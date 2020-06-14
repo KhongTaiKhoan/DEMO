@@ -18,5 +18,9 @@ Route::group(
    function(){
        Route::get('/','LoginAdminController@getLogin')->name('admin.login');
        Route::post('/postLogin','LoginAdminController@postLogin')->name('admin.postLogin');
+       Route::post('/postRegister','LoginAdminController@postRegister')->name('admin.postRegister');
+       Route::get('/register','LoginAdminController@getRegister')->name('admin.register');
+       Route::post('/valid','LoginAdminController@valid')->name('admin.validAdmin');
+       Route::get('/index','LoginAdminController@index')->name('admin.index');
    }
 );
