@@ -39,12 +39,6 @@ class AdminsSeeder extends Seeder{
         $admin->email = 'khongnhoemail33@gmail.com';
         $admin->password = bcrypt('admin');
         $admin->save();
-        // Admin::create(
-        //     [
-        //     'tenTaiKhoan'=>'admin',
-        //     'email'=>'khongnhoemail33@gmail.com',
-        //     'password'=>bcrypt('admin'),
-        //     ]
-        //   );
+      
     }
 }

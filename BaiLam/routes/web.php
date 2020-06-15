@@ -21,6 +21,17 @@ Route::group(
        Route::post('/postRegister','LoginAdminController@postRegister')->name('admin.postRegister');
        Route::get('/register','LoginAdminController@getRegister')->name('admin.register');
        Route::post('/valid','LoginAdminController@valid')->name('admin.validAdmin');
-       Route::get('/index','LoginAdminController@index')->name('admin.index');
+       
+       Route::group(['prefix'=>'danhmuc','middleware'=>'authadmin'], function(){
+             Route::get('/list','LoginAdminController@index')->name('admin.index');
+             Route::group(['prefix'=>'theloai'],function(){
+                 Route::get('create','TheLoai@create')->name('theloai-create');
+                 Route::post('store','TheLoai@store')->name('theloai-store');
+               }
+            );
+        }
+    );
    }
 );
+
+

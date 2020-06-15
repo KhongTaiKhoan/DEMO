@@ -26,7 +26,7 @@ class LoginAdminController extends Controller
       if(Auth::guard('admin')->attempt($arr) ){
         return \redirect(route('admin.index'));
       }else{
-        \dd('that bai bai');
+        \dd( $request->get('pass'));
       }
    }
    
