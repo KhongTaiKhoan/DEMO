@@ -30,7 +30,14 @@ Route::group(
                  Route::get('phantrang','TheLoai@pagination')->name('theloai-chuyen');
                }
             );
+             Route::group(['prefix'=>'tacgia'],function(){
+                Route::get('phantrang','TacGia@pagination')->name('tacgia-chuyen');
+              }
+            );
             Route::resource('theloai','TheLoai');
+           
+            Route::resource('tacgia','TacGia');
+            
         }
     );
    }

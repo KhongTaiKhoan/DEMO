@@ -143,6 +143,7 @@
 @parent
 <script>
 
+     
     $(document).ready(function(){
         var radio = $('input[name=theLoai]');
         var href =   window.location;
@@ -227,10 +228,12 @@
             'mieuTa': $("#mieuTa").val(),
             'theLoai':$('input[name=theLoai]:checked').val(),
         };
-        var url = '/admin/danhmuc/theloai';
+        var id =href.toString().split('theloai/')[1].split('/')[0] ;
+        var url = '/admin/danhmuc/theloai/'+id;
         console.log(url);
         $.ajax({
             type:"post",
+            method:'put',
             url: url,
             data:obj,
             headers: {

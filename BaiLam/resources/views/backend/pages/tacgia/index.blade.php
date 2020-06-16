@@ -23,9 +23,9 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Sach/The Loai/Danh Sach</h4>
+                <h4 class="page-title">Sach/Tac gia</h4>
             </div>
-            <a href="/admin/danhmuc/theloai/create">
+            <a href="/admin/danhmuc/tacgia/create">
                 <button class="btn btn-primary" style="background-color: #008f45; border: none; float: right;margin-right: 3rem;">Add</button>
             </a>
         </div>
@@ -39,8 +39,10 @@
                             <tr>
                                 <th>#</th>
                                 <th>ID</th>
-                                <th>TÊN THỂ LOẠI</th>
-                                <th>ID THỂ LOẠI CHA</th>
+                                <th>TÊN TÁC GIẢ</th>
+                                <th>NĂM SINH</th>
+                                <th>NĂM MẤT</th>
+                                <th>QUỐC TỊCH</th>
                                 <th>THAO TÁC</th>
                             </tr>
                         </thead>
@@ -50,10 +52,12 @@
                             <tr>
                                 <td>{{$index++}}</td>
                                 <td class="txt-oflo">{{$item->id}} </td>
-                                <td>{{$item->tenTheLoai}}</td>
-                                <td class="txt-oflo">{{$item->ID_Cha}} </td>
+                                <td>{{$item->hoTen}}</td>
+                                <td class="txt-oflo">{{$item->namSinh}} </td>
+                                <td class="txt-oflo">{{$item->namMat == "" ? "Chưa rõ":$item->namMat}} </td>
+                                <td class="txt-oflo">{{$item->quocTich == "" ? "Chưa rõ":$item->quocTich}} </td>
                                 <td>
-                                <a href="{{route('theloai.edit',['theloai'=>$item->id])}}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+                                <a href="{{route('tacgia.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>
                             </tr>
@@ -79,20 +83,24 @@
 <script>
 
     var page = 1;
+    const urlPhanTrang = "/admin/danhmuc/tacgia/phantrang?page=";
+    const urlXoa  = "/admin/danhmuc/tacgia/";
     // Chay Phan trang 
     $(document).on('click', '.pagination a', function (e) {
         e.preventDefault();
         page = $(this).attr("href").split('page=')[1];
+      
         loadAjax(page);
 
     });
+
+    
 
 
     // xoa the loai
     $(document).on('click', '.table .xoa', function () {
         var id = $(this).val();
-        alertify.confirm("Bạn có muông xóa thể loại này, lưu ý khi xóa xong các thể loại con của nó sẽ" +
-            " được chuyển lên node cha",
+        alertify.confirm("Bạn có muông xóa tác giả này??",
             function () {
                 $.ajaxSetup({
                     headers: {
@@ -101,15 +109,17 @@
                 });
                 $.ajax({
                     type: "delete",
-                    url: "/admin/danhmuc/theloai/" + id,
+                    url: urlXoa + id,
                     success: function (data) {
-                        
-                        if(data.size%5 ==0&&data.size>1  )
-                           page--;
+                        console.log(data.size);
+                        if(data.size%5 ==0&&data.size>1  ){
+                            page--;
+                           
+                     }
                     }
                 }).done(function () {
                     alertify.success('Xóa thành công');
-                    console.log(page);
+                   
                     loadAjax(page);
                 });
             },
@@ -117,42 +127,22 @@
                 alertify.error('Đã hủy');
             });
 
-        // var yes = confirm("Bạn có muông xóa thể loại này, lưu ý khi xóa xong các thể loại con của nó sẽ" +
-        //     " được chuyển lên node cha");
-        // if (yes) {
-        //     var id = $(this).val();
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         type: "delete",
-        //         url: "/admin/danhmuc/theloai/" + id,
-        //         success:function(data){
-        //             console.log(data);
-        //         }
-        //     }).done(function () {
-        //         alertify.success('Xóa thành công');
-        //         loadAjax(page);
-        //     });
-
-
-        // }
     });
 
 
 
     /// hamg xu ly load phan trang
     function loadAjax(page_) {
-
+        
         $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-            url: "/admin/danhmuc/theloai/phantrang?page=" + page_,
+            url: urlPhanTrang + page_,
 
         }).done(function (response) {
+           
             $("#tb_tl").empty();
             $("#tb_tl").html(response);
+
         });
     }
 
