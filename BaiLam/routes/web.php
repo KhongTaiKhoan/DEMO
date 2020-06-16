@@ -34,7 +34,12 @@ Route::group(
                 Route::get('phantrang','TacGia@pagination')->name('tacgia-chuyen');
               }
             );
+            Route::group(['prefix'=>'nxb'],function(){
+              Route::get('phantrang','NXB@pagination')->name('nxb-chuyen');}
+            );
+
             Route::resource('theloai','TheLoai');
+            Route::resource('nxb','NXB');
            
             Route::resource('tacgia','TacGia');
             

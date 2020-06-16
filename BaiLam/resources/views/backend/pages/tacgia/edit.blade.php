@@ -4,69 +4,7 @@
 @parent
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <style>
-    .myRadio input[type=radio] {
-        opacity: 0;
-    }
-
-    .myRadio {
-        position: relative;
-    }
-
-    .myRadio .custom-tick:before {
-        border: 2px black solid;
-        border-radius: 50%;
-        width: 14px;
-        height: 14px;
-        content: "";
-        display: inline-block !important;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-45%);
-        left: 0;
-        transition: all .4s;
-    }
-
-    .myRadio .custom-tick:after {
-        content: "";
-        display: inline-block !important;
-        position: absolute;
-        display: none;
-        left: 0;
-        transition: all .4s;
-    }
-
-    .myRadio input[type=radio]:checked~.custom-tick:before,
-    .myRadio input[type=radio]:checked~.custom-tick:after {
-        height: 4px;
-        display: inline-block;
-        border-radius: 0;
-    }
-
-    .myRadio input[type=radio]:checked~.custom-tick:before {
-        width: 9px;
-        background-color: rgb(3, 43, 19);
-        border: none;
-        top: 8px;
-        transform: rotate(40deg);
-        left: 2px;
-    }
-
-    .myRadio input[type=radio]:checked~.custom-tick:after {
-        width: 18px;
-        background-color: rgb(12, 172, 78);
-        transform: rotateZ(130deg);
-        top: 7px;
-        left: 7px;
-    }
-
-    .myRadio span {
-        margin-left: 1.5rem;
-    }
-
-    .theLoai {
-        padding-left: 1rem !important;
-    }
-
+   
     body {
         font-family: 'Muli', sans-serif;
     }

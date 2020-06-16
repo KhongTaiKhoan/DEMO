@@ -4,7 +4,7 @@
 @parent
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <style>
- 
+   
 
     body {
         font-family: 'Muli', sans-serif;
@@ -31,45 +31,36 @@
         </div>
 
         <div class="white-box">
-            <form id="tacgiaForm" action="{{route('tacgia.store')}}" method="post">
+            <form id="tacgiaForm" action="{{route('nxb.store')}}" method="post">
+                {{ method_field('PUT') }}
                 @csrf
+               
                 {{-- Nhap ten the loai --}}
                 <div>
-                    <label for="hoTen">Họ và tên</label>
-                    <input type="text" class="form-control" required name="hoTen" id="hoTen"
-                        placeholder="Tối đa 50 kí tự">
+                    <label for="tenNXB">Tên nhà xuất bản</label>
+                    <input type="text" class="form-control" required name="tenNXB" id="tenNXB"
+                        placeholder="Tối đa 50 kí tu">
                 </div>
                 
                 <div style="display: flex;">
                 
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="namSinh">Năm sinh</label>
-                    <input type="date" class="form-control" required name="namSinh" id="namSinh">
+                    <label for="email">Email:</label>
+                <input type="text" class="form-control"  required name="email" id="email">
                 </div>
                 
                 
                 
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="namMat">Năm mất</label>
-                    <input type="date" class="form-control"  name="namMat" id="namMat">
+                    <label for="sdt">Số điện thoại</label>
+                    <input type="text" class="form-control"   name="sdt" id="sdt">
                 </div>
 
 
 
-                <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="quocTich">Quốc tịch</label>
-                    <input type="text" class="form-control"  name="quocTich" id="quocTich"
-                    placeholder="Tối đa 20 kí tự">
-                </div>
-            </div>
-                {{-- Them mo ta ve the loai --}}
-                <div style="margin-top: 2rem !important;">
-                    <label for="tomTat">Tóm tắt về tác giả</label>
-                    <textarea class="form-control" name="tomTat" required id="tomTat" rows="4"
-                    placeholder="Tối đa 100 kí tự"></textarea>
-                </div>
+               
 
                 {{-- Bat Dau chon the loai cha--}}
                 
@@ -78,7 +69,7 @@
                 <div class="text-center" style="margin-top: 5rem;">
                     <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
                     <button type="button" id="check" class="btn btn-primary">Lưu</button>
-                    <a href="{{route('tacgia.index')}}"> <button type="button" class="btn btn-danger">Hủy</button></a>
+                    <a href="{{route('nxb.index')}}"> <button type="button" class="btn btn-danger">Hủy</button></a>
                 </div>
 
 
@@ -92,7 +83,7 @@
 @parent
 <script>
 
-    const urlPost='/admin/danhmuc/tacgia';
+    const urlPost='/admin/danhmuc/nxb';
     $("#check").click(function () {
         var hl = $("#tacgiaForm").valid();
         if (hl) {
@@ -112,31 +103,34 @@
             }
         }, onkeyup: false,
         rules: {
-            hoTen: {
+            tenNXB: {
                 required: true,
                 maxlength: 50
             },
-            tomTat: {
+            email: {
                 required: true,
-                maxlength: 100
+                maxlength: 100,
+                email:true
             },
-            quocTich:{
-              
+            sdt:{
+                required: true,
                 maxlength: 20
             }
 
 
         },
         messages: {
-            hoTen: {
+            tenNXB: {
                 required: 'Bạn phải nhập trường này',
                 maxlength: "Tối đa 50 kí tự"
             },
-            tomTat: {
+            email: {
                 required: 'Bạn phải nhập trường này',
-                maxlength: "Tối đa 50 kí tự"
+                maxlength: "Tối đa 100 kí tự",
+                email:'Không đúng định dạng'
             },
-            quocTich:{
+            sdt:{
+                required: 'Bạn phải nhập trường này',
                 maxlength: "Tối đa 20 kí tự"
             }
 
@@ -152,11 +146,10 @@
     );
     function thucHienAjax(form) {
         var obj = {
-            'hoTen': $("#hoTen").val(),
-            'tomTat': $("#tomTat").val(),
-            'namSinh': $("#namSinh").val(),
-            'namMat': $("#namMat").val(),
-            'quocTich': $("#quocTich").val(),
+            'tenNXB': $("#tenNXB").val(),
+            'email': $("#email").val(),
+            'sdt': $("#sdt").val(),
+            
             // 'theLoai': $('input[name=theLoai]:checked').val(),
         
         };
@@ -171,15 +164,12 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
-
+                console.log(response);
                 if (response.yes === true) {
 
-                   var now = new Date();
-                    $("#hoTen").val("");
-                    $("#namSinh").val( now.getTime());
-                    $("#namMat").val(now.getTime());
-                    $("#quocTic").val("");
-                    $("#tomTat").val("");
+                    $("#tenNXB").val(''),
+                    $("#email").val(''),
+                    $("#sdt").val(''),
 
                     alertify.success('Thêm thể loại thành công');
                 }

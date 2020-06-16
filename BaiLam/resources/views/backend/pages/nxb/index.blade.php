@@ -25,12 +25,15 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Sach/Tac gia</h4>
             </div>
-            <a href="/admin/danhmuc/tacgia/create">
+            <a href="/admin/danhmuc/nxb/create">
                 <button class="btn btn-primary" style="background-color: #008f45; border: none; float: right;margin-right: 3rem;">Add</button>
             </a>
         </div>
 
+
+       
         <div class="row">
+            
             <div class="white-box">
                 <div class="table-responsive" id="tb_tl">
                     @php ($index = ($page-1)*5 +1)
@@ -39,39 +42,38 @@
                             <tr>
                                 <th>#</th>
                                 <th>ID</th>
-                                <th>TÊN TÁC GIẢ</th>
-                                <th>NĂM SINH</th>
-                                <th>NĂM MẤT</th>
-                                <th>QUỐC TỊCH</th>
+                                <th>TÊN NXB</th>
+                                <th>SDT</th>
+                                <th>EMAIL</th>
                                 <th>THAO TÁC</th>
                             </tr>
                         </thead>
                         <tbody>
-
+    
                             @foreach ($arr as $item)
                             <tr>
                                 <td>{{$index++}}</td>
                                 <td class="txt-oflo">{{$item->id}} </td>
                                 <td>{{$item->tenNXB}}</td>
-                                <td class="txt-oflo">{{$item->namSinh}} </td>
-                                <td class="txt-oflo">{{$item->namMat == "" ? "Chưa rõ":$item->namMat}} </td>
-                                <td class="txt-oflo">{{$item->quocTich == "" ? "Chưa rõ":$item->quocTich}} </td>
+                                <td class="txt-oflo">{{$item->tenNXB}} </td>
+                                <td class="txt-oflo">{{$item->email}} </td>
+                                <td class="txt-oflo">{{$item->sdt}} </td>
                                 <td>
-                                <a href="{{route('tacgia.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+                                <a href="{{route('nxb.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-
+    
                     <nav aria-label="Page navigation example" style="text-align: center">
                         {!!$arr->links()!!}
                     </nav>
                     {{-- @include('backend.pages.theloai.phantrang',['arr'=>$arr]) --}}
                 </div>
             </div>
-
+    
         </div>
     </div>
 </div>
