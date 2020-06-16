@@ -17,7 +17,7 @@ class CreateTheloaisTable extends Migration
             $table->id();
             $table->string('tenTheLoai',30);
             $table->string('mieuTa',50);
-            $table->integer('ID_Cha')->nullable();
+            $table->integer('ID_Cha');
             $table->integer('soLuongNode')->default(0);
             $table->timestamps();
         });
