@@ -11,15 +11,15 @@
     
     
     @section('header')
-       @include('backend.page.header')
+       @include('backend.elements.header')
     @show
     
     
 </head>
 
 <body class="fix-header">
-    @include('backend.page.head-menu')
-    @include('backend.page.sidebar')
+    @include('backend.elements.head-menu')
+    @include('backend.elements.sidebar')
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- Page Content -->
@@ -132,7 +132,7 @@
 
 
     @section('footer')
-       @include('backend.page.footer')
+       @include('backend.elements.footer')
     @show
 </body>
 

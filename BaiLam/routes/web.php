@@ -24,11 +24,13 @@ Route::group(
        
        Route::group(['prefix'=>'danhmuc','middleware'=>'authadmin'], function(){
              Route::get('/list','LoginAdminController@index')->name('admin.index');
+            
+
              Route::group(['prefix'=>'theloai'],function(){
-                 Route::get('create','TheLoai@create')->name('theloai-create');
-                 Route::post('store','TheLoai@store')->name('theloai-store');
+                 Route::get('phantrang','TheLoai@pagination')->name('theloai-chuyen');
                }
             );
+            Route::resource('theloai','TheLoai');
         }
     );
    }

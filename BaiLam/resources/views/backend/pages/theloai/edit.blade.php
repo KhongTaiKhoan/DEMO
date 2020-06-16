@@ -1,4 +1,4 @@
-@extends('backend.page.master')
+@extends('backend.pages.master')
 
 @section('header')
 @parent
@@ -74,6 +74,10 @@
     .white-box label {
         font-weight: bold;
     }
+
+    ul.theLoai{
+        border-left: 0.5px solid black;   
+    }
 </style>
 @endsection
 {{-- {{$html}} --}}
@@ -86,32 +90,34 @@
                 <h4 class="page-title">Sach/The Loai</h4>
             </div>
         </div>
-        <!-- action="{{route('theloai-store')}}" -->
+      
         <div class="white-box">
-            <form  id="theLoaiForm" action="{{route('theloai-store')}}"   method="post">
+        <form  id="theLoaiForm" action="{{route('theloai.update',['theloai'=>$theloai->id])}}"  method="post">
+               {{ method_field('PUT') }}
+
                 @csrf
                 {{-- Nhap ten the loai --}}
                 <div>
                     <label for="tenThaLoai">Tên thể loại</label>
                     <input type="text" class="form-control" required name="tenTheLoai" id="tenTheLoai"
-                        placeholder="VD: Sách,truyện,...">
+                placeholder="VD: Sách,truyện,..." value="{{$theloai->tenTheLoai}}">
                 </div>
 
                 {{-- Them mo ta ve the loai --}}
                 <div style="margin-top: 2rem !important;">
                     <label for="mieuTa">Mô tả ngắn về thể loại</label>
-                    <textarea class="form-control" name="mieuTa" required id="mieuTa" rows="4"></textarea>
+                    <textarea class="form-control" name="mieuTa"  required id="mieuTa" rows="4">{{$theloai->mieuTa}}</textarea>
                 </div>
 
                 {{-- Bat Dau chon the loai cha--}}
 
-                <div class="cayTheLoai" style="margin-top: 2rem !important;">
-                    <label class="font-muli">Chọn thể loại cha:
+                <div class="cayTheLoai"   style="margin-top: 2rem !important;">
+                    <label id="tick"  class="font-muli">ID thể loại cha: {{$theloai->ID_Cha}}
                    </label>
-                    <div>
+                    <div >
 
                         <label class="myRadio" for="theloai-none">
-                            <input checked type="radio" style="display: contents;" value="0" name="theLoai" id="theloai-none">
+                            <input checked  type="radio" style="display: contents;" value="0" name="theLoai" id="theloai-none">
                             <span class="custom-tick"></span>
                             <span>None</span>
                         </label>
@@ -122,8 +128,8 @@
                     </ul>
                     <div class="text-center" style="margin-top: 5rem;">
                         <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
-                        <button type="button" id = "check" class = "btn btn-primary">Lưu</button>
-                        <button type="button" class="btn btn-danger">Hủy</button>
+                        <button type="submit" id = "check" class = "btn btn-primary">Lưu</button>
+                        <a href="{{route('theloai.index')}}"> <button type="button" class="btn btn-danger">Hủy</button></a>
                     </div>
                 </div>
 
@@ -136,13 +142,34 @@
 @section('footer')
 @parent
 <script>
-    $("#check").click(function(){
-        var hl = $("#theLoaiForm").valid();    
-        if(hl){
-            thucHienAjax();
+
+    $(document).ready(function(){
+        var radio = $('input[name=theLoai]');
+        var href =   window.location;
+        var id =href.toString().split('theloai/')[1].split('/')[0] ;
+        var id_cha = $('#tick').text().toString().split(':')[1].trim();
+        for(let i = 0;i<radio.length;i++){
+            
+            if($(radio[i]).val() == id_cha){
+                $(radio[i]).prop('checked',true)
+            }else if($(radio[i]).val() == id){
+                $(radio[i]).prop('disabled',true);
+
+            }
         }
+        
     });
 
+    // $("#check").click(function(){
+    //     var hl = $("#theLoaiForm").valid();    
+    //     if(hl){
+    //         thucHienAjax();
+    //     }
+    // });
+
+
+
+    /// validate cho form
     $("#theLoaiForm").validate({
         onfocusout: function (element) {
             if ($(element).val() == "") return;
@@ -200,7 +227,7 @@
             'mieuTa': $("#mieuTa").val(),
             'theLoai':$('input[name=theLoai]:checked').val(),
         };
-        var url =  window.location.protocol + "//" + window.location.host + "/admin/danhmuc/theloai/store";
+        var url = '/admin/danhmuc/theloai';
         console.log(url);
         $.ajax({
             type:"post",
