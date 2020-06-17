@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
-use Storage;
+use File;
 class Sach extends Controller
 {
     /**
@@ -55,17 +55,16 @@ class Sach extends Controller
         $sach->namXB = $request->namXB;
         $sach->gia = $request->gia;
         $sach->duocPhepMuon = $request->duocPhepMuon;
-        $anh = $request->file('anhBia');
+        $anh = $request->file('anhbia');
+        // return $request->file('anhbia');
+        if($anh){  
+            $tenanh = $anh->getClientOriginalName();
 
-        if($anh){
-           $tenanh = $anh->getClientOriginalName();
-        //    dd($tenanh);
-           
            $tenanh_ = explode('.',$tenanh)[0];
            $_tenanh = explode('.',$tenanh)[1];
            $tenanh = $tenanh_ .rand(0,100).".".$_tenanh;
            
-           $anh->move('upload/sach/anhbia',$tenanh);
+           $anh->move('img/bia',$tenanh);
            $sach->anhBia = $tenanh;
            $sach->save();
         } else{
@@ -116,17 +115,18 @@ class Sach extends Controller
     {   
         $sach = \App\Model\sach::find($id);
         $sach->tenSach = $request->tenSach;
-        $sach->ID_TacGia = $request->ID_TacGia;
-        $sach->ID_TheLoai = $request->ID_TheLoai;
-        $sach->ID_NXB = $request->ID_NXB;
-        $sach->namXB = $request->namXB;
+        $sach->ID_TacGia = $request->tacgia;
+        $sach->ID_TheLoai = $request->theLoai;
+        $sach->ID_NXB = $request->nxb;
+        $sach->namXB = $request->namxb;
         $sach->gia = $request->gia;
-        $sach->duocPhepMuon = $request->duocPhepMuon;
-        $anh = $request->file('anhBia');
-         return $request->tenSach;
+        $sach->duocPhepMuon = $request->choMuon;
+        $anh = $request->file('anhbia');
+        // dd ($request->tacgia);
         
-        if($anh){
-            Storage::delete('public/upload/sach/anhbia/'+$sach->anhBia);
+        if($anh && $request->anhbia != $sach->anhBia){
+            if(File::exists('img/bia/'.$sach->anhBia))
+                File::delete('img/bia/'.$sach->anhBia);
            
             $tenanh = $anh->getClientOriginalName();
         //    dd($tenanh);
@@ -135,16 +135,19 @@ class Sach extends Controller
            $_tenanh = explode('.',$tenanh)[1];
            $tenanh = $tenanh_ .rand(0,100).".".$_tenanh;
            
-           $anh->move('upload/sach/anhbia',$tenanh);
+           $anh->move('img/bia',$tenanh);
            $sach->anhBia = $tenanh;
            $sach->save();
         } else{
             $sach->save();
         }
-
-      
-        return \response()->json(
-            ['s'=>true],200);
+        // return \response()->json(
+        //     ['s'=>true],200);
+        $theloai = \App\Model\theloai::all();
+        $tacgia = \App\Model\tacgia::all();
+        $nxb = \App\Model\nhaxb::all(); 
+        return  \back()->with($sach->id);
+           
     }
 
     /**

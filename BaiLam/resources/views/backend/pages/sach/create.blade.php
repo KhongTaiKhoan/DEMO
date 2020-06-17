@@ -332,7 +332,7 @@
            
             success: function (response) {
                 console.log(response!= "");
-                
+                console.log(response);
                 if (response != "") {$('#sachForm').trigger("reset");
                     alertify.success('Thêm sách thành công');
                     $('#sachForm img').attr('src','');

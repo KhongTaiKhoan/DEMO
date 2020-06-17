@@ -97,9 +97,13 @@
 @section('noi-dung')
 <div id="page-wrapper">
     <div class="container-fluid">
-        @include('backend.pages.sach.page-title');
+        @include('backend.pages.sach.page-title')
 
         <div class="white-box">
+             @isset($update)
+             <div style="color:#c42214;font-size: 2rem; font-weight: bolder; text-align: center;">Cập nhật dữ liệu thành công</div>
+
+             @endisset
             <form id="sachForm" action="{{route('sach.update',$sach->id)}}" method="post" enctype="multipart/form-data">
                 {{ method_field('PUT') }}
                 @csrf
@@ -187,13 +191,13 @@
                 </div>
 
 
-
-                <div class="form-cotrol">
+                <div class="form-cotrol" style="display: contents;">
                     <label class="form-cotrol">Ảnh bìa</label>
-                    <input type="file" class="form-cotrol" style="border: none;background:none;" name="anhbia"
+                    <input type="file" class="form-cotrol" style=" border: none;background:none;" name="anhbia"
                      id="anhbia">
-                    <img class="form-cotrol" src="@if ($sach->anhBia) {{asset('upload/sach/anhbia/')}}/{{ $sach->anhBia}}
-                                                  @endif "  id="bia">
+                    <img class="form-cotrol" src="@if ($sach->anhBia) {{asset('img/bia/')}}/{{ $sach->anhBia}}
+                                                  @endif " 
+                    id="bia">
                 </div>
                 {{-- Bat Dau chon the loai cha--}}
 
@@ -227,17 +231,18 @@
     $("#anhbia").on('change', function (evt) {
         var tgt = evt.target || window.event.srcElement,
             files = tgt.files;
-    
+
         // FileReader support
         if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = function () {
-                document.getElementById("bia").src = fr.result;
+                $("#bia").attr('src',fr.result) ;
+
+                
             }
             fr.readAsDataURL(files[0]);
-           
         }
-      
+
 
     });
 
@@ -251,7 +256,9 @@
         var href =   window.location+"";
         var id =href.toString().split('sach/')[1].split('/')[0] ;
         if (hl) {
-            thucHienAjax(id);
+            console.log($("#ID_TacGia").val());
+            $('#sachForm').submit();
+            // thucHienAjax(id);
         }
     });
 
@@ -346,7 +353,7 @@
 
 
         // var obj = $("#tacgiaForm").serialize();
-        var form = new FormData($('#sachForm')[0]);
+        // var form = new FormData($('#sachForm')[0]);
         //  var formData = new FormData(form);
         console.log(form==null);
         $.ajaxSetup({
@@ -357,17 +364,18 @@
         });
         $.ajax({
            
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form,
-                type: 'put',
-                url:urlPost+id,
-                async:false,
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form,
+            type: 'put',
+            url:urlPost+id,
+            async:false,
             success: function (response) {
                 console.log(response);
                 if (response != "") {
-                        alertify.success('Sua sach thành công');
+                     alertify.success('Sua sach thành công');
                 }
             }
         });
