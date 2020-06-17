@@ -25,7 +25,7 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Sach/Tac gia</h4>
             </div>
-            <a href="/admin/danhmuc/tacgia/create">
+            <a href="/admin/danhmuc/sach/create">
                 <button class="btn btn-primary" style="background-color: #008f45; border: none; float: right;margin-right: 3rem;">Add</button>
             </a>
         </div>
@@ -39,10 +39,12 @@
                             <tr>
                                 <th>#</th>
                                 <th>ID</th>
-                                <th>TÊN TÁC GIẢ</th>
-                                <th>NĂM SINH</th>
-                                <th>NĂM MẤT</th>
-                                <th>QUỐC TỊCH</th>
+                                <th>TÊN SÁCH</th>
+                                <th>TÁC GIẢ</th>
+                                <th>THỂ LOẠI</th>
+                                <th>NHÀ XUẤT BẢN</th>
+                                <th>GIÁ BÁN</th>
+                                <th>CHO PHÉP MƯỢN</th>
                                 <th>THAO TÁC</th>
                             </tr>
                         </thead>
@@ -52,18 +54,26 @@
                             <tr>
                                 <td>{{$index++}}</td>
                                 <td class="txt-oflo">{{$item->id}} </td>
-                                <td>{{$item->hoTen}}</td>
-                                <td class="txt-oflo">{{$item->namSinh}} </td>
-                                <td class="txt-oflo">{{$item->namMat == "" ? "Chưa rõ":$item->namMat}} </td>
-                                <td class="txt-oflo">{{$item->quocTich == "" ? "Chưa rõ":$item->quocTich}} </td>
+                                <td>{{$item->tenSach}}</td>
+                                <td class="txt-oflo">{{$item->hoTen}} </td>
+                                <td class="txt-oflo">{{$item->tenTheLoai == "" ? "Chưa rõ":$item->tenTheLoai}} </td>
+                                <td class="txt-oflo">{{$item->tenNXB == "" ? "Chưa rõ":$item->tenNXB}} </td>
+                                <td class="txt-oflo">{{$item->gia == "" ? "Chưa rõ":$item->gia}} </td>
+                                <td class="txt-oflo">{{$item->duocPhepMuon == "" ? "Chưa":"Được"}} </td>
+                                
                                 <td>
-                                <a href="{{route('sach.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+                                    <a href="{{route('sach.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+                                    <a href="{{route('sach.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="soan btn btn-primary">Soạn bài</button></a>
+
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+
+                   
                     <nav aria-label="Page navigation example" style="text-align: center">
                         {!!$arr->links()!!}
                     </nav>
@@ -82,8 +92,8 @@
 <script>
 
     var page = 1;
-    const urlPhanTrang = "/admin/danhmuc/nxb/phantrang?page=";
-    const urlXoa  = "/admin/danhmuc/nxb/";
+    const urlPhanTrang = "/admin/danhmuc/sach/phantrang?page=";
+    const urlXoa  = "/admin/danhmuc/sach/";
     // Chay Phan trang 
     $(document).on('click', '.pagination a', function (e) {
         e.preventDefault();
@@ -99,7 +109,7 @@
     // xoa the loai
     $(document).on('click', '.table .xoa', function () {
         var id = $(this).val();
-        alertify.confirm("Bạn có muông xóa tác giả này??",
+        alertify.confirm("Bạn có muông xóa sách này??",
             function () {
                 $.ajaxSetup({
                     headers: {
@@ -111,9 +121,8 @@
                     url: urlXoa + id,
                     success: function (data) {
                         console.log(data.size);
-                        if(data.size%5 ==0&&data.size/5>1  ){
-                            page--;
-                           
+                        if(data.size%5 ==0&&data.size/5>=1  ){
+                            page--;   
                      }
                     }
                 }).done(function () {
@@ -132,9 +141,13 @@
 
     /// hamg xu ly load phan trang
     function loadAjax(page_) {
-        
+        $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
         $.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+           
             url: urlPhanTrang + page_,
 
         }).done(function (response) {

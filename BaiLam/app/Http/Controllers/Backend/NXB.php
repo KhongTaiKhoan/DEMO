@@ -54,7 +54,12 @@ class NXB extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
+    {
+         $nhaxb=\App\Model\nhaxb::find($id);
+        if($nhaxb != null){
+            return \response()->json(['yes'=>true],200);
+        }
+        else return \response()->json(['yes'=>fasle],200);
     }
 
     /**

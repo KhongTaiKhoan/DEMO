@@ -55,8 +55,11 @@ class TacGia extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   $tacgia=\App\Model\tacgia::find($id);
+        if($tacgia != null){
+            return \response()->json(['yes'=>true],200);
+        }
+        else return \response()->json(['yes'=>fasle],200);
     }
 
     /**
@@ -117,5 +120,6 @@ class TacGia extends Controller
           return  
           view('backend.pages.tacgia.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();
         }
+        
     }
 }

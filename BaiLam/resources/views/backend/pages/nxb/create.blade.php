@@ -32,7 +32,7 @@
 
         <div class="white-box">
             <form id="tacgiaForm" action="{{route('nxb.store')}}" method="post">
-                {{ method_field('PUT') }}
+                {{-- {{ method_field('PUT') }} --}}
                 @csrf
                
                 {{-- Nhap ten the loai --}}

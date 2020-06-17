@@ -114,42 +114,58 @@
         rules: {
             hoTen: {
                 required: true,
-                maxlength: 50
+                minlength: 7,
+                maxlength: 50,
+                
             },
             tomTat: {
                 required: true,
-                maxlength: 100
+                minlength: 7,
+                maxlength: 50
             },
-            quocTich:{
-              
-                maxlength: 20
-            }
-
+            namSinh:{
+                min:'1950',
+                max: new Date().getFullYear(),
+                required:true
+            },
+           quocTich:{
+            required: true,
+                minlength: 7,
+                maxlength: 50
+           },
 
         },
         messages: {
             hoTen: {
-                required: 'Bạn phải nhập trường này',
-                maxlength: "Tối đa 50 kí tự"
+                required: 'Không được bỏ trống',
+                minlength: 'Ít nhát 7 kí tự',
+                maxlength: 'Tối đa 50 kí tự'
             },
             tomTat: {
-                required: 'Bạn phải nhập trường này',
-                maxlength: "Tối đa 50 kí tự"
+                required: 'Không được bỏ trống',
+                minlength: 'Ít nhát 7 kí tự',
+                maxlength: 'Tối đa 50 kí tự'
+            },
+            namSinh:{
+                min:'Năm sinh quá lâu, chém gió à',
+                max: 'Năm sinh lớn hươn hiện tại, chém gió à',
+                required:'Không được bỏ trống'
             },
             quocTich:{
-                maxlength: "Tối đa 20 kí tự"
-            }
-
+                required: 'Không được bỏ trống',
+                minlength: 'Ít nhát 7 kí tự',
+                maxlength: 'Tối đa 50 kí tự'
+           },
 
         }, errorPlacement: function (err, elemet) {
-
-            err.insertAfter(elemet);
-            err.addClass('invalid-feedback d-inline text-danger');
-            elemet.addClass('form-control is-invalid');
-            $('.focus-input100-1,.focus-input100-2').addClass('hidden');
-        }
+        
+        err.insertAfter(elemet);    
+        err.addClass('invalid-feedback d-inline text-danger');
+        elemet.addClass('form-control is-invalid');
+        $('.focus-input100-1,.focus-input100-2').addClass('hidden');
     }
-    );
+}
+);
     function thucHienAjax(form) {
         var obj = {
             'hoTen': $("#hoTen").val(),

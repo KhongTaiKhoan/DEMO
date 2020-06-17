@@ -37,7 +37,28 @@ Route::group(
             Route::group(['prefix'=>'nxb'],function(){
               Route::get('phantrang','NXB@pagination')->name('nxb-chuyen');}
             );
+           
+           
+           
+            Route::group(['prefix'=>'sach'],function(){
+              Route::get('phantrang','Sach@pagination')->name('sach-chuyen');}
+            );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            Route::resource('sach','Sach');
             Route::resource('theloai','TheLoai');
             Route::resource('nxb','NXB');
            
