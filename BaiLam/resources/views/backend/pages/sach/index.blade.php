@@ -63,7 +63,7 @@
                                 
                                 <td>
                                     <a href="{{route('sach.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
-                                    <a href="{{route('sach.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="soan btn btn-primary">Soạn bài</button></a>
+                                    <a href="{{route('sach.review',$item->id ) }}"><button type="button" value="{{$item->id}}" class="soan btn btn-primary">Soạn bài</button></a>
 
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>

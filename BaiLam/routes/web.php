@@ -38,31 +38,29 @@ Route::group(
               Route::get('phantrang','NXB@pagination')->name('nxb-chuyen');}
             );
            
-           
+            Route::group(['prefix'=>'docgia'],function(){
+              Route::get('phantrang','DocGia@pagination')->name('docgia-chuyen');}
+            );
+            Route::group(['prefix'=>'nhanvien'],function(){
+              Route::get('phantrang','NhanVien@pagination')->name('nhanvien-chuyen');}
+            );
            
             Route::group(['prefix'=>'sach'],function(){
-              Route::get('phantrang','Sach@pagination')->name('sach-chuyen');}
+              Route::get('phantrang','Sach@pagination')->name('sach-chuyen');
+              Route::get('review/{id}','Sach@review')->name('sach.review');
+              Route::post('write/{id}','Sach@write')->name('sach.write');
+            
+            }
             );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             Route::resource('sach','Sach');
             Route::resource('theloai','TheLoai');
             Route::resource('nxb','NXB');
            
             Route::resource('tacgia','TacGia');
+            Route::resource('docgia','DocGia');
+            Route::resource('nhanvien','NhanVien');
+            
             
         }
     );

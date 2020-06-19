@@ -112,7 +112,7 @@
                     url: urlXoa + id,
                     success: function (data) {
                         console.log(data.size);
-                        if(data.size%5 ==0&&data.size/5>1  ){
+                        if(data.size%5 ==0&&data.size/5>=1  ){
                             page--;
                            
                      }

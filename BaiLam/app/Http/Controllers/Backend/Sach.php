@@ -178,4 +178,16 @@ class Sach extends Controller
                
     
     }
+    public function write(Request $request, $id){
+       $review = $request->review;
+       $sach = \App\Model\sach::find($id);
+       $sach->mieuTa = $review;
+       $sach->save();
+       return  \back()->with(['dulieu'=>$sach->mieuTa,'id'=>$id]);
+    }
+
+    public function review($id){
+        $sach = \App\Model\sach::find($id);
+        return view('backend.pages.sach.write')->with(['dulieu'=>$sach->mieuTa,'id'=>$id]);
+    }
 }

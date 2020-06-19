@@ -45,14 +45,14 @@
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="namSinh">Năm sinh</label>
-                <input type="date" class="form-control" value="{{$item->namSinh}}" required name="namSinh" id="namSinh">
+                <input type="text" class="form-control" value="{{$item->namSinh}}" required name="namSinh" id="namSinh">
                 </div>
 
 
 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="namMat">Địa chỉ</label>
-                    <input type="text" class="form-control"  name="diachi" id="diachi"
+                    <input type="text" class="form-control"  name="diachi" id="diaChi"
                     placeholder="Tối đa 50 kí tự" value="{{$item->diaChi}}">
                 </div>
 
@@ -130,6 +130,7 @@
             namSinh:{
                 min:'1950',
                 max: new Date().getFullYear(),
+                digits:true,
                 required:true
             },
            quocTich:{
@@ -153,7 +154,8 @@
             namSinh:{
                 min:'Năm sinh quá lâu, chém gió à',
                 max: 'Năm sinh lớn hươn hiện tại, chém gió à',
-                required:'Không được bỏ trống'
+                required:'Không được bỏ trống',
+                digits:"Dữ liệu không hợp lệ",
             },
             quocTich:{
                 required: 'Không được bỏ trống',
