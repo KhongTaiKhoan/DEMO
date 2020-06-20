@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test/{data}',function($data){
+  return \view('test')->with(['html'=>$data]);
+})->name('test');
+
 Route::group(
    ['prefix'=>'admin', 'namespace'=>'Backend'],
    function(){
@@ -52,6 +56,9 @@ Route::group(
             
             }
             );
+            Route::group(['prefix'=>'taikhoan'],function(){
+              Route::post('avatar/{id}','TaiKhoan@thayDoiAnhDaiDien')->name('taikhoan.avatar');}
+            );
 
             Route::resource('sach','Sach');
             Route::resource('theloai','TheLoai');
@@ -60,11 +67,23 @@ Route::group(
             Route::resource('tacgia','TacGia');
             Route::resource('docgia','DocGia');
             Route::resource('nhanvien','NhanVien');
-            
+            Route::resource('taikhoan','TaiKhoan');
             
         }
     );
    }
 );
+
+
+// Route::get('chucvu-quyen',function(){
+//    $data=  \App\Admin::find(1)->chucvus()->get();
+//    foreach($data as $dat){
+//         $out = $dat->quyens()->get()->toArray();
+//         echo "<pre>";
+//         print_r($out);
+//         echo "</pre>";
+//     }
+  
+// });
 
 

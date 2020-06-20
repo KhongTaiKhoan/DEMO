@@ -20,6 +20,7 @@ class CreateAdminsTable extends Migration
             $table->string('password');
             $table->date('ngayLap')->default(Carbon::now());
             $table->string('avatar',50)->default('blank.png');
+            $table->integer('ID_NhanVien');
             $table->timestamps();
         });
     }

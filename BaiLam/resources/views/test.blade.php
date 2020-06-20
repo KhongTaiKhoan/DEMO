@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    {{!!$html!!}}
+    {{dd ($html)}}
 </body>
 </html>

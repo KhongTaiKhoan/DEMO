@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNhanviensTable extends Migration
+class AdminChucvu extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateNhanviensTable extends Migration
      */
     public function up()
     {
-        Schema::create('nhanviens', function (Blueprint $table) {
+        Schema::create('admin_chucvu', function (Blueprint $table) {
             $table->id();
-            $table->string('hoTen',50);
-            $table->string('chucVu',30);
-            $table->integer('namSinh');
-            $table->string('cmnd',30);
-            $table->string('diaChi',50);
-            $table->string('sdt',11);
+            $table->integer('ID_Admin');
+            $table->integer('ID_ChucVu');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateNhanviensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nhanviens');
+        Schema::dropIfExists('admin_chucvu');
     }
 }

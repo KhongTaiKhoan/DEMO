@@ -49,7 +49,7 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
-            <form class="login100-form validate-form" method="POST" action="{{route('admin.postRegister')}}">
+            <form class="login100-form validate-form" method="post" action="{{route('admin.postRegister')}}">
                     @csrf
                     <span class="login100-form-title p-b-33">
                         Account Login
@@ -61,10 +61,18 @@
                         <span class="focus-input100-2"></span>
                     </div>
 
-                    <div class="wrap-input100">
+                    <div class="wrap-input100 ">
                         <input class="input100" required type="text" name="email" placeholder="Email">
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
+                    </div>
+                    <div class="mb-3">
+                        {{-- <label for="idNhanVien">Nhân viên:</label> --}}
+                        <select class="custom-select " name="idNhanVien" style="padding-left : 1.5rem;" id="idNhanVien">
+                            @foreach ($nhanvien as $item)
+                            <option value="{{$item->id}}" >{{$item->hoTen}}</option>
+                            @endforeach   
+                        </select>
                     </div>
 
                     <div class="wrap-input100">

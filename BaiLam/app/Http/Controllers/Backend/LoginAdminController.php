@@ -32,14 +32,20 @@ class LoginAdminController extends Controller
    
 
    public function getRegister(){
-      return view ('backend.register');
+      $nhanviens = \App\Model\nhanvien::all();
+      return view ('backend.register')->with(['nhanvien'=>$nhanviens]);
    }
 
    public function postRegister(Request $request){
+
+
+      // dd($request);
       $admin = new Admin();
       $admin->tenTaiKhoan = $request->tenTaiKhoan;
       $admin->email = $request->email;
       $admin->password = bcrypt($request->pass);
+      $admin->ID_NhanVien = $request->idNhanVien;
+
       $admin->save();
 
       Auth::guard('admin')->login($admin);

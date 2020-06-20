@@ -25,6 +25,7 @@ class Admin extends Authenticatable
         'email',
         'ngayLap',
         'avatar',
+        'ID_NhanVien',
     ];
 
     /**
@@ -44,4 +45,15 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function nhanvien(){
+        return $this->belongsTo('App\Model\nhanvien','ID_NhanVien');
+    }
+
+    public function chucvus(){
+        return $this->belongsToMany('App\Model\chucvu','admin_chucvu','ID_ChucVu','ID_Admin'); 
+    }
+
+   
 }
