@@ -25,7 +25,7 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Nhan Vien</h4>
             </div>
-            <a href="/admin/danhmuc/nhanvien/create">
+            <a href="{{route('taikhoan.create')}}">
                 <button class="btn btn-primary" style="background-color: #008f45; border: none; float: right;margin-right: 3rem;">Add</button>
             </a>
         </div>
@@ -39,13 +39,10 @@
                             <tr>
                                 <th>#</th>
                                 <th>ID</th>
-                                <th>TÊN NHÂN VIÊN</th>
-                                <th>CHỨC VỤ</th>
-                                <th>NĂM SINH</th>
-                                <th>CMND</th>
-                                <th>ĐỊA CHỈ</th>
-                                <th>SỐ ĐIỆN THOẠI</th>
-                                <th>Giới tính</th>
+                                <th>TÊN KHOẢN</th>
+                                <th>EMAIL</th>
+                                <th>NHAN VIEN</th>
+                                <th>NGÀY LẬP</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,15 +51,13 @@
                             <tr>
                                 <td>{{$index++}}</td>
                                 <td class="txt-oflo">{{$item->id}} </td>
+                                <td class="txt-oflo">{{$item->tenTaiKhoan}} </td>
+                                <td class="txt-oflo">{{$item->email}} </td>
                                 <td class="txt-oflo">{{$item->hoTen}} </td>
-                                <td class="txt-oflo">{{$item->chucVu}} </td>
-                                <td class="txt-oflo">{{$item->namSinh}} </td>
-                                <td class="txt-oflo">{{$item->cmnd}} </td>
-                                <td class="txt-oflo">{{$item->diaChi}} </td>
-                                <td class="txt-oflo">{{$item->sdt}} </td>
-                                <td class="txt-oflo">{{$item->gioiTinh == true ? "Nam":"Nữ"}} </td>
+                                <td class="txt-oflo">{{$item->ngayLap}} </td>
+                               
                                 <td>
-                                <a href="{{route('nhanvien.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+                                <a href="{{route('taikhoan.show',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a>
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>
                             </tr>
@@ -87,8 +82,8 @@
 <script>
 
     var page = 1;
-    const urlPhanTrang = "/admin/danhmuc/nhanvien/phantrang?page=";
-    const urlXoa  = "/admin/danhmuc/nhanvien/";
+    const urlPhanTrang = "/admin/danhmuc/taikhoan/phantrang?page=";
+    const urlXoa  = "/admin/danhmuc/taikhoan/";
     // Chay Phan trang 
     $(document).on('click', '.pagination a', function (e) {
         e.preventDefault();
@@ -104,7 +99,7 @@
     // xoa the loai
     $(document).on('click', '.table .xoa', function () {
         var id = $(this).val();
-        alertify.confirm("Bạn có muốn xóa nhân viên này??",
+        alertify.confirm("Bạn có muốn xóa tài khoản này??",
             function () {
                 $.ajaxSetup({
                     headers: {

@@ -69,7 +69,7 @@
                         </a>
                     </div>
 
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         <span class="txt1">
                             Tạo tài khoản mới?
                         </span>
@@ -77,7 +77,7 @@
                         <a href="{{route('admin.register')}}" class="txt2 hov1">
                             đăng ký nhé
                         </a>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
         </div>

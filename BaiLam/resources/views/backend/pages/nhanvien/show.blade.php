@@ -85,6 +85,34 @@
     #nhanvienForm input:read-only{
       background-color: white;
     }
+
+
+    .avatar {
+        position: relative;
+
+    }
+
+    .avatar img {
+        display: block;
+        width: 75%;
+        /* border-radius: 50%; */
+        margin: 0 auto;
+       
+    }
+
+    .avatar input[type=file] {
+        opacity: 0;
+        z-index: -1;
+        position: absolute;
+    }
+
+    .avatar button {
+        display: none;
+    }
+    .avatar label{
+        display: block;text-align: center; font-weight: 800;font-size: 1.5rem;
+    }
+
 </style>
 @endsection
 {{-- {{$html}} --}}
@@ -102,8 +130,6 @@
             <form id="nhanvienForm" action="{{route('nhanvien.store')}}" method="post">
                 {{ method_field('PUT') }}
                 @csrf
-
-
                 <div class="col-md-8">
                     {{-- Nhap ten the loai --}}
                     <div>
@@ -156,7 +182,10 @@
                         <p style="font-weight: bold;">Giới tính:</p>
                         <div style="display: inline-block;margin-right:1rem;">
                             <label class="myRadio" for="theloai-cho">
-                                <input checked type="radio" style="display: contents;" value="1" id="theloai-cho"
+                                <input @if ($item->gioiTinh == true)
+                                       checked
+                                       @endif 
+                                    type="radio" style="display: contents;" value="1" id="theloai-cho"
                                     name="gioitinh">
                                 <span class="custom-tick"></span>
                                 <span>Nam</span>
@@ -164,7 +193,11 @@
                         <div style="display: inline-block;">
                             </label>
                             <label class="myRadio" for="theloai-chua">
-                                <input  type="radio" style="display: contents;" value="0" id="theloai-chua"
+                                <input 
+                                      @if ($item->gioiTinh != true)
+                                          checked
+                                       @endif
+                                    type="radio" style="display: contents;" value="0" id="theloai-chua"
                                     name="gioitinh">
                                 <span class="custom-tick"></span>
                                 <span>Nữ</span>
@@ -172,21 +205,14 @@
                         </div>
 
                     </div>
-
-
-
-
-
-                    {{-- Bat Dau chon the loai cha--}}
-
-                    <div class="text-center" style="margin-top: 5rem;">
-                        <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
-                        <button  type="button" id="check" class="btn btn-primary">Lưu</button>
-                        <button  type="button"  class=" sua btn  btn-info">Sửa</button>
-                        <a href="{{route('nhanvien.index')}}"> <button type="button"
-                                class="btn btn-danger">Hủy</button></a>
+                  
+                   
+                </div>
+                <div class="col-md-4">
+                    <div class="avatar ">
+                        <label>Ảnh chân dung</label>
+                        <img src="{{asset('img/avatar/nhanvien/'.$item->anhDaiDien)}}" />
                     </div>
-
                 </div>
             </form>
         </div>
@@ -199,159 +225,13 @@
 <script>
     function choPhepNhap(choPhep){
         $('#nhanvienForm input').prop('readonly',!choPhep);
+        $('#nhanvienForm input[type=radio]').prop('disabled',true);
     }    
     const urlPost = '/admin/danhmuc/nhanvien';
     $(document).ready(function (e) {
         choPhepNhap(false);   
     }
     );
-
-  
-    $("#check").click(function () {
-        var hl = $("#nhanvienForm").valid();
-        var href = window.location;
-        var id = href.toString().split('nhanvien/')[1].split('/')[0];
-        if (hl) {
-            thucHienAjax(id);
-        }
-    });
-
-    $('#nhanvienForm .sua').click(function(){
-        $(this).removeClass('sua');
-        choPhepNhap(true);
-        $(this).text('Reset');
-        $(this).prop('type','reset');
-        $(this).addClass('reset');
-    });
-
-    $("#nhanvienForm").validate({
-        onfocusout: function (element) {
-            if ($(element).val() == "") return;
-            var hl = $(element).valid();
-            if (hl) {
-
-                if ($(element).hasClass('is-invalid'))
-                    $(element).removeClass("form-control is-invalid");
-                $(element).addClass('form-control is-valid');
-            }
-        }, onkeyup: false,
-        rules: {
-            hoTen: {
-                required: true,
-                // minlength: 7,
-                maxlength: 50,
-
-            },
-            chucVu: {
-                required: true,
-                minlength: 3,
-                maxlength: 30,
-
-            },
-            namSinh: {
-                min: '1950',
-                max: '2020',
-                required: true
-            },
-            cmnd: {
-                required: true,
-                minlength: 6,
-                maxlength: 30
-            },
-            diaChi: {
-                required: true,
-                minlength: 1,
-                maxlength: 50
-            },
-            sdt: {
-                required: true,
-                minlength: 7,
-                maxlength: 11
-            },
-            email: {
-                required: true,
-                minlength: 1,
-                maxlength: 50
-            },
-        },
-        messages: {
-            hoTen: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 7 kí tự',
-                maxlength: 'Tối đa 50 kí tự'
-            },
-            chucvu: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 3 kí tự',
-                maxlength: 'Tối đa 30 kí tự'
-            },
-            namSinh: {
-                min: 'Năm sinh quá lâu, chém gió à',
-                max: 'Năm sinh lớn hơn hiện tại, chém gió à',
-                required: 'Không được bỏ trống'
-            },
-            cmnd: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 6 kí tự',
-                maxlength: 'Tối đa 30 kí tự'
-            },
-            diaChi: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 1 kí tự',
-                maxlength: 'Tối đa 50 kí tự'
-            },
-            sdt: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 7 kí tự',
-                maxlength: 'Tối đa 11 kí tự'
-            },
-            email: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 1 kí tự',
-                maxlength: 'Tối đa 40 kí tự'
-            },
-        }, errorPlacement: function (err, elemet) {
-
-            err.insertAfter(elemet);
-            err.addClass('invalid-feedback d-inline text-danger');
-            elemet.addClass('form-control is-invalid');
-            $('.focus-input100-1,.focus-input100-2').addClass('hidden');
-        }
-    }
-    );
-    function thucHienAjax(id) {
-        var obj = {
-            'hoTen': $("#hoTen").val(),
-            'chucVu': $("#chucVu").val(),
-            'namSinh': $("#namSinh").val(),
-            'cmnd': $("#cmnd").val(),
-            'diaChi': $("#diaChi").val(),
-            'sdt': $("#sdt").val(),
-            'gioiTinh' :$("input[name=gioiTinh]:checked").val(),
-            'ID_Admin': 1,
-
-        };
-        // var obj = $("#nhanvienForm").serialize();
-        console.log(obj);
-
-        $.ajax({
-            type: "post",
-            method: 'put',
-            url: urlPost + '/' + id,
-            data: obj,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-
-                if (response.yes === true) {
-                    alertify.success('Sửa nhân viên thành công');
-                }
-            }
-        });
-    }
-
-
 
 </script>
 @endsection

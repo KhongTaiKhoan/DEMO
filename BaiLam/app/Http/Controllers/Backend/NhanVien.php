@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class NhanVien extends Controller
 {
+
+
+    protected $duongDanAnhDaiDien = "img/avatar/nhanvien";
     /**
      * Display a listing of the resource.
      *
@@ -43,9 +46,20 @@ class NhanVien extends Controller
         $nhanvien->cmnd = $request->cmnd;
         $nhanvien->diaChi = $request->diaChi;
         $nhanvien->sdt = $request->sdt;
-        $nhanvien->email = $request->email;
-        $nhanvien->ID_Admin = $request->ID_Admin;
-        $nhanvien->save();
+        $nhanvien->gioiTinh = $request->gioiTinh;
+        $anhDD = $request->file('anhDaiDien');
+        if($anhDD){
+            $tenanh = $anhDD->getClientOriginalName();
+
+            $tenanh_ = explode('.',$tenanh)[0];
+            $_tenanh = explode('.',$tenanh)[1];
+            $tenanh = $tenanh_ .rand(0,100).".".$_tenanh;
+            
+            $anhDD->move($this->duongDanAnhDaiDien,$tenanh);
+            $nhanvien->anhDaiDien = $tenanh;
+            $nhanvien->save();
+        }else{
+        $nhanvien->save();}
         return \response()->json(
             [
                 'yes'=>true],200);
@@ -58,11 +72,9 @@ class NhanVien extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   $nhanvien=\App\Model\nhanvien::find($id);
-        if($nhanvien != null){
-            return \response()->json(['yes'=>true],200);
-        }
-        else return \response()->json(['yes'=>fasle],200);
+    {   
+        $nhanvien=\App\Model\nhanvien::find($id);
+        return view('backend.pages.nhanvien.show',['item'=>$nhanvien]);
     }
 
     /**
@@ -93,9 +105,23 @@ class NhanVien extends Controller
         $nhanvien->cmnd = $request->cmnd;
         $nhanvien->diaChi = $request->diaChi;
         $nhanvien->sdt = $request->sdt;
-        $nhanvien->email = $request->email;
-        $nhanvien->ID_Admin = $request->ID_Admin;
-        $nhanvien->save();
+        $nhanvien->gioiTinh = $request->gioiTinh;
+        $anhDD = $request->file('anhDaiDien');
+
+        if($anhDD && $request->anhDaiDien != "" && $request->anhDaiDien != $nhanvien->anhDaiDien){
+            if(File::exists('img/bia/'.$sach->anhBia) && $nhanvien->anhDaiDien != "default.png")
+                File::delete('img/bia/'.$sach->anhBia);
+            $tenanh = $anhDD->getClientOriginalName();
+
+            $tenanh_ = explode('.',$tenanh)[0];
+            $_tenanh = explode('.',$tenanh)[1];
+            $tenanh = $tenanh_ .rand(0,100).".".$_tenanh;
+            
+            $anhDD->move($this->duongDanAnhDaiDien,$tenanh);
+            $nhanvien->anhDaiDien = $tenanh;
+            $nhanvien->save();
+        }else{
+        $nhanvien->save();}
         
        return \response()->json(['yes'=>true],200);
     }

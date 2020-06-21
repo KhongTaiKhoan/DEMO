@@ -85,6 +85,63 @@
     #nhanvienForm input:read-only{
       background-color: white;
     }
+
+
+    .table-info tr {
+        display: block;
+        margin-top: 2.5rem;
+    }
+
+    .avatar {
+        position: relative;
+
+    }
+
+    .avatar img {
+        display: block;
+        margin: 0;
+        width: 75%;
+        border-radius: 50%;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+    }
+
+    .avatar input[type=file] {
+        opacity: 0;
+        z-index: -1;
+        position: absolute;
+    }
+
+    .avatar button {
+        display: none;
+    }
+
+    .label-title{
+        padding-bottom: 2rem; display: block ;border-bottom:0.7px solid rgb(187, 187, 187) ;
+        font-family: 'Noto Serif', serif;
+        font-size: 2rem;
+    }
+    .danh-sach-quyen{
+        font-family: 'Roboto', sans-serif;
+        font-weight: bolder;
+    }
+    .danh-sach-quyen li{
+        padding-left: 1rem;
+        margin-top: 1rem;
+    }
+    .danh-sach-quyen li span{
+        margin-left: 1rem;
+    }
+    .ten-quyen{
+        background-color: #2cca79;
+        /* background-color: rgb(153, 153, 238); */
+        padding:  0.5rem;
+        border-radius: 4px;
+    }
+    .danh-sach-quyen p{
+        font-family: 'Noto Serif', serif;
+        margin-top: 1rem;
+    }
 </style>
 @endsection
 {{-- {{$html}} --}}
@@ -94,106 +151,112 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Nhan Vien</h4>
+                <h4 class="page-title font-noto">Cá nhân/Tài khoản</h4>
             </div>
         </div>
+        {{-- {{dd($data)}} --}}
+        <div class="row">
+            <div class="white-box " style="padding-left: 5rem; overflow: hidden;">
 
-        <div class="white-box" style="overflow: hidden;">
-            <form id="nhanvienForm" action="{{route('nhanvien.store')}}" method="post">
-                {{ method_field('PUT') }}
-                @csrf
+                <div class="row" style="margin-bottom: 9rem;">
+                    <div class="col-md-8">
 
+                        <table class="table-info ">
+                            <label class="label-title">Thông tin tài khoản</label>
+                            <tr>
+                                <td class="ten-thuoc-tinh">
+                                    <span>ID tài khoản: </span>
+                                </td>
+                                <td class="gia-tri-thuoc-tinh">
+                                    <span id="idTK">{{$data->id}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ten-thuoc-tinh">
+                                    <span>Tên tài khoản: </span>
+                                </td>
+                                <td class="gia-tri-thuoc-tinh">
+                                    <span>{{$data->tenTaiKhoan}}</span>
+                                </td>
+                            </tr>
 
-                <div class="col-md-8">
-                    {{-- Nhap ten the loai --}}
-                    <div>
-                        <label for="hoTen">Họ và tên</label>
-                        <input type="text" class="form-control" required name="hoTen" id="hoTen"
-                            placeholder="Tối đa 50 kí tự" value="{{$item->hoTen}}">
+                            <tr>
+                                <td class="ten-thuoc-tinh">
+                                    <span>Email: </span>
+                                </td>
+                                <td class="gia-tri-thuoc-tinh">
+                                    <span>{{$data->email}}</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="ten-thuoc-tinh">
+                                    <span>Ngày lập: </span>
+                                </td>
+                                <td class="gia-tri-thuoc-tinh">
+                                    <span>{{ $data->ngayLap->format('d/m/Y')}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                        <div class="text-center"  style="margin-top: 5rem;">
+                            <button  type="button" id="check" class="btn btn-primary">Lưu</button>
+                            <button  type="button"  class=" sua btn  btn-info">Sửa</button>
+                            <a href="{{route('nhanvien.index')}}"> <button type="button"
+                                    class="btn btn-danger">Hủy</button></a>
+                            
+                         </div>
+                    </div>
+                    <div class="col-md-4">
+                        <form method="post" action="{{route('taikhoan.avatar',$data->id)}}" id='form-avatar'
+                            enctype="multipart/form-data" style="margin-bottom: 4rem;">
+                            @csrf
+                            <div class="avatar">
+                                <img src="{{asset('img/avatar/admin/'.$data->avatar)}}" />
+                                <label for="photo" class="btn btn-primary">Chọn file</label>
+                                <input type="file" id="photo" name="photo" accept="image/*" />
+                                <button class=" btn btn-success ">Lưu</button>
+                            </div>
+                        </form>
+
+                        <div style="display: flex" >
+                            <a class="btn btn-danger" style="margin-right: 2rem;">Cập nhật Email</a>
+                            <a class="btn btn-info">Đổi mật khẩu</a>
+                            
+                         </div>
                     </div>
 
-
-
-                    <div style="margin-top:2rem ;margin-right:1rem ;">
-                        <label for="chucVu">Chức vụ</label>
-                        <input type="text" class="form-control" value="{{$item->chucVu}}" name="chucVu" id="chucVu"
-                            placeholder="Tối đa 30 kí tự">
-                    </div>
-
-
-
-                    <div style="margin-top:2rem ;margin-right:1rem ;">
-                        <label for="namSinh">Năm sinh</label>
-                        <input type="text" class="form-control" value="{{$item->namSinh}}" required name="namSinh"
-                            id="namSinh">
-                    </div>
-
-
-                    <div style="margin-top:2rem ;margin-right:1rem ;">
-                        <label for="namMat">CMND</label>
-                        <input type="text" class="form-control" value="{{$item->cmnd}}" name="cmnd" id="cmnd"
-                            placeholder="Tối đa 30 kí tự">
-                    </div>
-
-
-
-                    <div style="margin-top:2rem ;margin-right:1rem ;">
-                        <label for="namMat">Địa chỉ</label>
-                        <input type="text" class="form-control" name="diaChi" id="diaChi" placeholder="Tối đa 50 kí tự"
-                            value="{{$item->diaChi}}">
-                    </div>
-
-
-
-                    <div style="margin-top:2rem ;margin-right:1rem ;">
-                        <label for="quocTich">Số điện thoại</label>
-                        <input type="text" class="form-control" name="sdt" id="sdt" placeholder="Tối đa 11 kí tự"
-                            value="{{$item->sdt}}">
-                    </div>
-
-
-                    <div>
-                        <p style="font-weight: bold;">Giới tính:</p>
-                        <div style="display: inline-block;margin-right:1rem;">
-                            <label class="myRadio" for="theloai-cho">
-                                <input checked type="radio" style="display: contents;" value="1" id="theloai-cho"
-                                    name="gioitinh">
-                                <span class="custom-tick"></span>
-                                <span>Nam</span>
-                        </div>
-                        <div style="display: inline-block;">
-                            </label>
-                            <label class="myRadio" for="theloai-chua">
-                                <input  type="radio" style="display: contents;" value="0" id="theloai-chua"
-                                    name="gioitinh">
-                                <span class="custom-tick"></span>
-                                <span>Nữ</span>
-                            </label>
-                        </div>
-
-                    </div>
-
-
-
-
-
-                    {{-- Bat Dau chon the loai cha--}}
-
-                    <div class="text-center" style="margin-top: 5rem;">
-                        <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
-                        <button  type="button" id="check" class="btn btn-primary">Lưu</button>
-                        <button  type="button"  class=" sua btn  btn-info">Sửa</button>
-                        <a href="{{route('nhanvien.index')}}"> <button type="button"
-                                class="btn btn-danger">Hủy</button></a>
-                    </div>
-
+                    
                 </div>
-            </form>
+
+                <div class="row" style="margin-bottom: 5rem !important; ">
+                    
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <label class="label-title">Quyền của tài khoản</label>
+                        <div class = "table-info quyen">
+                           <ul class="danh-sach-quyen">
+                               @foreach ($data->chucvus()->get() as $item)
+                                    <p>Quyền: {{$item->tenChucVu}}</p>
+
+                                    @foreach ($item->quyens()->get() as $q)
+                                    <li style="display: flex; ">
+                                        <span style="width: 25%; text-align: center;" class='ten-quyen'>{{$q->tenQuyen}}</span>
+                                        <span style="width: 70%;" >{{$q->moTa}}</span>
+                                    </li>
+                                    @endforeach
+                               @endforeach
+                             
+                           </ul>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+</div>
 @endsection
-
 @section('footer')
 @parent
 <script>

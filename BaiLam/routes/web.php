@@ -23,7 +23,7 @@ Route::group(
        Route::get('/','LoginAdminController@getLogin')->name('admin.login');
        Route::post('/postLogin','LoginAdminController@postLogin')->name('admin.postLogin');
        Route::post('/postRegister','LoginAdminController@postRegister')->name('admin.postRegister');
-       Route::get('/register','LoginAdminController@getRegister')->name('admin.register');
+      //  Route::get('/register','LoginAdminController@getRegister')->name('admin.register');
        Route::post('/valid','LoginAdminController@valid')->name('admin.validAdmin');
        
        Route::group(['prefix'=>'danhmuc','middleware'=>'authadmin'], function(){
@@ -57,7 +57,10 @@ Route::group(
             }
             );
             Route::group(['prefix'=>'taikhoan'],function(){
-              Route::post('avatar/{id}','TaiKhoan@thayDoiAnhDaiDien')->name('taikhoan.avatar');}
+              Route::post('avatar/{id}','TaiKhoan@thayDoiAnhDaiDien')->name('taikhoan.avatar');
+              Route::get('nhanvien/{id}','TaiKhoan@nhanvien')->name('taikhoan.nhanvien');
+            
+            }
             );
 
             Route::resource('sach','Sach');

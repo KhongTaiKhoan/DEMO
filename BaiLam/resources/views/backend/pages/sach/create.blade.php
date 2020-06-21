@@ -64,6 +64,7 @@
         margin-left: 1.5rem;
     }
 
+    /* HET CHECK BOX */
     .theLoai {
         padding-left: 1rem !important;
     }

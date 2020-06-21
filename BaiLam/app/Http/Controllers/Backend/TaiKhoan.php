@@ -16,7 +16,12 @@ class TaiKhoan extends Controller
      */
     public function index()
     {
-        //
+        $arr =  DB::table('admins')->join('nhanviens','admins.ID_NhanVien','nhanviens.id')->select(['admins.*','nhanviens.hoTen'])->paginate(5);
+        // $nhanvien = \App\Model\nhanvien::all()
+
+      
+        
+        return view('backend.pages.taikhoan.index',['arr'=>$arr,'page'=>1]);
     }
 
     /**
@@ -26,7 +31,8 @@ class TaiKhoan extends Controller
      */
     public function create()
     {
-        //
+        $nhanviens = \App\Model\nhanvien::all();
+      return view ('backend.register')->with(['nhanvien'=>$nhanviens]);
     }
 
     /**
@@ -69,8 +75,10 @@ class TaiKhoan extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {        $data = \App\Admin::find($id);
+
+        $data->ngayLap = Carbon::parse($data->ngayLap);   
+        return view('backend.pages.taikhoan.edit',['data'=>$data]);
     }
 
     /**
@@ -118,5 +126,11 @@ class TaiKhoan extends Controller
             return \response()->json(['yes'=>true],200);
         }
         return \response()->json(['yes'=>false],200);
+    }
+
+
+    public function nhanVien ($id){
+        $nhanvien=\App\Model\nhanvien::find($id);
+         return \redirect()->route('nhanvien.show',['nhanvien'=>$nhanvien]);  
     }
 }
