@@ -133,4 +133,36 @@ class TaiKhoan extends Controller
         $nhanvien=\App\Model\nhanvien::find($id);
          return \redirect()->route('nhanvien.show',['nhanvien'=>$nhanvien]);  
     }
+
+    public function get_admin_chuc_vu($id){
+
+        $chucvu = \App\Admin::find($id)->chucvus()->get()->toArray();
+        $mang = \App\Model\chucvu::all();
+        // dd($chucvu[0]['id']);
+   
+        for($i = 0;$i <count($chucvu);++$i ){
+            $mang = $mang->where('id','<>',$chucvu[$i]['id']);
+        }
+        // dd($mang);
+
+        return view('backend.pages.taikhoan.popup-box-chucvu',['arr'=>$mang]);
+    }
+
+    public function insert_admin_chucvu(Request $request,$id_admin , $id_chucvu){
+         DB::table('admin_chucvu')->insert([
+             'ID_ChucVu'=>$id_chucvu,
+             'ID_Admin' =>$id_admin
+         ]); 
+
+
+         return view('backend.pages.taikhoan.admin_chucvu')->with(['item'=>\App\Model\chucvu::find($id_chucvu)]);
+    }
+
+    public function destroy_admin_chucvu($id_admin, $id_chucvu){
+        DB::table('admin_chucvu')->where('ID_ChucVu',$id_chucvu)->where('ID_Admin',$id_admin)->delete(); 
+        $data = \App\Admin::find($id_admin)->first();
+        // dd($data);
+     
+        return view('backend.pages.taikhoan.list_admin_chucvu')->with(['data'=>$data]);
+    }
 }

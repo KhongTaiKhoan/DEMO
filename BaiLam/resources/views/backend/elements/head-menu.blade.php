@@ -2,6 +2,8 @@
     <!-- ============================================================== -->
     <!-- Preloader -->
     <!-- ============================================================== -->
+ 
+    {{-- {{include ('Illuminate\Support\Facades\Auth') }} --}}
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
@@ -49,7 +51,8 @@
                         </form>
                     </li>
                     <li>
-                        <a class="profile-pic" href="#"> <img src="{{asset('backend/plugins/images/users/varun.jpg')}}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b></a>
+                        {{-- asset('backend/plugins/images/users/varun.jpg') --}}
+                        <a class="profile-pic" href="#"> <img src="{{asset('img/avatar/admin')}}/{{Auth::guard('admin')->user()->avatar}}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{Auth::guard('admin')->user()->tenTaiKhoan}}</b></a>
                     </li>
                 </ul>
             </div>

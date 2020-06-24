@@ -24,7 +24,7 @@ class LoginAdminController extends Controller
 
     
       if(Auth::guard('admin')->attempt($arr) ){
-        return \redirect(route('admin.index'));
+        return \redirect(route('sach.index'));
       }else{
         \dd( $request->get('pass'));
       }
@@ -51,7 +51,7 @@ class LoginAdminController extends Controller
       Auth::guard('admin')->login($admin);
 
       
-      return \redirect(route('admin.index'));
+      return \redirect(route('sach.index'));
 
       // dd($request);
    }

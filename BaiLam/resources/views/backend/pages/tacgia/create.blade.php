@@ -45,7 +45,7 @@
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="namSinh">Năm sinh</label>
-                    <input type="date" class="form-control" required name="namSinh" id="namSinh">
+                    <input type="text" class="form-control" required name="namSinh" id="namSinh">
                 </div>
                 
                 
@@ -53,7 +53,7 @@
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="namMat">Năm mất</label>
-                    <input type="date" class="form-control"  name="namMat" id="namMat">
+                    <input type="text" class="form-control"  name="namMat" id="namMat">
                 </div>
 
 
@@ -121,14 +121,17 @@
             tomTat: {
                 required: true,
                 minlength: 7,
-                maxlength: 50
+                maxlength: 100
             },
             namSinh:{
+                digits : true,
                 min:'1950',
                 max: new Date().getFullYear(),
-                required:true
+                required:true,
+               
             },
-           quocTich:{
+            namMat: {digits:true},
+            quocTich:{
             required: true,
                 minlength: 7,
                 maxlength: 50
@@ -144,12 +147,16 @@
             tomTat: {
                 required: 'Không được bỏ trống',
                 minlength: 'Ít nhát 7 kí tự',
-                maxlength: 'Tối đa 50 kí tự'
+                maxlength: 'Tối đa 100 kí tự'
             },
             namSinh:{
                 min:'Năm sinh quá lâu, chém gió à',
-                max: 'Năm sinh lớn hươn hiện tại, chém gió à',
+                max: 'Năm sinh lớn hơn hiện tại, chém gió à',
+                digits: 'Năm sinh ko hợp lệ',
                 required:'Không được bỏ trống'
+            },
+            namMat:{
+                digits: 'Năm sinh ko hợp lệ',
             },
             quocTich:{
                 required: 'Không được bỏ trống',
@@ -192,8 +199,8 @@
 
                    var now = new Date();
                     $("#hoTen").val("");
-                    $("#namSinh").val( now.getTime());
-                    $("#namMat").val(now.getTime());
+                    $("#namSinh").val( '');
+                    $("#namMat").val('');
                     $("#quocTic").val("");
                     $("#tomTat").val("");
 

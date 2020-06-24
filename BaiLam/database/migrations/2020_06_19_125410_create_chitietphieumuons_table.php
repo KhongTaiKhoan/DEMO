@@ -15,8 +15,8 @@ class CreateChitietphieumuonsTable extends Migration
     {
         Schema::create('chitietphieumuons', function (Blueprint $table) {
             $table->id();
-            $table->integer('ID_PhieuMuon');
-            $table->integer('ID_CuonSach');
+            $table->integer('ID_PhieuMuon')->unique();
+            $table->integer('ID_CuonSach')->unique();
             $table->timestamps();
         });
     }

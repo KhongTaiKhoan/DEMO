@@ -14,10 +14,10 @@
                         </a>
                         <div class="collapse in" id="sach-collect">
                         <ul class="nav nav-bar">
-                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="#">Sách</a></li>
-                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="#">Thể loại</a></li>
-                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="#">Tác giả</a></li>
-                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="#">Nhà xuất bản</a></li>
+                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('sach.index')}}">Sách</a></li>
+                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('theloai.index')}}">Thể loại</a></li>
+                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('tacgia.index')}}">Tác giả</a></li>
+                            <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('nxb.index')}}">Nhà xuất bản</a></li>
                         </ul>
                     </div>
                     </li>

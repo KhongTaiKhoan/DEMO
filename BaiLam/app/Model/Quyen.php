@@ -21,7 +21,7 @@ class Quyen extends Model
         'moTa',
     ];
     public function chucvus(){
-        return $this->belongsToMany('App\Model\chucvu','chucvu_quyen','ID_ChucVu','ID_Quyen');
+        return $this->belongsToMany('App\Model\chucvu','chucvu_quyen','ID_Quyen','ID_ChucVu');
     }
 
 }

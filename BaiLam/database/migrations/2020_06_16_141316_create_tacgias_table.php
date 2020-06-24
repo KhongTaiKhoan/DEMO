@@ -16,8 +16,8 @@ class CreateTacgiasTable extends Migration
         Schema::create('tacgias', function (Blueprint $table) {
             $table->id();
             $table->string('hoTen',50);
-            $table->date('namSinh');
-            $table->date('namMat')->nullable();
+            $table->integer('namSinh');
+            $table->integer('namMat')->nullable();
             $table->string('tomTat',100);
             $table->string('quocTich',20)->nullable();
             $table->timestamps();

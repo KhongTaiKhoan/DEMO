@@ -4,62 +4,6 @@
 @parent
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <style>
-    /* CUSTOM CHECBOX */
-    .myRadio input[type=radio] {
-        opacity: 0;
-    }
-
-    .myRadio {
-        position: relative;
-    }
-
-    .myRadio .custom-tick:before {
-        border: 2px black solid;
-        border-radius: 50%;
-        width: 14px;
-        height: 14px;
-        content: "";
-        display: inline-block !important;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-45%);
-        left: 0;
-        transition: all .4s;
-    }
-
-    .myRadio .custom-tick:after {
-        content: "";
-        display: inline-block !important;
-        position: absolute;
-        display: none;
-        left: 0;
-        transition: all .4s;
-    }
-
-    .myRadio input[type=radio]:checked~.custom-tick:before,
-    .myRadio input[type=radio]:checked~.custom-tick:after {
-        height: 4px;
-        display: inline-block;
-        border-radius: 0;
-    }
-
-    .myRadio input[type=radio]:checked~.custom-tick:before {
-        width: 9px;
-        background-color: rgb(3, 43, 19);
-        border: none;
-        top: 8px;
-        transform: rotate(40deg);
-        left: 2px;
-    }
-
-    .myRadio input[type=radio]:checked~.custom-tick:after {
-        width: 18px;
-        background-color: rgb(12, 172, 78);
-        transform: rotateZ(130deg);
-        top: 7px;
-        left: 7px;
-    }
-
     .myRadio span {
         margin-left: 1.5rem;
     }
@@ -77,13 +21,14 @@
         border-left: 0.5px solid black;
     }
 
-    #nhanvienForm input{
+    #nhanvienForm input {
         border: none;
         box-shadow: none;
         border-bottom: solid 0.7px rgb(179, 179, 179);
     }
-    #nhanvienForm input:read-only{
-      background-color: white;
+
+    #nhanvienForm input:read-only {
+        background-color: white;
     }
 
 
@@ -116,32 +61,115 @@
         display: none;
     }
 
-    .label-title{
-        padding-bottom: 2rem; display: block ;border-bottom:0.7px solid rgb(187, 187, 187) ;
+    .label-title {
+        padding-bottom: 2rem;
+        display: block;
+        border-bottom: 0.7px solid rgb(187, 187, 187);
         font-family: 'Noto Serif', serif;
         font-size: 2rem;
     }
-    .danh-sach-quyen{
+
+    .danh-sach-quyen {
         font-family: 'Roboto', sans-serif;
         font-weight: bolder;
     }
-    .danh-sach-quyen li{
+
+    .danh-sach-quyen li {
         padding-left: 1rem;
         margin-top: 1rem;
     }
-    .danh-sach-quyen li span{
+
+    .danh-sach-quyen li span {
         margin-left: 1rem;
     }
-    .ten-quyen{
+
+    .ten-quyen {
         background-color: #2cca79;
         /* background-color: rgb(153, 153, 238); */
-        padding:  0.5rem;
+        padding: 0.5rem;
         border-radius: 4px;
     }
-    .danh-sach-quyen p{
+
+    .danh-sach-quyen p {
         font-family: 'Noto Serif', serif;
         margin-top: 1rem;
     }
+    .danh-sach-quyen .xoa-quyen {
+        background-color: white;
+        border: none;
+        color: rgb(68, 68, 245);
+    }
+
+    /*  POPUP BOX */
+    .hien-popup-box::before {
+
+        position: absolute;
+        background-color: rgba(51, 51, 51, 0.2);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        content: "";
+    }
+
+    .hien-popup-box .box {
+        position: absolute;
+        background-color: white !important;
+        top: 50%;
+        left: 50%;
+        z-index: 11;
+        width: 300px;
+        transform: translateX(-50%, -50%);
+        box-shadow: 0 0 5px 2px rgb(150, 150, 150);
+        padding: 1rem 2rem 0 2rem;
+    }
+
+    .hien-popup-box .box .noi-dung {
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+
+    }
+
+    .hien-popup-box .box .popup-box-exit {
+        position: absolute;
+        font-size: 2rem;
+        top: 5px;
+        right: 10px;
+        cursor: pointer;
+
+    }
+
+    .hien-popup-box .box .title {
+        font-size: 1.6rem;
+        font-family: 'Noto Serif', serif;
+        margin: 0;
+        border-bottom: rgb(189, 189, 189) 0.4px solid;
+        margin-bottom: 1rem;
+    }
+
+    .hien-popup-box .box .ok-chuc-vu {
+        background-color: white;
+        border-radius: 5px;
+        padding: 2px 7px;
+        color: black;
+        border: solid 0.7px black;
+    }
+
+    .hien-popup-box .box .ok-chuc-vu:hover {
+        background-color: rgb(50, 93, 231);
+        color: white;
+    }
+
+    .hien-popup-box .box select[name=chucvu] {
+        width: 180px;
+        display: block;
+        margin: 0 auto 20px auto;
+    }
+
+
+    /*  END POPUP BOX */
 </style>
 @endsection
 {{-- {{$html}} --}}
@@ -199,13 +227,7 @@
                             </tr>
 
                         </table>
-                        <div class="text-center"  style="margin-top: 5rem;">
-                            <button  type="button" id="check" class="btn btn-primary">Lưu</button>
-                            <button  type="button"  class=" sua btn  btn-info">Sửa</button>
-                            <a href="{{route('nhanvien.index')}}"> <button type="button"
-                                    class="btn btn-danger">Hủy</button></a>
-                            
-                         </div>
+
                     </div>
                     <div class="col-md-4">
                         <form method="post" action="{{route('taikhoan.avatar',$data->id)}}" id='form-avatar'
@@ -219,202 +241,155 @@
                             </div>
                         </form>
 
-                        <div style="display: flex" >
+                        {{-- <div style="display: flex" >
                             <a class="btn btn-danger" style="margin-right: 2rem;">Cập nhật Email</a>
                             <a class="btn btn-info">Đổi mật khẩu</a>
                             
-                         </div>
+                         </div> --}}
+
+
                     </div>
 
-                    
+
                 </div>
 
                 <div class="row" style="margin-bottom: 5rem !important; ">
-                    
-                    <div class="col-md-8 col-sm-12 col-xs-12">
-                        <label class="label-title">Quyền của tài khoản</label>
-                        <div class = "table-info quyen">
-                           <ul class="danh-sach-quyen">
-                               @foreach ($data->chucvus()->get() as $item)
-                                    <p>Quyền: {{$item->tenChucVu}}</p>
 
-                                    @foreach ($item->quyens()->get() as $q)
-                                    <li style="display: flex; ">
-                                        <span style="width: 25%; text-align: center;" class='ten-quyen'>{{$q->tenQuyen}}</span>
-                                        <span style="width: 70%;" >{{$q->moTa}}</span>
-                                    </li>
-                                    @endforeach
-                               @endforeach
-                             
-                           </ul>
-                        </div>   
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <label class="label-title">Quyền của tài khoản
+                            <button type="button" style="float: right"
+                                class="them-chuc-vu btn btn-success font-muli">Thêm</button>
+
+                        </label>
+                        
+                        <div class="table-info quyen" id = "ds_admin_chucvu">
+                            <ul class="danh-sach-quyen">
+                                @include('backend.pages.taikhoan.list_admin_chucvu',['data'=>$data])
+                            </ul>
+                        </div>
+
+                        <div class="text-center" style="margin-top: 5rem;">
+                            {{-- <button  type="button" id="check" class="btn btn-primary">Lưu</button> --}}
+                            {{-- <button type="button" class=" sua btn  btn-info">Sửa</button> --}}
+                            <a href="{{route('nhanvien.index')}}"> <button type="button"
+                                    class="btn btn-danger">Trở về</button></a>
+
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
 </div>
+<div class="hien-popup-box">
+
 </div>
 @endsection
 @section('footer')
 @parent
 <script>
-    function choPhepNhap(choPhep){
-        $('#nhanvienForm input').prop('readonly',!choPhep);
-    }    
-    const urlPost = '/admin/danhmuc/nhanvien';
-    $(document).ready(function (e) {
-        choPhepNhap(false);   
-    }
-    );
+    const id =  window.location.toString().split('taikhoan/')[1].split('/')[0] ;
+    $(document).ready(function () {
+        $('.hien-popup-box').hide();
+     
+    });
+    
+    function showDialog(hien,data) {
 
-  
-    $("#check").click(function () {
-        var hl = $("#nhanvienForm").valid();
-        var href = window.location;
-        var id = href.toString().split('nhanvien/')[1].split('/')[0];
-        if (hl) {
-            thucHienAjax(id);
+        if(!hien){
+            $('.hien-popup-box').hide();
         }
-    });
-
-    $('#nhanvienForm .sua').click(function(){
-        $(this).removeClass('sua');
-        choPhepNhap(true);
-        $(this).text('Reset');
-        $(this).prop('type','reset');
-        $(this).addClass('reset');
-    });
-
-    $("#nhanvienForm").validate({
-        onfocusout: function (element) {
-            if ($(element).val() == "") return;
-            var hl = $(element).valid();
-            if (hl) {
-
-                if ($(element).hasClass('is-invalid'))
-                    $(element).removeClass("form-control is-invalid");
-                $(element).addClass('form-control is-valid');
-            }
-        }, onkeyup: false,
-        rules: {
-            hoTen: {
-                required: true,
-                // minlength: 7,
-                maxlength: 50,
-
-            },
-            chucVu: {
-                required: true,
-                minlength: 3,
-                maxlength: 30,
-
-            },
-            namSinh: {
-                min: '1950',
-                max: '2020',
-                required: true
-            },
-            cmnd: {
-                required: true,
-                minlength: 6,
-                maxlength: 30
-            },
-            diaChi: {
-                required: true,
-                minlength: 1,
-                maxlength: 50
-            },
-            sdt: {
-                required: true,
-                minlength: 7,
-                maxlength: 11
-            },
-            email: {
-                required: true,
-                minlength: 1,
-                maxlength: 50
-            },
-        },
-        messages: {
-            hoTen: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 7 kí tự',
-                maxlength: 'Tối đa 50 kí tự'
-            },
-            chucvu: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 3 kí tự',
-                maxlength: 'Tối đa 30 kí tự'
-            },
-            namSinh: {
-                min: 'Năm sinh quá lâu, chém gió à',
-                max: 'Năm sinh lớn hơn hiện tại, chém gió à',
-                required: 'Không được bỏ trống'
-            },
-            cmnd: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 6 kí tự',
-                maxlength: 'Tối đa 30 kí tự'
-            },
-            diaChi: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 1 kí tự',
-                maxlength: 'Tối đa 50 kí tự'
-            },
-            sdt: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 7 kí tự',
-                maxlength: 'Tối đa 11 kí tự'
-            },
-            email: {
-                required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 1 kí tự',
-                maxlength: 'Tối đa 40 kí tự'
-            },
-        }, errorPlacement: function (err, elemet) {
-
-            err.insertAfter(elemet);
-            err.addClass('invalid-feedback d-inline text-danger');
-            elemet.addClass('form-control is-invalid');
-            $('.focus-input100-1,.focus-input100-2').addClass('hidden');
+        else{ 
+            $('.hien-popup-box').show();     
+            $('.hien-popup-box').html(data);
         }
     }
-    );
-    function thucHienAjax(id) {
-        var obj = {
-            'hoTen': $("#hoTen").val(),
-            'chucVu': $("#chucVu").val(),
-            'namSinh': $("#namSinh").val(),
-            'cmnd': $("#cmnd").val(),
-            'diaChi': $("#diaChi").val(),
-            'sdt': $("#sdt").val(),
-            'gioiTinh' :$("input[name=gioiTinh]:checked").val(),
-            'ID_Admin': 1,
 
-        };
-        // var obj = $("#nhanvienForm").serialize();
-        console.log(obj);
+    //// Cac su kien click vao button
+//  ====================== THWM MOI CHUC VU =====================    
 
-        $.ajax({
-            type: "post",
-            method: 'put',
-            url: urlPost + '/' + id,
-            data: obj,
+    $('.them-chuc-vu').click(function(){
+       let data ;
+       $.ajax({
+                type      : 'get',
+                async     : false,
+                success   : function(data_) {
+                   data = data_;
+                },
+                url       : '/admin/danhmuc/taikhoan/laychucvu/'+id,
+                
+            });   
+
+     
+       showDialog(true,data);
+         
+    });
+
+
+//  ====================== XOA CHUC VU DANG CHON =====================    
+    $(document).on('click','.danh-sach-quyen .xoa-quyen',function (e) {
+        e.preventDefault();
+       var idchucvu = $(this).val();
+     
+       console.log(idchucvu);     
+        alertify.confirm (
+          'Bạn có chắc bỏ chức vụ này ra khỏi tài khoản',
+          function(){
+             $.ajax({
+                 type:'delete',
+                 headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                 },
+                 url:'/admin/danhmuc/taikhoan/admin/'+id+'/chucvu/'+idchucvu,
+                 success: function(data){
+                     console.log(data);
+                    $('.danh-sach-quyen').empty();
+                    $('.danh-sach-quyen').html(data);
+                    alertify.success("Đã xóa");
+                 }
+             });
+          },
+          function(){
+              alertify.error('Chưa có gì xảy ra!!!');
+          }
+      );
+       
+    });
+
+
+
+   $(document).on('click','.hien-popup-box .box .popup-box-exit',function (e) {
+       $('.hien-popup-box').empty();
+       $('.hien-popup-box').hide();
+   });
+
+   $(document).on('click','.hien-popup-box .box .ok-chuc-vu',function (e) {
+       var idchucvu = $('.hien-popup-box #select-chuc-vu option:checked').val();
+       console.log(idchucvu);
+
+       $('.hien-popup-box').empty();
+       $('.hien-popup-box').hide();
+       $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-
-                if (response.yes === true) {
-                    alertify.success('Sửa nhân viên thành công');
-                }
             }
         });
-    }
+       $.ajax({
+           type:'post',
+         
+           url: '/admin/danhmuc/taikhoan/insert-admin/'+id+'/chucvu/'+idchucvu,
+           success: function(data){
+               $('#ds_admin_chucvu .danh-sach-quyen').append(data);     
+               alertify.success('Thêm thành công');
+           } 
+       });
+   });
 
+  
 
-
+   
 </script>
 @endsection
+

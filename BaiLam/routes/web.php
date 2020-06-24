@@ -59,8 +59,15 @@ Route::group(
             Route::group(['prefix'=>'taikhoan'],function(){
               Route::post('avatar/{id}','TaiKhoan@thayDoiAnhDaiDien')->name('taikhoan.avatar');
               Route::get('nhanvien/{id}','TaiKhoan@nhanvien')->name('taikhoan.nhanvien');
+              Route::get('laychucvu/{id}','TaiKhoan@get_admin_chuc_vu')->name('taikhoan.layChucVu');
+              Route::post('insert-admin/{id_admin}/chucvu/{id_chuvu}','TaiKhoan@insert_admin_chucvu')->name('taikhoan.insert.admin-chucvu');
+              Route::delete('admin/{id_admin}/chucvu/{id_chucvu}','TaiKhoan@destroy_admin_chucvu')->name('taikhoan.destroy.admin-chucvu');
             
             }
+            );
+
+            Route::group(['prefix'=>'chucvu'],function(){
+              Route::get('phantrang','ChucVu@pagination')->name('chucvu-chuyen');}
             );
 
             Route::resource('sach','Sach');
@@ -71,22 +78,13 @@ Route::group(
             Route::resource('docgia','DocGia');
             Route::resource('nhanvien','NhanVien');
             Route::resource('taikhoan','TaiKhoan');
+            Route::resource('phieumuon','PhieuMuon');
+            Route::resource('chucvu','ChucVu');
             
         }
     );
    }
 );
 
-
-// Route::get('chucvu-quyen',function(){
-//    $data=  \App\Admin::find(1)->chucvus()->get();
-//    foreach($data as $dat){
-//         $out = $dat->quyens()->get()->toArray();
-//         echo "<pre>";
-//         print_r($out);
-//         echo "</pre>";
-//     }
-  
-// });
 
 

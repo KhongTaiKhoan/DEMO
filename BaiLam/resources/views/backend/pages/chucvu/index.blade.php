@@ -14,6 +14,11 @@
         font-size: 1.5rem;
         font-weight: bolder;
     }
+    
+    .table .show-collapse{
+        display: block;
+    }
+    
 </style>
 @endsection
 {{-- {{$html}} --}}
@@ -25,7 +30,7 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Sach/Tac gia</h4>
             </div>
-            <a href="/admin/danhmuc/tacgia/create">
+            <a href="/admin/danhmuc/chucvu/create">
                 <button class="btn btn-primary" style="background-color: #008f45; border: none; float: right;margin-right: 3rem;">Add</button>
             </a>
         </div>
@@ -39,10 +44,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>ID</th>
-                                <th>TÊN TÁC GIẢ</th>
-                                <th>NĂM SINH</th>
-                                <th>NĂM MẤT</th>
-                                <th>QUỐC TỊCH</th>
+                                <th>TÊN CHÚC VỤ</th>
                                 <th>THAO TÁC</th>
                             </tr>
                         </thead>
@@ -51,13 +53,21 @@
                             @foreach ($arr as $item)
                             <tr>
                                 <td>{{$index++}}</td>
-                                <td class="txt-oflo">{{$item->id}} </td>
-                                <td>{{$item->hoTen}}</td>
-                                <td class="txt-oflo">{{$item->namSinh}} </td>
-                                <td class="txt-oflo">{{$item->namMat == "" ? "Chưa rõ":$item->namMat}} </td>
-                                <td class="txt-oflo">{{$item->quocTich == "" ? "Chưa rõ":$item->quocTich}} </td>
+                                <td class="txt-oflo">{{$item->id}}</td>
+                                <td data-togge="tooltip" data-placement="top" title="Nhấn để xem chi tiết"> 
+                                    <a href="#noi-dung-collapse-{{$item->id}}" class="show-collapse" data-toggle="collapse">{{$item->tenChucVu}}</a>            
+                                    <div class="collapse" id = "noi-dung-collapse-{{$item->id}}">
+                                        <ul>
+                                            @foreach ($item->quyens()->get() as $q)    
+                                            <li>
+                                                <p>{{$q->tenQuyen}}</p>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </td>                               
                                 <td>
-                                <a href="{{route('tacgia.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+                                    <a href="{{route('chucvu.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>
                             </tr>
@@ -82,8 +92,8 @@
 <script>
 
     var page = 1;
-    const urlPhanTrang = "/admin/danhmuc/tacgia/phantrang?page=";
-    const urlXoa  = "/admin/danhmuc/tacgia/";
+    const urlPhanTrang = "/admin/danhmuc/chucvu/phantrang?page=";
+    const urlXoa  = "/admin/danhmuc/chucvu/";
     // Chay Phan trang 
     $(document).on('click', '.pagination a', function (e) {
         e.preventDefault();
@@ -99,7 +109,7 @@
     // xoa the loai
     $(document).on('click', '.table .xoa', function () {
         var id = $(this).val();
-        alertify.confirm("Bạn có muông xóa tác giả này??",
+        alertify.confirm("Bạn có muông xóa chức vụ này??",
             function () {
                 $.ajaxSetup({
                     headers: {

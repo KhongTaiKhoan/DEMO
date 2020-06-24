@@ -52,7 +52,7 @@ class Admin extends Authenticatable
     }
 
     public function chucvus(){
-        return $this->belongsToMany('App\Model\chucvu','admin_chucvu','ID_ChucVu','ID_Admin'); 
+        return $this->belongsToMany('App\Model\chucvu','admin_chucvu','ID_Admin','ID_ChucVu'); 
     }
 
    

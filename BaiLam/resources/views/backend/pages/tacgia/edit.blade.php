@@ -46,7 +46,7 @@
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="namSinh">Năm sinh</label>
-                <input type="date" class="form-control" value="{{$item->namSinh}}" required name="namSinh" id="namSinh">
+                <input type="text" class="form-control" value="{{$item->namSinh}}" required name="namSinh" id="namSinh">
                 </div>
                 
                 
@@ -54,7 +54,7 @@
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="namMat">Năm mất</label>
-                    <input type="date" class="form-control" value="{{$item->namMat==""?"":$item->namMat}}"  name="namMat" id="namMat">
+                    <input type="text" class="form-control" value="{{$item->namMat==""?"":$item->namMat}}"  name="namMat" id="namMat">
                 </div>
 
 
@@ -123,14 +123,17 @@
             tomTat: {
                 required: true,
                 minlength: 7,
-                maxlength: 50
+                maxlength: 100
             },
             namSinh:{
+                digits : true,
                 min:'1950',
-                max: new Date().getFullYear(),
-                required:true
+                max: new Date().getFullYear() ,
+                required:true,
+               
             },
-           quocTich:{
+            namMat: {digits:true},
+            quocTich:{
             required: true,
                 minlength: 7,
                 maxlength: 50
@@ -151,7 +154,11 @@
             namSinh:{
                 min:'Năm sinh quá lâu, chém gió à',
                 max: 'Năm sinh lớn hươn hiện tại, chém gió à',
-                required:'Không được bỏ trống'
+                required:'Không được bỏ trống',
+                digits: 'Năm sinh ko hợp lệ',
+            },
+            namMat:{
+                digits: 'Năm sinh ko hợp lệ',
             },
             quocTich:{
                 required: 'Không được bỏ trống',
