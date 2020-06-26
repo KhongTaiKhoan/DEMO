@@ -31,42 +31,67 @@
         </div>
 
         <div class="white-box">
-            <form id="chitietphieumuonForm" action="{{route('chitietphieumuon.store')}}" method="post">
+            <form id="phieuTraForm" action="{{route('phieumuon.store')}}" method="post">
                 @csrf
                 {{-- Nhap ten Phieu Muon --}}
-                
+
                 <div>
-                    <label for="selectPhieuMuon">Phiếu mượn</label>
-                    <select class="form-control" id="selectPhieuMuon" name="selectPhieuMuon" required>
-                            <option value="" disabled selected>Chọn phiếu mượn</option>
-                            @foreach($itemphieumuon as $item)
-                            <option value="{{$item->id}}">{{$item->id}}</option>
-                            @endforeach
-                    </select>
+                    <label for="ngayLap">Ngày trả</label>
+                    <input disabled type="date" class="form-control" required name="ngayTra" id="ngayTra">
                 </div>
-                
-                <div style="display: flex;">
-                
+
                 <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="selectCuonSach">Cuốn sách</label>
-                    <select class="form-control" id="selectCuonSach" name="selectCuonSach" required>
-                            <option value="" disabled selected>Chọn cuốn sách</option>
-                            @foreach($itemcuonsach as $item)
-                            <option value="{{$item->id}}">{{$item->id}}</option>
-                            @endforeach
-                    </select>
+                    <label for="maPhieuMuon">Mã phiếu mượn</label>
+                    <input type="text" class="form-control" required name="maPhieuMuon" id="maPhieuMuon">
                 </div>
 
+                <div style="margin-top:2rem ;margin-right:1rem ;">
+                    <label for="maNhanVien">Nhân viên lập</label>
+                    <select class="form-control" id="maNhanVien">
+                          @foreach ($nhanvien as $item)
+                              <option value="{{$item->id}}">{{$item->hoTen}}</option>
+                          @endforeach
+                    </select>
+                </div>
+                
+                <div class="chitietphieumuon" style="margin-top: 5rem; ">
+                    <div class="title-chitiet">Chi tiết phiếu mượn</div>
+                    <div style="margin-top:2rem ;margin-right:1rem ;">
+                        <label for="maCuonSach" style="display: block">Mã Cuốn Sách</label>
+                        <input type="text" class="form-control"  name="maCuonSach" id="maCuonSach"
+                            style="width: 20%;display: inline-block;">
+
+                        <button type="button" id="them-cuon-sach" class="btn btn-success">Add</button>
+                        <label class="invalid-feedback text-danger" id='khong-ton-tai' style="display: block">Cuốn sách
+                            đã tồn tai</label>
+                    </div>
+                    <div class="table-responsive" id="tb_tl">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>MÃ CUỐN SÁCH</th>
+                                    <th>TÊN SÁCH</th>
+                                    <th>THAO TÁC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </form>
             <div class="text-center" style="margin-top: 5rem;">
                 <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
                 <button type="button" id="check" class="btn btn-primary">Lưu</button>
-                <a href="{{route('chitietphieumuon.show',$item->id)}}"> <button type="button" class="btn btn-danger">Hủy</button></a>
+                <a href="{{route('vipham.index')}}"> <button type="button" class="btn btn-danger">Hủy</button></a>
             </div>
 
 
-            </form>
+
         </div>
     </div>
 </div>

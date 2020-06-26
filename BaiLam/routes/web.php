@@ -79,6 +79,11 @@ Route::group(
             
             });
 
+            Route::group(['prefix'=>'phieutra'],function(){
+              Route::post('them_chitiet/{id}','PhieuTra@them_chitiet')->name('phieutra.add');
+              Route::get('phantrang','PhieuTra@pagination')->name('phieutra.pagination');
+            });
+
             Route::resource('sach','Sach');
             Route::resource('theloai','TheLoai');
             Route::resource('nxb','NXB');
@@ -88,6 +93,7 @@ Route::group(
             Route::resource('nhanvien','NhanVien');
             Route::resource('taikhoan','TaiKhoan');
             Route::resource('phieumuon','PhieuMuon');
+            Route::resource('phieutra','PhieuTra');
             Route::resource('chucvu','ChucVu');
             Route::resource('vipham','BienBanViPham');
             

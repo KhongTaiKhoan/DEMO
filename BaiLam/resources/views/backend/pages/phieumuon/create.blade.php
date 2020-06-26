@@ -207,9 +207,7 @@
     ///  ==================   CHUAN BI ===============
     $(document).ready(function (e) {
         $('#khong-ton-tai').hide();
-        $('table thead tr td').prop('color', 'blue');
-
-
+      
         var d = new Date();
         let moth = d.getMonth() + 1;
         let year = d.getFullYear();

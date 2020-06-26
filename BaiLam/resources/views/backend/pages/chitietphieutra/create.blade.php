@@ -45,7 +45,7 @@
                     </select>
                 </div>
                 
-                <div style="display: flex;">
+               
                 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="selectCuonSach">Cuốn sách</label>
@@ -57,16 +57,42 @@
                     </select>
                 </div>
 
+                <div class="chitietphieumuon" style="margin-top: 5rem; ">
+                    <div class="title-chitiet">Chi tiết phiếu mượn</div>
+                    <div style="margin-top:2rem ;margin-right:1rem ;">
+                        <label for="maCuonSach" style="display: block">Mã Cuốn Sách</label>
+                        <input type="text" class="form-control"  name="maCuonSach" id="maCuonSach"
+                            style="width: 20%;display: inline-block;">
+
+                        <button type="button" id="them-cuon-sach" class="btn btn-success">Add</button>
+                        <label class="invalid-feedback text-danger" id='khong-ton-tai' style="display: block">Cuốn sách
+                            đã tồn tai</label>
+                    </div>
+                    <div class="table-responsive" id="tb_tl">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>MÃ CUỐN SÁCH</th>
+                                    <th>TÊN SÁCH</th>
+                                    <th>THAO TÁC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </form>
             <div class="text-center" style="margin-top: 5rem;">
                 <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
                 <button type="button" id="check" class="btn btn-primary">Lưu</button>
                 <a href="{{route('chitietphieutra.index')}}"> <button type="button" class="btn btn-danger">Hủy</button></a>
             </div>
 
-
-            </form>
         </div>
     </div>
 </div>
@@ -80,7 +106,7 @@
     $("#check").click(function () {
         var hl = $("#chitietphieutraForm").valid();
         if (hl) {
-            thucHienAjax($("#chitietphieutraForm"));
+            thucHienAjax();
         }
     });
 
@@ -116,7 +142,7 @@
     //     $('.focus-input100-1,.focus-input100-2').addClass('hidden');
     // }
     //});
-    function thucHienAjax(form) {
+    function thucHienAjax() {
         var obj = {
             'ID_PhieuTra': $("#selectPhieuTra").children('option:selected').val(),
             'ID_CuonSach': $("#selectCuonSach").children('option:selected').val(),

@@ -27,9 +27,9 @@ class PhieuTra extends Controller
      */
     public function create()
     {
-        $phieumuon =  DB::table('phieumuons')->select('id')->get();
+        $phieutra =  DB::table('phieumuons')->select('id')->get();
         $nhanvien =  DB::table('nhanviens')->select('id', 'hoTen')->get();
-        return \view('backend.pages.phieutra.create',['itemphieumuon'=>$phieumuon, 'itemnhanvien'=>$nhanvien]);
+        return \view('backend.pages.phieutra.create',['itemphieumuon'=>$phieutra, 'itemnhanvien'=>$nhanvien]);
     }
 
     /**
@@ -45,6 +45,19 @@ class PhieuTra extends Controller
         $phieutra->ID_PhieuMuon = $request->ID_PhieuMuon;
         $phieutra->ID_NhanVien = $request->ID_NhanVien;
         $phieutra->save();
+        DB::table('phieumuons')->where('id',$phieutra->ID_PhieuMuon)->update([
+            'daTra'=>true]
+        );
+        foreach ($request->chitiet as $ct){
+           $csach= \App\Model\cuonsach::all()->where('hienThi',$ct)->first();
+            $ct = DB::table('chitietphieutras')->insert([
+                'ID_PhieuTra'=>$phieutra->id,
+                'ID_CuonSach' => $csach->id
+            ]);
+            $csach->daMuon  = false;
+            $csach->save();
+        }
+        
         return \response()->json(
             [
                 'yes'=>true],200);
@@ -73,9 +86,9 @@ class PhieuTra extends Controller
     public function edit($id)
     {
         $phieutra =  \App\Model\phieutra::find($id);
-        $phieumuon =  DB::table('phieumuons')->select('id')->get();
+        $phieutra =  DB::table('phieumuons')->select('id')->get();
         $nhanvien =  DB::table('nhanviens')->select('id', 'hoTen')->get();
-        return view('backend.pages.phieutra.edit')->with(['item'=>$phieutra, 'itemphieumuon'=>$phieumuon, 'itemnhanvien'=>$nhanvien]);
+        return view('backend.pages.phieutra.edit')->with(['item'=>$phieutra, 'itemphieumuon'=>$phieutra, 'itemnhanvien'=>$nhanvien]);
     }
 
     /**
@@ -123,5 +136,28 @@ class PhieuTra extends Controller
           view('backend.pages.phieutra.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();
         }
         
+    }
+
+    public function them_chitiet(Request $request,$id){
+
+        // dd($request);
+
+        if($request->maPhieuMuon == null)  return \response()->json(['yes'=>2],200);
+        $c = \App\Model\cuonsach::all()->where('hienThi',$id)->where('daMuon','1')->first();
+        $pm = \App\Model\phieumuon::find($request->maPhieuMuon)->where('daTra','0')->first()->cuonsachs()->get();
+        
+        $co = false;
+        foreach($pm as $p){
+            if($p->hienThi == $id){
+                $co = true;
+                break;
+            }
+        }
+
+        if($co && $c){
+            $data = \view('backend.pages.sach.row_chitiet')->with(['item'=>$c])->render();
+            return \response()->json(['yes'=>0,'data'=>$data],200);
+        }else
+        return \response()->json(['yes'=>1],200);
     }
 }
