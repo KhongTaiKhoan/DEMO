@@ -69,6 +69,9 @@ Route::group(
             Route::group(['prefix'=>'chucvu'],function(){
               Route::get('phantrang','ChucVu@pagination')->name('chucvu-chuyen');}
             );
+            Route::group(['prefix'=>'phieumuon'],function(){
+              Route::post('them_chitiet/{id}','PhieuMuon@them_chitiet')->name('cuonsach.add');
+            });
 
             Route::resource('sach','Sach');
             Route::resource('theloai','TheLoai');

@@ -20,6 +20,8 @@ class CreatePhieumuonsTable extends Migration
             $table->date('ngayHenTra')->default(Carbon::now());
             $table->integer('ID_DocGia');
             $table->integer('ID_NhanVien');
+            $table->boolean('daTra');
+            $table->integer('soLuongSach');
             $table->timestamps();
         });
     }

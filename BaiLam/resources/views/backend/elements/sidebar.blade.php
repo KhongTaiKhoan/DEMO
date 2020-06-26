@@ -22,7 +22,14 @@
                     </div>
                     </li>
                     <li>
-                        <a href="profile.html" class="waves-effect font-muli text-b"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Sổ mượn</a>
+                        <a href="#somuon" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Sổ mượn</a>
+                        <div class="collapse" id="somuon">
+                            <ul  class="nav nav-bar" >
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('phieumuon.create')}}">Tạo phiếu mượn</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('phieumuon.index')}}">Danh Sách</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="#">Xuất phiếu</a></li>
+                            </ul>
+                            </div>
                     </li>
                     <li>
                         <a href="basic-table.html" class="waves-effect font-muli text-b"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Sổ trả</a>
@@ -31,7 +38,7 @@
                         <a href="fontawesome.html" class="waves-effect font-muli text-b"><i class="fa fa-font fa-fw" aria-hidden="true"></i>Biên bản</a>
                     </li>
                     <li>
-                        <a href="map-google.html" class="waves-effect font-muli text-b"><i class="fa fa-globe fa-fw" aria-hidden="true"></i>Độc giả</a>
+                        <a href="{{route('docgia.index')}}" class="waves-effect font-muli text-b"><i class="fa fa-globe fa-fw" aria-hidden="true"></i>Độc giả</a>
                     </li>
                     <li>
                         <a href="blank.html" class="waves-effect font-muli text-b"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Quyền và tài khoản</a>

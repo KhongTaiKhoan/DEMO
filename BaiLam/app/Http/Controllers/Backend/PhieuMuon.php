@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class PhieuMuon extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,13 @@ class PhieuMuon extends Controller
     {
         $mang = DB::table('phieumuons')->join('docgias','phieumuons.ID_DocGia','=','docgias.id')
                    ->join('nhanviens','phieumuons.ID_NhanVien','=','nhanviens.id')
-                   ->select(['phieumuons.id','phieumuons.ngayMuon','phieumuons.ngayHenTra','nhanviens.hoTen as tenNhanVien','docgias.hoTen as tenDocGia'])->paginate(5);
+                   ->select(['phieumuons.id','phieumuons.ngayMuon as ngayMuon','phieumuons.ngayHenTra as ngayHenTra','nhanviens.hoTen as tenNhanVien','docgias.hoTen as tenDocGia'])->paginate(5);
+        for ($i = 0 ;$i <count($mang) ;$i++){
+            $mang[$i]->ngayMuon = Carbon::parse($mang[$i]->ngayMuon);
+            $mang[$i]->ngayHenTra = Carbon::parse($mang[$i]->ngayHenTra);
+        }
+     
+        
         return \view('backend.pages.phieumuon.index')->with(['arr'=>$mang,'page'=>1]);
     }
 
@@ -40,12 +48,27 @@ class PhieuMuon extends Controller
      */
     public function store(Request $request)
     {
+
+        
         $phieumuon = new \App\Model\phieumuon();
         $phieumuon->ngayMuon = $request->ngayMuon;
         $phieumuon->ngayHenTra = $request->ngayHenTra;
         $phieumuon->ID_DocGia = $request->ID_DocGia;
         $phieumuon->ID_NhanVien = $request->ID_NhanVien;
+        $phieumuon->daTra = false;
+        $phieumuon->soLuongSach = count($request->chitiet);
         $phieumuon->save();
+        
+        foreach ($request->chitiet as $ct){
+           $csach= \App\Model\cuonsach::all()->where('hienThi',$ct)->first();
+            $ct = DB::table('chitietphieumuons')->insert([
+                'ID_PhieuMuon'=>$phieumuon->id,
+                'ID_CuonSach' => $csach->id
+            ]);
+            $csach->daMuon  = true;
+            $csach->save();
+        }
+        
         return \response()->json(
             [
                 'yes'=>true],200);
@@ -76,7 +99,7 @@ class PhieuMuon extends Controller
         $phieumuon =  \App\Model\phieumuon::find($id);
         $docgia =  DB::table('docgias')->select('id', 'hoTen')->get();
         $nhanvien =  DB::table('nhanviens')->select('id', 'hoTen')->get();
-        return view('backend.pages.phieumuon.edit')->with(['item'=>$phieumuon, 'itemdocgia'=>$docgia, 'itemnhanvien'=>$nhanvien]);
+        return view('backend.pages.phieumuon.edit')->with(['item'=>$phieumuon, 'itemdocgia'=>$docgia, 'itemnhanvien'=>$nhanvien,'page'=>1]);
     }
 
     /**
@@ -125,5 +148,33 @@ class PhieuMuon extends Controller
           view('backend.pages.phieumuon.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();
         }
         
+    }
+
+
+    protected $SO_LUONG_TOI_DA_DUOC_MUON= 7;
+    public  function them_chitiet(Request $request,$id){
+        $c = \App\Model\cuonsach::all()->where('hienThi',$id)->where('daMuon','0')->first();
+        // dd($request->obj);
+        $pm = \App\Model\docgia::find($request->docGia)->phieumuons()->where('daTra','0')->get();
+
+        // dd($pm);
+        
+        $soLuong = 0;
+        foreach($pm as $p){
+           $soLuong += $p->soLuongSach;
+        }
+        if($request->obj)
+          $soLuong+=count($request->obj);
+
+
+        if($soLuong+1 > $this->SO_LUONG_TOI_DA_DUOC_MUON) 
+            return \response()->json(['yes'=>1],200);
+        else if($c){
+            $data = \view('backend.pages.sach.row_chitiet')->with(['item'=>$c,'index'=>1])->render();
+            return \response()->json(['yes'=>0,'data'=>$data],200);
+        }
+        else
+        return \response()->json(['yes'=>2],200);
+
     }
 }

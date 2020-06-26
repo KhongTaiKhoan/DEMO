@@ -200,7 +200,7 @@
 
                    var now = new Date();
                     $("#hoTen").val("");
-                    $("#namSinh").val( now.getTime());
+                    $("#namSinh").val('');
                     $("#diaChi").val("");
                     $("#sdt").val("");
                     $("#email").val("");

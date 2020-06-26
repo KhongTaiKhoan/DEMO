@@ -8,4 +8,9 @@ class docgia extends Model
 {
     protected $table='docgias';
     protected $fillable = ['id','hoTen','namSinh','diaChi','sdt','email'];
+
+
+    public function phieumuons(){
+        return $this->hasMany('App\Model\phieumuon','ID_DocGia','id');
+    }
 }

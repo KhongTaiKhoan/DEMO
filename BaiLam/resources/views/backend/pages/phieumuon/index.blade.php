@@ -41,8 +41,8 @@
                                 <th>ID</th>
                                 <th>NGÀY MƯỢN</th>
                                 <th>NGÀY HẸN TRẢ</th>
-                                <th>ID ĐỘC GIẢ</th>
-                                <th>ID NHÂN VIÊN</th>
+                                <th>ĐỘC GIẢ</th>
+                                <th>NHÂN VIÊN</th>
                                 <th>THAO TÁC</th>
                             </tr>
                         </thead>
@@ -52,12 +52,12 @@
                             <tr>
                                 <td>{{$index++}}</td>
                                 <td class="txt-oflo">{{$item->id}} </td>
-                                <td class="txt-oflo">{{$item->ngayMuon}}</td>
-                                <td class="txt-oflo">{{$item->ngayHenTra}} </td>
+                                <td class="txt-oflo">{{$item->ngayMuon->format('d-m-Y')}}</td>
+                                <td class="txt-oflo">{{$item->ngayHenTra->format('d-m-Y')}} </td>
                                 <td class="txt-oflo">{{$item->tenDocGia}} </td>
                                 <td class="txt-oflo">{{$item->tenNhanVien}} </td>
                                 <td>
-                                    <a href="{{route('chitietphieumuon.show',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a>
+                                    {{-- <a href="{{route('chitietphieumuon.show',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a> --}}
                                     <a href="{{route('phieumuon.edit',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>

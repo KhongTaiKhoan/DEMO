@@ -16,6 +16,8 @@ class CreateCuonsachsTable extends Migration
         Schema::create('cuonsachs', function (Blueprint $table) {
             $table->id();
             $table->integer('ID_Sach');
+            $table->boolean('daMuon');
+            $table->string('hienThi',60)->unique();
             $table->timestamps();
         });
     }

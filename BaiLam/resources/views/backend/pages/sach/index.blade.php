@@ -43,7 +43,6 @@
                                 <th>TÁC GIẢ</th>
                                 <th>THỂ LOẠI</th>
                                 <th>NHÀ XUẤT BẢN</th>
-                                <th>GIÁ BÁN</th>
                                 <th>CHO PHÉP MƯỢN</th>
                                 <th>THAO TÁC</th>
                             </tr>
@@ -58,13 +57,11 @@
                                 <td class="txt-oflo">{{$item->hoTen}} </td>
                                 <td class="txt-oflo">{{$item->tenTheLoai == "" ? "Chưa rõ":$item->tenTheLoai}} </td>
                                 <td class="txt-oflo">{{$item->tenNXB == "" ? "Chưa rõ":$item->tenNXB}} </td>
-                                <td class="txt-oflo">{{$item->gia == "" ? "Chưa rõ":$item->gia}} </td>
                                 <td class="txt-oflo">{{$item->duocPhepMuon == "" ? "Chưa":"Được"}} </td>
                                 
                                 <td>
                                     <a href="{{route('sach.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
                                     <a href="{{route('sach.review',$item->id ) }}"><button type="button" value="{{$item->id}}" class="soan btn btn-primary">Soạn bài</button></a>
-
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>
                             </tr>
