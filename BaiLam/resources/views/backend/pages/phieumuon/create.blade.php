@@ -92,7 +92,7 @@
                     <div class="title-chitiet">Chi tiết phiếu mượn</div>
                     <div style="margin-top:2rem ;margin-right:1rem ;">
                         <label for="maCuonSach" style="display: block">Mã Cuốn Sách</label>
-                        <input type="text" class="form-control" required name="maCuonSach" id="maCuonSach"
+                        <input type="text" class="form-control"  name="maCuonSach" id="maCuonSach"
                             style="width: 20%;display: inline-block;">
 
                         <button type="button" id="them-cuon-sach" class="btn btn-success">Add</button>

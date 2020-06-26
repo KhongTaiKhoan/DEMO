@@ -81,11 +81,12 @@ class PhieuMuon extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   $phieumuon=\App\Model\phieumuon::find($id);
-        if($phieumuon != null){
-            return \response()->json(['yes'=>true],200);
-        }
-        else return \response()->json(['yes'=>fasle],200);
+    {   
+        // $phieumuon=\App\Model\phieumuon::find($id);
+        // if($phieumuon != null){
+        //     return \response()->json(['yes'=>true],200);
+        // }
+        // else return \response()->json(['yes'=>false],200);
     }
 
     /**
@@ -99,7 +100,7 @@ class PhieuMuon extends Controller
         $phieumuon =  \App\Model\phieumuon::find($id);
         $docgia =  DB::table('docgias')->select('id', 'hoTen')->get();
         $nhanvien =  DB::table('nhanviens')->select('id', 'hoTen')->get();
-        return view('backend.pages.phieumuon.edit')->with(['item'=>$phieumuon, 'itemdocgia'=>$docgia, 'itemnhanvien'=>$nhanvien,'page'=>1]);
+        return view('backend.pages.phieumuon.edit')->with(['phieumuon'=>$phieumuon, 'itemdocgia'=>$docgia, 'itemnhanvien'=>$nhanvien,'page'=>1]);
     }
 
     /**
@@ -117,6 +118,29 @@ class PhieuMuon extends Controller
         $phieumuon->ID_DocGia = $request->ID_DocGia;
         $phieumuon->ID_NhanVien = $request->ID_NhanVien;
         $phieumuon->save();
+        // Xoa chi tit phieu muon va cap nhat la cuon sach
+        $ct = DB::table('chitietphieumuons')->where('ID_PhieuMuon',$id)->get();
+        if($phieumuon->daTra == false){
+        foreach($ct as $c){
+            $s = \App\Model\cuonsach::all()->find($c->ID_CuonSach)->first();
+            $s->daMuon = false;
+            $s->save();
+            // DB::table('chitietphieumuons')->find($c->id)->delete();
+        }}
+        if($ct)
+           DB::table('chitietphieumuons')->where('ID_PhieuMuon',$id)->delete();
+        // luu lai
+        foreach ($request->chitiet as $ct_){
+             $csach= \App\Model\cuonsach::all()->where('hienThi',$ct_)->first();
+             DB::table('chitietphieumuons')->insert([
+                 'ID_PhieuMuon'=>$phieumuon->id,
+                 'ID_CuonSach' => $csach->id
+             ]);
+             $csach->daMuon  = true;
+             $csach->save();
+         }
+         
+        
         
        return \response()->json(['yes'=>true],200);
     }
@@ -129,7 +153,23 @@ class PhieuMuon extends Controller
      */
     public function destroy($id)
     {
+        $pm = \App\Model\phieumuon::find($id);
+        
+        $ct = DB::table('chitietphieumuons')->where('ID_PhieuMuon',$id)->get();
+        if($pm->daTra == false){
+        foreach($ct as $c){
+        //   echo($c->ID_CuonSach . ' ');  
+          DB::table('cuonsachs')->where('id',$c->ID_CuonSach)->update([
+              'daMuon'=>false
+          ]);
+            // DB::table('chitietphieumuons')->find($c->id)->delete();
+        }
+    }
+        if($ct)
+           DB::table('chitietphieumuons')->where('ID_PhieuMuon',$id)->delete();
+        
         \App\Model\phieumuon::destroy($id);
+      
         return \response()->json(['size'=>\App\Model\phieumuon::count()],200);
     }
 
@@ -142,7 +182,7 @@ class PhieuMuon extends Controller
     function pagination(Request $request){
         if($request->ajax()){
             
-            $mang =  DB::table('phieumuons')->paginate(5);
+          $mang =  DB::table('phieumuons')->paginate(5);
            
           return  
           view('backend.pages.phieumuon.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();

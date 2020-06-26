@@ -71,6 +71,7 @@ Route::group(
             );
             Route::group(['prefix'=>'phieumuon'],function(){
               Route::post('them_chitiet/{id}','PhieuMuon@them_chitiet')->name('cuonsach.add');
+              Route::post('phantrang/{id}','PhieuMuon@pagination')->name('cuonsach.pagination');
             });
 
             Route::resource('sach','Sach');
