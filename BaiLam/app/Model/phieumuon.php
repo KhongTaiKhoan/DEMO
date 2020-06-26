@@ -12,4 +12,8 @@ class phieumuon extends Model
     public function cuonsachs(){
         return $this->belongsToMany('App\Model\cuonsach','chitietphieumuons','ID_PhieuMuon','ID_CuonSach');
     }
+
+    public function docgia(){
+        return $this->belongsTo('App\Model\docgia','ID_DocGia');
+    }
 }

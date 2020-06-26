@@ -71,7 +71,12 @@ Route::group(
             );
             Route::group(['prefix'=>'phieumuon'],function(){
               Route::post('them_chitiet/{id}','PhieuMuon@them_chitiet')->name('cuonsach.add');
-              Route::post('phantrang/{id}','PhieuMuon@pagination')->name('cuonsach.pagination');
+              Route::get('phantrang','PhieuMuon@pagination')->name('cuonsach.pagination');
+              Route::get('kttontai/{id}','PhieuMuon@kiemTraTonTai')->name('cuonsach.tontai');
+            });
+            Route::group(['prefix'=>'vipham'],function(){
+              Route::get('phantrang','BienBanViPham@pagination')->name('vipham.pagination');
+            
             });
 
             Route::resource('sach','Sach');
@@ -84,6 +89,7 @@ Route::group(
             Route::resource('taikhoan','TaiKhoan');
             Route::resource('phieumuon','PhieuMuon');
             Route::resource('chucvu','ChucVu');
+            Route::resource('vipham','BienBanViPham');
             
         }
     );

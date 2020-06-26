@@ -84,9 +84,10 @@ class PhieuMuon extends Controller
     {   
         // $phieumuon=\App\Model\phieumuon::find($id);
         // if($phieumuon != null){
-        //     return \response()->json(['yes'=>true],200);
+        //     return \response()->json(['yes'=>'true'],200);
         // }
-        // else return \response()->json(['yes'=>false],200);
+        // else 
+        //     return \response()->json(['yes'=>'false'],200);
     }
 
     /**
@@ -216,5 +217,15 @@ class PhieuMuon extends Controller
         else
         return \response()->json(['yes'=>2],200);
 
+    }
+
+
+    public function kiemTraTonTai($id){
+        $phieumuon=\App\Model\phieumuon::find($id);
+        if($phieumuon != null){
+            return \response()->json(['yes'=>'true','docgia'=>$phieumuon->docgia()->first()->hoTen],200);
+        }
+        else 
+            return \response()->json(['yes'=>'false'],200);
     }
 }
