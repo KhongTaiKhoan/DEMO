@@ -54,6 +54,7 @@ class Sach extends Controller
         $sach->ID_NXB = $request->ID_NXB;
         $sach->namXB = $request->namXB;
         $sach->gia = $request->gia;
+        $sach->vietTat = $request->vietTat;
         $sach->duocPhepMuon = $request->duocPhepMuon;
         $anh = $request->file('anhbia');
         // return $request->file('anhbia');
@@ -120,6 +121,7 @@ class Sach extends Controller
         $sach->ID_NXB = $request->nxb;
         $sach->namXB = $request->namxb;
         $sach->gia = $request->gia;
+        $sach->vietTat = $request->vietTat;
         $sach->duocPhepMuon = $request->choMuon;
         $anh = $request->file('anhbia');
         // dd ($request->tacgia);

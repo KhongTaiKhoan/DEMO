@@ -158,16 +158,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <label for="namxb">Năm xuất bản</label>
                         <input type="text" class="form-control" required name="namxb" id="namxb"
                             placeholder="Tối đa 50 kí tu">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <label for="gia">Giá cuốn sách</label>
                         <input type="text" class="form-control" required name="gia" id="gia">
                     </div>
-
+                    <div class="col-sm-4">
+                        <label for="vietTat">Tên viết tắt</label>
+                        <input type="text" class="form-control" required name="vietTat" id="vietTat">
+                    </div>
                 </div>
 
 
@@ -258,6 +261,9 @@
                 required: true,
                 digits: true
             },
+            vietTat: {
+                required: true,
+            },
 
 
         },
@@ -277,6 +283,9 @@
             }, gia: {
                 required: 'Không được bỏ trống',
                 digits: 'Không hợp lệ'
+            },
+            vietTat: {
+                required: 'Không được bỏ trống',
             },
 
 
@@ -300,6 +309,7 @@
         form.append('namXB', $("#namxb").val());
         form.append('duocPhepMuon', $("input[name=choMuon]:checked").val());
         form.append('gia',  $("#gia").val());
+        form.append('vietTat',  $("#vietTat").val());
         
         // var obj = {
         //     'tenSach': $("#tenSach").val(),

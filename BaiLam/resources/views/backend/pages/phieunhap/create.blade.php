@@ -73,8 +73,23 @@
                     </select>
                 </div>
 
+                <div style="margin-top:2rem ;margin-right:1rem ;">
+                    <label for="maPhieuYeuCau">Phiếu yêu cầu</label>
+                    <input type="text" class="form-control" required name="maPhieuYeuCau" id="maPhieuYeuCau"  >
+
+                </div>
+
+                <div style="margin-top:2rem ;margin-right:1rem ;">
+                    <label for="ngayLap" style="display: block">Tổng tiền</label>
+                    <div style="display: inline-block;width: 40%;">
+                        <input type="text" class="form-control" required name="tongTien" id="tongTien"  >
+                    </div>
+                    
+                    <label >  VND</label>
+                </div>
+
                 <div class="chitietphieumuon" style="margin-top: 5rem; ">
-                    <div class="title-chitiet">Chi tiết phiếu yêu cầu</div>
+                    <div class="title-chitiet">Chi tiết phiếu nhập</div>
                     <div style="margin-top:2rem ;margin-right:1rem ;">
                         
                         <div style="display: flex">
@@ -82,7 +97,7 @@
                                 <label for="maSach" style="display: block">Mã Sách</label>
                                 <select class="form-control" name="maSach" id="maSach"
                                     style="width: 90%;display: inline-block;">
-                                    @include('backend.pages.phieuyeucau.select_sach_nhaxb',['item'=>$itemnhaxb->first()])  
+                                    @include('backend.pages.phieunhap.select_sach_nhaxb',['item'=>$itemnhaxb->first()])  
                                 </select> 
                                 <label class="invalid-feedback text-danger" id='khong-ton-tai' style="display: block">Cuốn sách
                                     đã tồn tai</label>
@@ -128,7 +143,7 @@
 @parent
 <script>
 
-    const urlPost = '/admin/danhmuc/phieuyeucau';
+    const urlPost = '/admin/danhmuc/phieunhap';
     $("#check").click(function () {
         var hl = $("#phieuyeucauForm").valid();
         if (hl) {
@@ -136,12 +151,80 @@
         }
     });
 
+    // =========  VALIDATE FORM ================
+    $.validator.addMethod("kiemTraTonTai", function (value, element, params) {
+        var kt =  false;
+        var chitiet_phieumuon_url = "/admin/danhmuc/phieuyeucau/kttontai/" + value;
+        console.log('safd');
+        $.ajax({
+            url: chitiet_phieumuon_url,
+            type: 'get',
+            async: false,
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            success: function (data) {
+                if (data['yes'] == true) {
+                    kt= true;
+                }
+            }
+        });
+        // console.log(data_);
+        return kt;
+    });
+
+
+    $("#phieuyeucauForm").validate({
+        onfocusout: function (element) {
+            if ($(element).val() == "") return;
+            var hl = $(element).valid();
+            if (hl) {
+
+                if ($(element).hasClass('is-invalid'))
+                    $(element).removeClass("form-control is-invalid");
+                $(element).addClass('form-control is-valid');
+            }
+        }, onkeyup: false,
+        rules: {
+            maPhieuYeuCau: {
+                required: true,
+                kiemTraTonTai: true
+            },
+            tongTien:{
+                required: true,
+                digits: true
+            }        
+        },
+        messages: {
+            maPhieuYeuCau: {
+                required: 'Bạn phải nhập dòng này',
+                kiemTraTonTai: 'Phiếu yêu cầu không tồn tại'
+            },
+            tongTien:{
+                required: 'Bạn phải nhập dòng này',
+                digits: 'Dữ liệu phải là số'
+            }  
+
+
+        }, errorPlacement: function (err, elemet) {
+
+            err.insertAfter(elemet);
+            err.addClass('invalid-feedback d-inline text-danger');
+            elemet.addClass('form-control is-invalid');
+            $('.focus-input100-1,.focus-input100-2').addClass('hidden');
+        }
+    }
+    );
+
+    // =================== KET THUC VALUDATE FORM
+
+
     // LUU PHIEU TRA
     function thucHienAjax() {
         var obj = {
             // 'ngayTra': $("#ngayTra").val(),
             'ID_NhaXB': $("#selectNXB option:selected").val(),
             'ID_NhanVien': $("#selectNhanVien").children('option:selected').val(),
+            'gia': $("#tongTien").val(),
+            'ID_PhieuYeuCau': $("#maPhieuYeuCau").val(),
             'chitiet': chiTietSach
         };
         console.log(obj);
@@ -182,8 +265,11 @@ $('#selectNXB').blur(function(){
         type:'get',
         data: {ID_NhaXB:$(this).children('option:selected').val()},
         success: function(data){
+
+
             chiTietSach = new Array();
             $('.table tbody').empty();
+
             $('#maSach').empty();
             $('#maSach').html(data);
         }  
@@ -204,7 +290,7 @@ function kiemTraTrung(maCuonSach) {
 function layDuKieu_Row(maSach){
     var data = '';
     $.ajax({
-        url : '/admin/danhmuc/phieuyeucau/them_chitiet/'+maSach,
+        url : '/admin/danhmuc/phieunhap/them_chitiet/'+maSach,
         data: {soLuong: $('#soLuong').val()},
         type: 'post',
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -225,6 +311,7 @@ $('#them-cuon-sach').click(function (){
         $('#khong-ton-tai').show();
     }else{
         data = layDuKieu_Row($('#maSach option:selected').val());
+       
         $('.table tbody').append(data);
             $('#khong-ton-tai').hide();
             chiTietSach.push(

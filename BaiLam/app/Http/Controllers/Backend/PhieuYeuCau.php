@@ -146,4 +146,13 @@ class PhieuYeuCau extends Controller
         $data = view('backend.pages.phieuyeucau.row_chitiet')->with(['item'=>$sach,'soLuong'=>$request->soLuong])->render();
         return \response()->json(['yes'=>true,'data'=>$data],200);
     }
+
+    public function kttontai ($id){
+        $kt=\App\Model\phieuyeucau::find($id);
+        if($kt){
+            return \response()->json(['yes'=>true],200);
+        }else{
+            return \response()->json(['yes'=>false],200);
+        }
+    }
 }

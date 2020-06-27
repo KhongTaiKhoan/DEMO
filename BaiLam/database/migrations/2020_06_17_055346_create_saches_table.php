@@ -25,6 +25,7 @@ class CreateSachesTable extends Migration
             $table->integer('namXB');
             $table->double('diemDanhGia')->default(0.0);
             $table->text('mieuTa')->nullable();
+            $table->string('vietTat')->unique();
             $table->boolean('duocPhepMuon')->default(true);
              
             $table->timestamps();

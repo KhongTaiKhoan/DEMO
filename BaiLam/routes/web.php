@@ -82,13 +82,20 @@ Route::group(
               Route::get('phantrang','PhieuYeuCau@pagination')->name('phieuyeucau.pagination');
               Route::get('get_nhaXB_sach','PhieuYeuCau@get_nhaXB_sach')->name('phieuyeucau.get_nhaXB_sach');
               Route::post('them_chitiet/{id}','PhieuYeuCau@them_chitiet')->name('phieuyeucau.them_chitiet');
-            
+              Route::get('kttontai/{id}','PhieuYeuCau@kttontai')->name('phieuyeucau.kttontai');
+
             });
 
             Route::group(['prefix'=>'phieutra'],function(){
               Route::post('them_chitiet/{id}','PhieuTra@them_chitiet')->name('phieutra.add');
               Route::get('phantrang','PhieuTra@pagination')->name('phieutra.pagination');
               Route::post('ktvipham','PhieuTra@kiemTraViPham')->name('phieutra.ktvipham');
+            });
+            Route::group(['prefix'=>'phieunhap'],function(){
+              Route::get('phantrang','PhieuNhap@pagination')->name('phieunhap.pagination');
+              Route::get('get_nhaXB_sach','PhieuNhap@get_nhaXB_sach')->name('phieunhap.get_nhaXB_sach');
+              Route::post('them_chitiet/{id}','PhieuNhap@them_chitiet')->name('phieunhap.them_chitiet');
+            
             });
 
             Route::resource('sach','Sach');
@@ -104,6 +111,7 @@ Route::group(
             Route::resource('chucvu','ChucVu');
             Route::resource('vipham','BienBanViPham');
             Route::resource('phieuyeucau','PhieuYeuCau');
+            Route::resource('phieunhap','PhieuNhap');
             
         }
     );
