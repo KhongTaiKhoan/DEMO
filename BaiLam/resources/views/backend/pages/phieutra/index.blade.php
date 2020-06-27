@@ -33,40 +33,7 @@
         <div class="row">
             <div class="white-box">
                 <div class="table-responsive" id="tb_tl">
-                    @php ($index = ($page-1)*5 +1)
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>ID</th>
-                                <th>PHIẾU TRẢ</th>
-                                <th>NGÀY TRẢ</th>
-                                <th>TÊN NHÂN VIÊN</th>
-                                <th>THAO TÁC</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach ($arr as $item)
-                            <tr>
-                                <td>{{$index++}}</td>
-                                <td class="txt-oflo">{{$item->id}} </td>
-                                <td class="txt-oflo">{{$item->idphieumuon}} </td>
-                                <td class="txt-oflo">{{$item->ngayTra}}</td>
-                                <td class="txt-oflo">{{$item->tenNhanVien}} </td>
-                                <td>
-                                    {{-- <a href="{{route('chitietphieutra.show',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a>
-                                    <a href="{{route('phieutra.edit',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a> --}}
-                                    <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <nav aria-label="Page navigation example" style="text-align: center">
-                        {!!$arr->links()!!}
-                    </nav>
-                    {{-- @include('backend.pages.phieutra.phantrang',['arr'=>$arr]) --}}
+                    @include('backend.pages.phieutra.phantrang',['arr'=>$arr,'page'=>1])
                 </div>
             </div>
 

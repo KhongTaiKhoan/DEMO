@@ -54,7 +54,7 @@
                 <div>
                     <label for="ngayMuon">Ngày Mượn</label>
                     <input disabled type="date" class="form-control" required name="ngayMuon"
-                     value="{{$phieumuon->ngayMuon}}" id="ngayMuon">
+                     value="{{$phieumuon->ngayMuon->format('Y-m-d')}}" id="ngayMuon">
                 </div>
 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
@@ -81,7 +81,11 @@
                         <select class="form-control" id="selectNhanVien" name="selectNhanVien" required>
                             <!-- <option value="" disabled selected>Chọn tên độc giả</option> -->
                             @foreach($itemnhanvien as $item)
-                            <option value="{{$item->id}}">{{$item->hoTen}}</option>
+                            <option
+                               @if ($item->id == $phieumuon->ID_NhanVien)
+                                 selected
+                               @endif   
+                               value="{{$item->id}}">{{$item->hoTen}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -216,13 +220,13 @@
             chiTietSach.push($(mang[i]).text());
          
         console.log(chiTietSach);
-        var d = new Date();
-        let moth = d.getMonth() + 1;
-        let year = d.getFullYear();
-        let date = d.getDate();
+        // var d = new Date();
+        // let moth = d.getMonth() + 1;
+        // let year = d.getFullYear();
+        // let date = d.getDate();
         
 
-        $('#ngayMuon').val(`${year}-${moth < 9 ? '0' + moth : moth}-${date < 9 ? '0' + date : date}`);
+        // $('#ngayMuon').val(`${year}-${moth < 9 ? '0' + moth : moth}-${date < 9 ? '0' + date : date}`);
     });
 
     // ====================   THEM CUON SACH ===============

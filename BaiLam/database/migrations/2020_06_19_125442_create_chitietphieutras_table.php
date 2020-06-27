@@ -15,8 +15,8 @@ class CreateChitietphieutrasTable extends Migration
     {
         Schema::create('chitietphieutras', function (Blueprint $table) {
             $table->id();
-            $table->integer('ID_PhieuTra');
-            $table->integer('ID_CuonSach');
+            $table->foreignId('ID_PhieuTra')->constrained('phieutras')->onDelete('cascade');
+            $table->foreignId('ID_CuonSach')->constrained('cuonsachs')->onDelete('cascade');
             $table->timestamps();
         });
     }

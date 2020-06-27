@@ -202,6 +202,7 @@
 
         var data_ = {};
         var chitiet_phieumuon_url = "/admin/danhmuc/phieutra/them_chitiet/" + maCuonSach;
+        console.log(maCuonSach);
         $.ajax({
             url: chitiet_phieumuon_url,
             type: 'post',
@@ -265,42 +266,8 @@
         chiTietSach.splice(nth, 1);
     });
 
-
-    // LUU PHIEU TRA
-
-
-    function thucHienAjax() {
-        var obj = {
-            // 'ngayTra': $("#ngayTra").val(),
-            'ID_PhieuMuon': $("#maPhieuMuon").val(),
-            'ID_NhanVien': $("#selectNhanVien").children('option:selected').val(),
-            'chitiet': chiTietSach
-        };
-        console.log(obj);
-
-        $.ajax({
-            type: "post",
-            url: urlPost,
-            data: obj,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-
-                if (response.yes === true) {
-
-
-                    $('.table tbody').empty();
-                    $("#maPhieuMuon").val('');
-
-                    alertify.success('Thêm phiếu trả thành công');
-                }
-            }
-        });
-    }
-
-    // ===================== KIEM TRA VI PHAM  =================
-    function kiemTraViPham() {
+       // ===================== KIEM TRA VI PHAM  =================
+       function kiemTraViPham() {
         var kt = false;
         $.ajax({
             type: 'post',
@@ -347,5 +314,40 @@
         }
     }
 
+
+    // LUU PHIEU TRA
+
+
+    function thucHienAjax() {
+        var obj = {
+            // 'ngayTra': $("#ngayTra").val(),
+            'ID_PhieuMuon': $("#maPhieuMuon").val(),
+            'ID_NhanVien': $("#selectNhanVien").children('option:selected').val(),
+            'chitiet': chiTietSach
+        };
+        console.log(obj);
+
+        $.ajax({
+            type: "post",
+            url: urlPost,
+            data: obj,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+
+                if (response.yes === true) {
+
+
+                    $('.table tbody').empty();
+                    $("#maPhieuMuon").val('');
+
+                    alertify.success('Thêm phiếu trả thành công');
+                }
+            }
+        });
+    }
+
+ 
 </script>
 @endsection

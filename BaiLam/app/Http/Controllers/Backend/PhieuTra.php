@@ -18,6 +18,9 @@ class PhieuTra extends Controller
         $mang = DB::table('phieutras')->join('phieumuons','phieutras.ID_PhieuMuon','=','phieumuons.id')
                    ->join('nhanviens','phieutras.ID_NhanVien','=','nhanviens.id')
                    ->select(['phieutras.id','phieutras.ngayTra','phieumuons.id as idphieumuon','nhanviens.hoTen as tenNhanVien',])->paginate(5);
+        for ($i = 0 ;$i <count($mang) ;$i++)
+            $mang[$i]->ngayTra = Carbon::parse($mang[$i]->ngayTra);        
+
         return \view('backend.pages.phieutra.index')->with(['arr'=>$mang,'page'=>1]);
     }
 
@@ -87,9 +90,10 @@ class PhieuTra extends Controller
     public function edit($id)
     {
         $phieutra =  \App\Model\phieutra::find($id);
-        $phieutra =  DB::table('phieumuons')->select('id')->get();
+        $phieutra->ngayTra = Carbon::parse($phieutra->ngayTra);
+        // $phieutra =  DB::table('phieumuons')->select('id')->get();
         $nhanvien =  DB::table('nhanviens')->select('id', 'hoTen')->get();
-        return view('backend.pages.phieutra.edit')->with(['item'=>$phieutra, 'itemphieumuon'=>$phieutra, 'itemnhanvien'=>$nhanvien]);
+        return view('backend.pages.phieutra.edit')->with(['item'=>$phieutra, 'itemnhanvien'=>$nhanvien]);
     }
 
     /**
@@ -101,12 +105,38 @@ class PhieuTra extends Controller
      */
     public function update(Request $request, $id)
     { 
+       
         $phieutra =  \App\Model\phieutra::find($id);
-        $phieutra->ngayTra = $request->ngayTra;
-        $phieutra->ID_PhieuMuon = $request->ID_PhieuMuon;
+        // THAY DOI THUOC TINH DA MUON CUA TUNG CUON SACH 
+        DB::table('phieumuons')->where('id',$phieutra->ID_PhieuMuon)->update([
+            'daTra'=>true]
+        );
+        // B1 THAY DOI TAT CAC CAC SACH TRONG PHIEU TRA CU THANH DAMUON = FALSE
+        $ct_cu = DB::table('chitietphieutras')->where('ID_PhieuTra',$phieutra->id)->get();
+        
+        foreach($ct_cu as $c){
+            $s = \App\Model\cuonsach::all()->find($c->ID_CuonSach)->first();
+            $s->daMuon = true;
+            $s->save();
+            // DB::table('chitietphieumuons')->find($c->id)->delete();
+        }
+        if($ct_cu)
+            DB::table('chitietphieutras')->where('ID_PhieuTra',$phieutra->id)->delete();
+        // B2 SET TAT CAC CAC CUON SACH TRONG PHIEU MOI THANH DAMUIN = TRUE
+        // DONG THOI XOA TAT CAC CAC CHITIET_MUON CU VA CHEN VAO CHITIET_MOI
+        foreach ($request->chitiet as $ct){
+            $csach= \App\Model\cuonsach::all()->where('hienThi',$ct)->first();
+             $ct = DB::table('chitietphieutras')->insert([
+                 'ID_PhieuTra'=>$phieutra->id,
+                 'ID_CuonSach' => $csach->id
+             ]);
+             $csach->daMuon  = false;
+             $csach->save();
+         }
+
+        
         $phieutra->ID_NhanVien = $request->ID_NhanVien;
         $phieutra->save();
-        
        return \response()->json(['yes'=>true],200);
     }
 
@@ -131,32 +161,39 @@ class PhieuTra extends Controller
     function pagination(Request $request){
         if($request->ajax()){
             
-            $mang =  DB::table('phieutras')->paginate(5);
-           
-          return  
-          view('backend.pages.phieutra.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();
+            $mang = DB::table('phieutras')->join('phieumuons','phieutras.ID_PhieuMuon','=','phieumuons.id')
+            ->join('nhanviens','phieutras.ID_NhanVien','=','nhanviens.id')
+            ->select(['phieutras.id','phieutras.ngayTra','phieumuons.id as idphieumuon','nhanviens.hoTen as tenNhanVien',])->paginate(5);
+            for ($i = 0 ;$i <count($mang) ;$i++){
+                $mang[$i]->ngayTra = Carbon::parse($mang[$i]->ngayTra);
+            }
+            return  
+               view('backend.pages.phieutra.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();
         }
         
     }
 
     public function them_chitiet(Request $request,$id){
 
-        // dd($request);
+      
 
         if($request->maPhieuMuon == null)  return \response()->json(['yes'=>2],200);
         $c = \App\Model\cuonsach::all()->where('hienThi',$id)->where('daMuon','1')->first();
-        $pm = \App\Model\phieumuon::find($request->maPhieuMuon)->where('daTra','0')->first()->cuonsachs()->get();
-        
+        $pm = \App\Model\phieumuon::find($request->maPhieuMuon)->cuonsachs()->get();
+        // echo(count($pm).' ' );
         $co = false;
         foreach($pm as $p){
             if($p->hienThi == $id){
                 $co = true;
+                // echo(' co ');
                 break;
             }
         }
 
-        if($co && $c){
+        // dd($co);
+        if( $co && $c){
             $data = \view('backend.pages.sach.row_chitiet')->with(['item'=>$c])->render();
+           
             return \response()->json(['yes'=>0,'data'=>$data],200);
         }else
         return \response()->json(['yes'=>1],200);

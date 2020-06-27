@@ -102,7 +102,7 @@ class PhieuMuon extends Controller
         $docgia =  DB::table('docgias')->select('id', 'hoTen')->get();
         $nhanvien =  DB::table('nhanviens')->select('id', 'hoTen')->get();
         $phieumuon->ngayHenTra = Carbon::parse($phieumuon->ngayHenTra);
-
+        $phieumuon->ngayMuon = Carbon::parse($phieumuon->ngayMuon);
         return view('backend.pages.phieumuon.edit')->with(['phieumuon'=>$phieumuon, 'itemdocgia'=>$docgia, 'itemnhanvien'=>$nhanvien,'page'=>1]);
     }
 
@@ -123,6 +123,7 @@ class PhieuMuon extends Controller
         $phieumuon->save();
         // Xoa chi tit phieu muon va cap nhat la cuon sach
         $ct = DB::table('chitietphieumuons')->where('ID_PhieuMuon',$id)->get();
+      
         if($phieumuon->daTra == false){
         foreach($ct as $c){
             $s = \App\Model\cuonsach::all()->find($c->ID_CuonSach)->first();
