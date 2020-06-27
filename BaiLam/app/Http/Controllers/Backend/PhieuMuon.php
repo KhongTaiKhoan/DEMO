@@ -203,7 +203,22 @@ class PhieuMuon extends Controller
     protected $SO_LUONG_TOI_DA_DUOC_MUON= 7;
     public  function them_chitiet(Request $request,$id){
         $c = \App\Model\cuonsach::all()->where('hienThi',$id)->where('daMuon','0')->first();
+        if(!$c){
+            $pd = \App\Model\docgia::find($request->docGia)->phieudats()->where('daSuDung','0')->get();
+            foreach($pd as $d){
+                foreach($d->cuonsachs()->get() as $cs){
+                    if($cs->hienThi == $id){
+                        $c = $cs;
+                        break;
+                    }
+                }
+
+                if($c)break;
+            }
+        }
         // dd($request->obj);
+       
+       
         $pm = \App\Model\docgia::find($request->docGia)->phieumuons()->where('daTra','0')->get();
 
         // dd($pm);

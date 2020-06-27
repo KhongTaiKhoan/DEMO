@@ -13,4 +13,8 @@ class docgia extends Model
     public function phieumuons(){
         return $this->hasMany('App\Model\phieumuon','ID_DocGia','id');
     }
+
+    public function phieudats(){
+        return $this->hasMany('App\Model\phieudat','ID_DocGia','id');
+    }
 }

@@ -98,6 +98,11 @@ Route::group(
             
             });
 
+            Route::group(['prefix'=>'phieudat'],function(){
+              Route::post('them_chitiet/{id}','PhieuDat@them_chitiet')->name('cuonsach.add');
+              Route::get('phantrang','PhieuDat@pagination')->name('cuonsach.pagination');
+            });
+
             Route::resource('sach','Sach');
             Route::resource('theloai','TheLoai');
             Route::resource('nxb','NXB');
@@ -112,6 +117,7 @@ Route::group(
             Route::resource('vipham','BienBanViPham');
             Route::resource('phieuyeucau','PhieuYeuCau');
             Route::resource('phieunhap','PhieuNhap');
+            Route::resource('phieudat','PhieuDat');
             
         }
     );
