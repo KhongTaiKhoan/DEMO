@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-class CreateTacgiasTable extends Migration
+use Carbon\Carbon;
+class CreatePhieuyeucausTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTacgiasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tacgias', function (Blueprint $table) {
+        Schema::create('phieuyeucaus', function (Blueprint $table) {
             $table->id();
-            $table->string('hoTen',50);
-            $table->integer('namSinh');
-            $table->integer('namMat')->nullable();
-            $table->string('tomTat');
-            $table->string('quocTich',20)->nullable();
+            $table->integer('ID_NhanVien');
+            $table->integer('ID_NhaXB');
+            $table->dateTime('ngayDat')->default(Carbon::now());
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTacgiasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tacgias');
+        Schema::dropIfExists('phieuyeucaus');
     }
 }

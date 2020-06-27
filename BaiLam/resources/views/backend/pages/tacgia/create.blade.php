@@ -68,7 +68,7 @@
                 <div style="margin-top: 2rem !important;">
                     <label for="tomTat">Tóm tắt về tác giả</label>
                     <textarea class="form-control" name="tomTat" required id="tomTat" rows="4"
-                    placeholder="Tối đa 100 kí tự"></textarea>
+                    placeholder="Tối đa 500 kí tự"></textarea>
                 </div>
 
                 {{-- Bat Dau chon the loai cha--}}
@@ -121,7 +121,7 @@
             tomTat: {
                 required: true,
                 minlength: 7,
-                maxlength: 100
+                maxlength: 500
             },
             namSinh:{
                 digits : true,
@@ -147,7 +147,7 @@
             tomTat: {
                 required: 'Không được bỏ trống',
                 minlength: 'Ít nhát 7 kí tự',
-                maxlength: 'Tối đa 100 kí tự'
+                maxlength: 'Tối đa 500 kí tự'
             },
             namSinh:{
                 min:'Năm sinh quá lâu, chém gió à',

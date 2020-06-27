@@ -78,6 +78,12 @@ Route::group(
               Route::get('phantrang','BienBanViPham@pagination')->name('vipham.pagination');
             
             });
+            Route::group(['prefix'=>'phieuyeucau'],function(){
+              Route::get('phantrang','PhieuYeuCau@pagination')->name('phieuyeucau.pagination');
+              Route::get('get_nhaXB_sach','PhieuYeuCau@get_nhaXB_sach')->name('phieuyeucau.get_nhaXB_sach');
+              Route::post('them_chitiet/{id}','PhieuYeuCau@them_chitiet')->name('phieuyeucau.them_chitiet');
+            
+            });
 
             Route::group(['prefix'=>'phieutra'],function(){
               Route::post('them_chitiet/{id}','PhieuTra@them_chitiet')->name('phieutra.add');
@@ -97,6 +103,7 @@ Route::group(
             Route::resource('phieutra','PhieuTra');
             Route::resource('chucvu','ChucVu');
             Route::resource('vipham','BienBanViPham');
+            Route::resource('phieuyeucau','PhieuYeuCau');
             
         }
     );
