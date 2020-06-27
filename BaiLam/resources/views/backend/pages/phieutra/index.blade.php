@@ -55,8 +55,8 @@
                                 <td class="txt-oflo">{{$item->ngayTra}}</td>
                                 <td class="txt-oflo">{{$item->tenNhanVien}} </td>
                                 <td>
-                                    <a href="{{route('chitietphieutra.show',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a>
-                                    <a href="{{route('phieutra.edit',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+                                    {{-- <a href="{{route('chitietphieutra.show',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a>
+                                    <a href="{{route('phieutra.edit',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a> --}}
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
                                 </td>
                             </tr>

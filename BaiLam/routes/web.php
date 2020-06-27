@@ -82,6 +82,7 @@ Route::group(
             Route::group(['prefix'=>'phieutra'],function(){
               Route::post('them_chitiet/{id}','PhieuTra@them_chitiet')->name('phieutra.add');
               Route::get('phantrang','PhieuTra@pagination')->name('phieutra.pagination');
+              Route::post('ktvipham','PhieuTra@kiemTraViPham')->name('phieutra.ktvipham');
             });
 
             Route::resource('sach','Sach');

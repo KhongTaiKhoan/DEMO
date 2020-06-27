@@ -59,7 +59,7 @@
 
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="ngayHenTra">Ngày Hẹn Trả</label>
-                    <input type="date" class="form-control" required name="ngayHenTra" value="{{$phieumuon->ngayHenTra}}" id="ngayHenTra">
+                    <input type="date" class="form-control" required name="ngayHenTra" value="{{$phieumuon->ngayHenTra->format('Y-m-d')}}" id="ngayHenTra">
                 </div>
 
                 <div style="display: flex;">
@@ -220,6 +220,8 @@
         let moth = d.getMonth() + 1;
         let year = d.getFullYear();
         let date = d.getDate();
+        
+
         $('#ngayMuon').val(`${year}-${moth < 9 ? '0' + moth : moth}-${date < 9 ? '0' + date : date}`);
     });
 
@@ -304,10 +306,10 @@
 //   ==============  LUU PHIEU MUON ====================
 
 function thucHienAjax(id) {
+        var now = new Date();
         var obj = {
             'chitiet':chiTietSach,
-            'ngayMuon': $('#ngayMuon').val(),
-            'ngayHenTra' :$('#ngayHenTra').val(),
+            'ngayHenTra' :$('#ngayHenTra').val() + ' 23:00:00',
             'ID_NhanVien' : $('#selectNhanVien option:selected').val(),  
             'ID_DocGia' : $('#selectDocGia option:selected').val(),  
         };

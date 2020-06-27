@@ -16,8 +16,8 @@ class CreatePhieumuonsTable extends Migration
     {
         Schema::create('phieumuons', function (Blueprint $table) {
             $table->id();
-            $table->date('ngayMuon')->default(Carbon::now());
-            $table->date('ngayHenTra')->default(Carbon::now());
+            $table->dateTime('ngayMuon')->default(Carbon::now());
+            $table->dateTime('ngayHenTra')->default(Carbon::now());
             $table->integer('ID_DocGia');
             $table->integer('ID_NhanVien');
             $table->boolean('daTra');

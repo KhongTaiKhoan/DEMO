@@ -16,7 +16,7 @@ class CreatePhieutrasTable extends Migration
     {
         Schema::create('phieutras', function (Blueprint $table) {
             $table->id();
-            $table->date('ngayTra')->default(Carbon::now());
+            $table->dateTime('ngayTra')->default(Carbon::now());
             $table->integer('ID_PhieuMuon');
             $table->integer('ID_NhanVien');
             $table->timestamps();

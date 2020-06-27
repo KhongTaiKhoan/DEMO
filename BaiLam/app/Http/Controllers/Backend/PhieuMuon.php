@@ -51,8 +51,8 @@ class PhieuMuon extends Controller
 
         
         $phieumuon = new \App\Model\phieumuon();
-        $phieumuon->ngayMuon = $request->ngayMuon;
-        $phieumuon->ngayHenTra = $request->ngayHenTra;
+        $phieumuon->ngayMuon = Carbon::now('Asia/Ho_Chi_Minh');
+        $phieumuon->ngayHenTra = Carbon::parse($request->ngayHenTra);
         $phieumuon->ID_DocGia = $request->ID_DocGia;
         $phieumuon->ID_NhanVien = $request->ID_NhanVien;
         $phieumuon->daTra = false;
@@ -101,6 +101,8 @@ class PhieuMuon extends Controller
         $phieumuon =  \App\Model\phieumuon::find($id);
         $docgia =  DB::table('docgias')->select('id', 'hoTen')->get();
         $nhanvien =  DB::table('nhanviens')->select('id', 'hoTen')->get();
+        $phieumuon->ngayHenTra = Carbon::parse($phieumuon->ngayHenTra);
+
         return view('backend.pages.phieumuon.edit')->with(['phieumuon'=>$phieumuon, 'itemdocgia'=>$docgia, 'itemnhanvien'=>$nhanvien,'page'=>1]);
     }
 
@@ -114,10 +116,10 @@ class PhieuMuon extends Controller
     public function update(Request $request, $id)
     { 
         $phieumuon =  \App\Model\phieumuon::find($id);
-        $phieumuon->ngayMuon = $request->ngayMuon;
-        $phieumuon->ngayHenTra = $request->ngayHenTra;
+        $phieumuon->ngayHenTra = Carbon::parse($request->ngayHenTra);
         $phieumuon->ID_DocGia = $request->ID_DocGia;
-        $phieumuon->ID_NhanVien = $request->ID_NhanVien;
+        $phieumuon->ID_NhanVien = $request->ID_NhanVien; 
+        $phieumuon->soLuongSach = count($request->chitiet);
         $phieumuon->save();
         // Xoa chi tit phieu muon va cap nhat la cuon sach
         $ct = DB::table('chitietphieumuons')->where('ID_PhieuMuon',$id)->get();
@@ -165,7 +167,7 @@ class PhieuMuon extends Controller
           ]);
             // DB::table('chitietphieumuons')->find($c->id)->delete();
         }
-    }
+      }
         if($ct)
            DB::table('chitietphieumuons')->where('ID_PhieuMuon',$id)->delete();
         
@@ -183,8 +185,13 @@ class PhieuMuon extends Controller
     function pagination(Request $request){
         if($request->ajax()){
             
-          $mang =  DB::table('phieumuons')->paginate(5);
-           
+            $mang = DB::table('phieumuons')->join('docgias','phieumuons.ID_DocGia','=','docgias.id')
+            ->join('nhanviens','phieumuons.ID_NhanVien','=','nhanviens.id')
+            ->select(['phieumuons.id','phieumuons.ngayMuon as ngayMuon','phieumuons.ngayHenTra as ngayHenTra','nhanviens.hoTen as tenNhanVien','docgias.hoTen as tenDocGia'])->paginate(5);
+            for ($i = 0 ;$i <count($mang) ;$i++){
+                $mang[$i]->ngayMuon = Carbon::parse($mang[$i]->ngayMuon);
+                $mang[$i]->ngayHenTra = Carbon::parse($mang[$i]->ngayHenTra);
+            }           
           return  
           view('backend.pages.phieumuon.phantrang')->with(['arr'=>$mang,'page'=>$request->page])->render();
         }

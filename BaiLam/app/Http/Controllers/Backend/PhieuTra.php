@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class PhieuTra extends Controller
 {
     /**
@@ -41,7 +42,7 @@ class PhieuTra extends Controller
     public function store(Request $request)
     {
         $phieutra = new \App\Model\phieutra();
-        $phieutra->ngayTra = $request->ngayTra;
+        $phieutra->ngayTra = Carbon::now();
         $phieutra->ID_PhieuMuon = $request->ID_PhieuMuon;
         $phieutra->ID_NhanVien = $request->ID_NhanVien;
         $phieutra->save();
@@ -159,5 +160,37 @@ class PhieuTra extends Controller
             return \response()->json(['yes'=>0,'data'=>$data],200);
         }else
         return \response()->json(['yes'=>1],200);
+    }
+
+
+
+    public function kiemTraViPham(Request $request){
+        $phieumuon = \App\Model\phieumuon::find($request->maPhieuMuon);
+        $result = [];
+        if(count($request->chitiet) < $phieumuon->soLuongSach ){
+
+            array_push($result,"Phiếu trả không đủ sách so với phiếu mượn thiếu "
+            .( $phieumuon->soLuongSach - count($request->chitiet)) . " cuốn!</br>
+             Nhắc nhở: nếu độc giả làm mất sách hãy tiến hành lập biên bản");
+        } 
+        
+      
+        $ngayHen = Carbon::parse($phieumuon->ngayHenTra);
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        if($ngayHen->diffInDays($now)<0){
+            
+            array_push($result,
+            "Phiếu mượn đã quán hạn ". $ngayHen->diffInDays($now). " ngày 
+            </br>Nhắc nhở: nếu đọc giả trả sách quá hạn thì hãy tiến hành lập biên bản");
+        }
+
+
+        // dd(($result));
+        // ===== MOI THU DEU OK < KO CO VI PHAM
+        if(count($result) == 0){
+           return \response()->json(['size'=>0],200);
+        }else{
+            return \response()->json(['size'=>count($result),'mess'=>$result],200);
+        }
     }
 }

@@ -298,8 +298,7 @@
 function thucHienAjax(form) {
         var obj = {
             'chitiet':chiTietSach,
-            'ngayMuon': $('#ngayMuon').val(),
-            'ngayHenTra' :$('#ngayHenTra').val(),
+            'ngayHenTra' :$('#ngayHenTra').val()+' 23:00:00',
             'ID_NhanVien' : $('#selectNhanVien option:selected').val(),  
             'ID_DocGia' : $('#selectDocGia option:selected').val(),  
         };

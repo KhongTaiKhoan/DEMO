@@ -4,8 +4,6 @@
 @parent
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <style>
- 
-
     body {
         font-family: 'Muli', sans-serif;
     }
@@ -17,9 +15,12 @@
     ul.theLoai {
         border-left: 0.5px solid black;
     }
-    input[type=date]:disabled,input[type=text]:disabled{
+
+    input[type=date]:disabled,
+    input[type=text]:disabled {
         background-color: white;
     }
+
     .chitietphieumuon .title-chitiet {
         width: 100%;
         text-align: center;
@@ -46,26 +47,26 @@
             <form id="phieutraForm" action="{{route('phieutra.store')}}" method="post">
                 @csrf
                 {{-- Nhap ten Phieu Muon --}}
-                
+
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="maPhieuMuon">Mã phiếu mượn</label>
                     <input type="text" class="form-control" required name="maPhieuMuon" id="maPhieuMuon">
                 </div>
-                
-                
+
+
                 <div>
                     <label for="ngayTra">Ngày Trả</label>
                     <input disabled type="date" class="form-control" required name="ngayTra" id="ngayTra">
                 </div>
 
-                
-                
+
+
                 <div style="margin-top:2rem ;margin-right:1rem ;">
                     <label for="selectDocGia">Nhân Viên</label>
                     <select class="form-control" id="selectNhanVien" name="selectNhanVien" required>
-                            @foreach($itemnhanvien as $items)
-                            <option value="{{$items->id}}">{{$items->hoTen}}</option>
-                            @endforeach
+                        @foreach($itemnhanvien as $items)
+                        <option value="{{$items->id}}">{{$items->hoTen}}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -73,7 +74,7 @@
                     <div class="title-chitiet">Chi tiết phiếu mượn</div>
                     <div style="margin-top:2rem ;margin-right:1rem ;">
                         <label for="maCuonSach" style="display: block">Mã Cuốn Sách</label>
-                        <input type="text" class="form-control"  name="maCuonSach" id="maCuonSach"
+                        <input type="text" class="form-control" name="maCuonSach" id="maCuonSach"
                             style="width: 20%;display: inline-block;">
 
                         <button type="button" id="them-cuon-sach" class="btn btn-success">Add</button>
@@ -112,11 +113,14 @@
 @parent
 <script>
 
-    const urlPost='/admin/danhmuc/phieutra';
+    const urlPost = '/admin/danhmuc/phieutra';
     $("#check").click(function () {
         var hl = $("#phieutraForm").valid();
         if (hl) {
-            thucHienAjax();
+            // NEU KHONG CO VI PHAM THI TIEN HANH LAP PHIEU TRA BINH THUONG
+           kiemTraViPham();
+            // if (kiemTraViPham())
+            //     thucHienAjax();
         }
     });
 
@@ -124,18 +128,18 @@
     //  KIEM TRA MA PHIEU MUON CO TRONG CO SO DU LIEU KHONG
 
     $.validator.addMethod("kiemTraTrung", function (value, element) {
-         var kiemTra= false;
-         $.ajax({
-            url: '/admin/danhmuc/phieumuon/kttontai/'+value,
+        var kiemTra = false;
+        $.ajax({
+            url: '/admin/danhmuc/phieumuon/kttontai/' + value,
             type: 'get',
             async: false,
-            success: function(data){
-                if(data['yes'] == 'true' ) {
-                   kiemTra = true; 
-                   }
-            } 
-         });
-         return kiemTra;
+            success: function (data) {
+                if (data['yes'] == 'true') {
+                    kiemTra = true;
+                }
+            }
+        });
+        return kiemTra;
     });
 
 
@@ -151,17 +155,17 @@
             }
         }, onkeyup: false,
         rules: {
-            maPhieuMuon:{
-                required : true,
-                kiemTraTrung : true
+            maPhieuMuon: {
+                required: true,
+                kiemTraTrung: true
             },
         },
         messages: {
-            maPhieuMuon:{
-                kiemTraTrung : 'Phiếu mượn không tồn tại',
-                required : 'Yêu cầu nhập mã phiếu mượn',  
+            maPhieuMuon: {
+                kiemTraTrung: 'Phiếu mượn không tồn tại',
+                required: 'Yêu cầu nhập mã phiếu mượn',
             },
-            
+
         }, errorPlacement: function (err, elemet) {
 
             err.insertAfter(elemet);
@@ -170,24 +174,24 @@
             $('.focus-input100-1,.focus-input100-2').addClass('hidden');
         }
     });
-  //=============== KET THUC VALIDATE ==================== 
+    //=============== KET THUC VALIDATE ==================== 
 
 
-   
+
 
     //  =================  LY NGAY THANG HIEN TAI ==================
     $(document).ready(function (e) {
         $('#khong-ton-tai').hide();
-        
+
         var d = new Date();
         let moth = d.getMonth() + 1;
         let year = d.getFullYear();
         let date = d.getDate();
         $('#ngayTra').val(`${year}-${moth < 9 ? '0' + moth : moth}-${date < 9 ? '0' + date : date}`);
- });
+    });
 
-  // ====================   THEM CUON SACH ===============
-  var chiTietSach = new Array();
+    // ====================   THEM CUON SACH ===============
+    var chiTietSach = new Array();
     // KIEM TRA SACH CO TRUNG
 
     function kiemTraTrung(maCuonSach) {
@@ -195,7 +199,7 @@
     }
     // KIEM TRA SU TON TAI CUA CUON SACH
     function kiemTraTonTai(maCuonSach) {
-        
+
         var data_ = {};
         var chitiet_phieumuon_url = "/admin/danhmuc/phieutra/them_chitiet/" + maCuonSach;
         $.ajax({
@@ -238,16 +242,16 @@
 
             }
             //  CUON SACH KO TON TAI TRONG KHO HOAC KO O TRONG PHIEU MUON
-            else if (data['yes'] == 1){
-                alertify.alert("Cuốn sách không trong kho hoặc không ở trong phiếu mượn", function(){
+            else if (data['yes'] == 1) {
+                alertify.alert("Cuốn sách không trong kho hoặc không ở trong phiếu mượn", function () {
                     alertify.success('ĐÃ HIỂU');
                 });
             }
-            else if (data['yes'] == 2){
+            else if (data['yes'] == 2) {
                 $('#khong-ton-tai').text('Hãy nhập mã phiếu mượn đi chứ');
                 $('#khong-ton-tai').show();
             }
-              
+
         }
 
     });
@@ -256,9 +260,9 @@
     $(document).on('click', '.table .xoa', function (e) {
         var ma = $(this).val();
         var nth = chiTietSach.indexOf(ma);
-        
-        $(`.table tbody tr:nth-child(${nth+1}) `).remove();
-        chiTietSach.splice(nth,1);
+
+        $(`.table tbody tr:nth-child(${nth + 1}) `).remove();
+        chiTietSach.splice(nth, 1);
     });
 
 
@@ -267,13 +271,13 @@
 
     function thucHienAjax() {
         var obj = {
-            'ngayTra': $("#ngayTra").val(),
+            // 'ngayTra': $("#ngayTra").val(),
             'ID_PhieuMuon': $("#maPhieuMuon").val(),
             'ID_NhanVien': $("#selectNhanVien").children('option:selected').val(),
             'chitiet': chiTietSach
         };
         console.log(obj);
-        
+
         $.ajax({
             type: "post",
             url: urlPost,
@@ -285,14 +289,62 @@
 
                 if (response.yes === true) {
 
-                   
-                   $('.table tbody').empty();
+
+                    $('.table tbody').empty();
                     $("#maPhieuMuon").val('');
-                   
+
                     alertify.success('Thêm phiếu trả thành công');
                 }
             }
         });
+    }
+
+    // ===================== KIEM TRA VI PHAM  =================
+    function kiemTraViPham() {
+        var kt = false;
+        $.ajax({
+            type: 'post',
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            data: {
+                maPhieuMuon: $("#maPhieuMuon").val(),
+                chitiet: chiTietSach
+            },
+            url: '{{route('phieutra.ktvipham')}}',
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data['size'] == 0){
+                   thucHienAjax();
+                }
+                else {
+                    hienViPham(0,data,kt);
+                }
+            }
+        });
+      
+    }
+
+    function hienViPham(i, data,kt) {
+       
+        if (i == data['size']) {
+            alertify.confirm(
+                'Bạn có muốn tiếp tục lập phiếu mượn?',
+                ()=> { thucHienAjax()},
+                ()=> { }
+            );
+        } else {
+           
+            if (data['mess'][i + ''] != '') {
+                setTimeout(function () {
+                    alertify.alert(data['mess'][i + ''], function () {
+                        alertify.success('Đã hiểu');
+                        hienViPham(i + 1, data,kt);
+                    });
+                }, 600);
+            } else {
+                setTimeout(hienViPham(i + 1, data,kt), 900);
+            }
+        }
     }
 
 </script>
