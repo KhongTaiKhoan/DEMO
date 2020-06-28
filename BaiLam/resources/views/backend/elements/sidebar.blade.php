@@ -31,7 +31,9 @@
                             </ul>
                             </div>
                     </li>
-
+                    <li>
+                        <a href="{{route('nhanvien.index')}}" class="waves-effect font-muli text-b"><i class="fa fa-globe fa-fw" aria-hidden="true"></i>Nhân sự</a>
+                    </li>
 
                     <li>
                         <a href="#somuon" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Sổ mượn</a>
@@ -66,7 +68,7 @@
                                 <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('taikhoan.index')}}">Tài khoản</a></li>
                                 <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('chucvu.index')}}">Chúc vụ</a></li>
                             </ul>
-                            </div>
+                        </div>
                     </li>
                     <li>
                         <a href="#thongke" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Thống kê</a>
@@ -80,7 +82,13 @@
                         </div>
                     </li>
                     <li class="mb-4">
-                        <a href="404.html" class="waves-effect font-muli text-b"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Cá nhân</a>
+                        <a href="#canhan" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Cá nhân</a>
+                        <div class="collapse" id="canhan">
+                            <ul  class="nav nav-bar" >
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('taikhoan.show',['taikhoan'=>Auth::guard('admin')->user()->id])}}">Tài khoản</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('taikhoan.nhanvien',['id'=>Auth::guard('admin')->user()->id] )}}">Thông tin cá nhân</a></li>
+                            </ul>
+                        </div>
                     </li>
                     
 
