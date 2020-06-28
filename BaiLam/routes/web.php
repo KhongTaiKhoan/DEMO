@@ -51,7 +51,7 @@ Route::group(
            
             Route::group(['prefix'=>'sach'],function(){
               Route::get('phantrang','Sach@pagination')->name('sach-chuyen');
-              Route::get('review/{id}','Sach@review')->name('sach.review');
+              Route::get('review/{id}','Sach@review')->name('sach.review')->middleware('KiemTraQuyen:soan_bai');
               Route::post('write/{id}','Sach@write')->name('sach.write');
             
             }
