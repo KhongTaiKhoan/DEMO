@@ -21,6 +21,18 @@
                         </ul>
                     </div>
                     </li>
+
+                    <li>
+                        <a href="#nhap" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Nhập kho</a>
+                        <div class="collapse" id="nhap">
+                            <ul  class="nav nav-bar" >
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('phieuyeucau.index')}}">Phiếu yêu cầu</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('phieunhap.index')}}">Phiếu nhập</a></li>
+                            </ul>
+                            </div>
+                    </li>
+
+
                     <li>
                         <a href="#somuon" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Sổ mượn</a>
                         <div class="collapse" id="somuon">
@@ -32,16 +44,29 @@
                             </div>
                     </li>
                     <li>
-                        <a href="basic-table.html" class="waves-effect font-muli text-b"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Sổ trả</a>
+                        <a href="{{route('phieutra.index')}}" class="waves-effect font-muli text-b"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Sổ trả</a>
                     </li>
                     <li>
-                        <a href="fontawesome.html" class="waves-effect font-muli text-b"><i class="fa fa-font fa-fw" aria-hidden="true"></i>Biên bản</a>
+                        {{-- <a href="fontawesome.html" class="waves-effect font-muli text-b"><i class="fa fa-font fa-fw" aria-hidden="true"></i></a> --}}
+                        <a href="#vipham" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Biên bản</a>
+                        <div class="collapse" id="vipham">
+                            <ul  class="nav nav-bar" >
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('vipham.create')}}">Tạo biên bản</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('vipham.index')}}">Danh Sách</a></li>
+                            </ul>
+                            </div>
                     </li>
                     <li>
                         <a href="{{route('docgia.index')}}" class="waves-effect font-muli text-b"><i class="fa fa-globe fa-fw" aria-hidden="true"></i>Độc giả</a>
                     </li>
                     <li>
-                        <a href="blank.html" class="waves-effect font-muli text-b"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Quyền và tài khoản</a>
+                        <a href="#tkvaq" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-columns fa-fw" aria-hidden="true"></i>Quyền và tài khoản</a>
+                        <div class="collapse" id="tkvaq">
+                            <ul  class="nav nav-bar" >
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('taikhoan.index')}}">Tài khoản</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('chucvu.index')}}">Chúc vụ</a></li>
+                            </ul>
+                            </div>
                     </li>
                     <li>
                         <a href="#thongke" data-toggle="collapse" class="waves-effect font-muli text-b"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i>Thống kê</a>

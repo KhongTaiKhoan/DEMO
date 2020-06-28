@@ -58,7 +58,9 @@
                                
                                 <td>
                                 <a href="{{route('taikhoan.show',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a>
-                                    <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
+                                <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
+                                <a href="{{route('taikhoan.edit',$item->id ) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
+
                                 </td>
                             </tr>
                             @endforeach

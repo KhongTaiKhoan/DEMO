@@ -3,7 +3,7 @@
         <button style="margin-left: 1rem;" class="xoa-quyen font-roboto"
             value="{{$item['id']}}"> Xóa |</button>
         {{-- <a href="#" class="chinh-sua-quyen font-roboto" value="{{$item->id}}"> Sửa |</a> --}}
-        <a href="#" class="chi-tiet-quyen font-roboto" value="{{$item['id']}}"> Chi tiết</a>
+        <a href="{{route('chucvu.index')}}" class="chi-tiet-quyen font-roboto" value="{{$item['id']}}"> Chi tiết</a>
     </p>
 
     @foreach ($item->quyens()->get() as $q)
