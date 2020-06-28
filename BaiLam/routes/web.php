@@ -73,6 +73,9 @@ Route::group(
               Route::post('them_chitiet/{id}','PhieuMuon@them_chitiet')->name('cuonsach.add');
               Route::get('phantrang','PhieuMuon@pagination')->name('cuonsach.pagination');
               Route::get('kttontai/{id}','PhieuMuon@kiemTraTonTai')->name('cuonsach.tontai');
+              Route::get('review/{id}','PhieuMuon@review')->name('phieumuon.review');
+              Route::get('new_review','PhieuMuon@new_review')->name('phieumuon.new_review');
+
             });
             Route::group(['prefix'=>'vipham'],function(){
               Route::get('phantrang','BienBanViPham@pagination')->name('vipham.pagination');

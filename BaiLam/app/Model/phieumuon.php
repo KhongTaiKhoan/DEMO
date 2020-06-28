@@ -13,7 +13,16 @@ class phieumuon extends Model
         return $this->belongsToMany('App\Model\cuonsach','chitietphieumuons','ID_PhieuMuon','ID_CuonSach');
     }
 
+    // public function docgia(){
+    //     return $this->belongsTo('App\Model\docgia','ID_DocGia');
+    // }
+
     public function docgia(){
-        return $this->belongsTo('App\Model\docgia','ID_DocGia');
+        return $this->hasOne('App\Model\docgia','id','ID_DocGia');
     }
+
+    public function nhanvien(){
+        return $this->hasOne('App\Model\nhanvien','id','ID_NhanVien');
+    }
+
 }

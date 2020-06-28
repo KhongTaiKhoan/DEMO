@@ -27,7 +27,7 @@
                             <ul  class="nav nav-bar" >
                                 <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('phieumuon.create')}}">Tạo phiếu mượn</a></li>
                                 <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('phieumuon.index')}}">Danh Sách</a></li>
-                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="#">Xuất phiếu</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('phieumuon.new_review')}}" target="_blank">Xuất phiếu</a></li>
                             </ul>
                             </div>
                     </li>

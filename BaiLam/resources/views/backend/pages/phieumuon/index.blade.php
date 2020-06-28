@@ -60,6 +60,8 @@
                                     {{-- <a href="{{route('chitietphieumuon.show',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Xem</button></a> --}}
                                     <a href="{{route('phieumuon.edit',$item->id) }}"><button type="button" value="{{$item->id}}" class="sua btn btn-primary">Sửa</button></a>
                                     <button type="button" value="{{$item->id}}" class="xoa btn btn-danger">Xóa</button>
+                                    <button type="button" value="{{$item->id}}" class="xuat btn btn-info">Xuất</button>
+
                                 </td>
                             </tr>
                             @endforeach
@@ -145,6 +147,22 @@
 
         });
     }
+
+// ========XUAT PDF FILE PHIEU MUON
+$(document).on('click', '.table .xuat', function () {
+    var id = $(this).val();
+    var url =  window.location.origin+'/admin/danhmuc/phieumuon/review/'+id;
+    console.log(url);
+        alertify.confirm("Bạn có muốn in phiếu mượn này về máy??",
+            function () {
+                var w = window.open(url);
+                if(w)
+                   w.print();
+            },
+            function () {
+                alertify.error('Đã hủy');
+            });
+});
 
 
 </script>

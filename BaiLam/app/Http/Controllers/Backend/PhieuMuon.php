@@ -251,4 +251,17 @@ class PhieuMuon extends Controller
         else 
             return \response()->json(['yes'=>'false'],200);
     }
+
+
+    public function review($id){
+       
+        $phieumuon = \App\Model\phieumuon::find($id);
+        $phieumuon->ngayHenTra = Carbon::parse($phieumuon->ngayHenTra);
+        $phieumuon->ngayMuon = Carbon::parse($phieumuon->ngayMuon);
+        return view ('backend.pages.phieumuon.review')->with(['phieumuon'=>$phieumuon])->render();
+    }
+
+    public function new_review(){
+        return view ('backend.pages.phieumuon.new_review');
+    }
 }
