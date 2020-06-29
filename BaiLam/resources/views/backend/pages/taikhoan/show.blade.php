@@ -160,7 +160,7 @@
 
                         <div style="display: flex" >
                             <a class="btn btn-danger" style="margin-right: 2rem;">Cập nhật Email</a>
-                            <a class="btn btn-info">Đổi mật khẩu</a>
+                            <a class="btn btn-info" href="{{route('taikhoan.mail',['id'=>Auth::guard('admin')->user()->id])}}">Đổi mật khẩu</a>
                             
                          </div>
                     </div>

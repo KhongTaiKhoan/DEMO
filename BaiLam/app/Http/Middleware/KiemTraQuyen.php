@@ -19,7 +19,11 @@ class KiemTraQuyen
         $chucvu = Auth::guard('admin')->user()->chucvus()->get();
         $hopLe = false;  
         foreach($chucvu as $cv){
-          
+            
+            if($cv->tenChucVu == 'ALL'){
+                $hopLe=true;
+                break;
+            }
             foreach($cv->quyens()->get() as $q)
                 if($q->maQuyen == $quyen){
                     $hopLe = true;

@@ -23,6 +23,12 @@ Route::group(
        Route::get('/','LoginAdminController@getLogin')->name('admin.login');
        Route::post('/postLogin','LoginAdminController@postLogin')->name('admin.postLogin');
        Route::post('/postRegister','LoginAdminController@postRegister')->name('admin.postRegister');
+       Route::get('/quenMK','LoginAdminController@viewQuenMatKhau')->name('admin.quenMK');
+       Route::get('/kttaikhoan/{value}','LoginAdminController@kttaikhoan')->name('admin.kttaikhoan');
+       Route::get('/xacnhan/{id}/code/{code}','LoginAdminController@xacnhan')->name('admin.xacnhan');
+       Route::post('/postQuenMK','LoginAdminController@postQuenMK')->name('admin.postQuenMK');
+
+
       //  Route::get('/register','LoginAdminController@getRegister')->name('admin.register');
        Route::post('/valid','LoginAdminController@valid')->name('admin.validAdmin');
        
@@ -62,7 +68,10 @@ Route::group(
               Route::get('laychucvu/{id}','TaiKhoan@get_admin_chuc_vu')->name('taikhoan.layChucVu');
               Route::post('insert-admin/{id_admin}/chucvu/{id_chuvu}','TaiKhoan@insert_admin_chucvu')->name('taikhoan.insert.admin-chucvu');
               Route::delete('admin/{id_admin}/chucvu/{id_chucvu}','TaiKhoan@destroy_admin_chucvu')->name('taikhoan.destroy.admin-chucvu');
-            
+              Route::get('doimatkhau/{id}/code/{code}','TaiKhoan@getViewDoiMatKhau')->name('taikhoan.doimatkhau_'); 
+              Route::post('doimatkhau/{id}','TaiKhoan@doiMatKhau')->name('taikhoan.doimatkhau'); 
+              Route::get('email/{id}','TaiKhoan@guiEmailDoiMatKhau')->name('taikhoan.mail'); 
+              
             }
             );
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
 use File;
+use Auth;
+use App\Notifications\GuiEmailXacNhan;
 class TaiKhoan extends Controller
 {
     /**
@@ -165,4 +167,44 @@ class TaiKhoan extends Controller
      
         return view('backend.pages.taikhoan.list_admin_chucvu')->with(['data'=>$data]);
     }
+
+
+
+
+    //// RESET MAT KHAU VA DOI EMAIL
+   
+    public function getViewDoiMatKhau($id,$code){
+        $taikhoan = \App\Admin::find($id);
+        $t = Carbon::parse($taikhoan->thoiGianGuiMail);
+        $now = Carbon::now(); 
+        // dd($code .  '   ' . $taikhoan->maXacThuc)
+        if($taikhoan->maXacThuc != $code ){
+            return view ('backend.pages.taikhoan.loi')->with(
+                ['loi'=>'Mã xác thực không chính xác']);
+
+        }else if($t->diffInMinutes($now) < 0){
+            return view ('backend.pages.taikhoan.loi')->with(
+                ['loi'=>'Mã xác thực đã hết hiệu lực ']);             
+        }else
+           return view ('backend.pages.taikhoan.doimatkhau');
+    }
+
+    public function doiMatKhau(Request $request,$id){
+        $admin = \App\Admin::find($id);
+       
+        // $admin->hoanThanhMa();
+        $admin->password = bcrypt($request->matKhau);
+        $admin->save();
+        return \response()->json(['yes'=>true],200);
+    }
+
+    public function guiEmailDoiMatKhau($id){
+        // dd($id);
+        $admin = \App\Admin::find($id);
+        $admin->taoMaXacThuc();
+        $admin->notify(new GuiEmailXacNhan($admin) );
+        return  view('backend.xacthucmail')->with(['info'=>'Email đã được gửi, hãy check email để tiếp tục hành trình']);
+    }
+
+   
 }

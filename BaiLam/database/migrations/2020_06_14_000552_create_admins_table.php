@@ -18,6 +18,9 @@ class CreateAdminsTable extends Migration
             $table->string('tenTaiKhoan',50)->unique();
             $table->string('email',50)->unique();
             $table->string('password');
+            $table->string('confirm_pass')->nullable();
+            $table->string('maXacThuc')->nullable();
+            $table->dateTime('thoiGianGuiMail')->nullable();
             $table->date('ngayLap')->default(Carbon::now());
             $table->string('avatar',50)->default('blank.png');
             $table->integer('ID_NhanVien');
