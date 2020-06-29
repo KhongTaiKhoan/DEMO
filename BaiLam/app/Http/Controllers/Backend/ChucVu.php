@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use DB;
 class ChucVu extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:ALL',['except'=>['index','show'] ]);
+    }
     /**
      * Display a listing of the resource.
      *

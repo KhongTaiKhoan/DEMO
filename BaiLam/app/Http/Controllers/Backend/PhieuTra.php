@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class PhieuTra extends Controller
 {
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:quan_ly_phieu_tra',['except'=>['index'] ]);
+    }
     /**
      * Display a listing of the resource.
      *

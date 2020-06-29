@@ -211,7 +211,7 @@
                 <div class="col-md-4">
                     <div class="avatar ">
                         <label>Ảnh chân dung</label>
-                        <img src="{{asset('img/avatar/nhanvien/'.$item->anhDaiDien)}}" />
+                        <img src="{{asset('img/avatar/nhanvien/'.$item->anhChanDung)}}" />
                     </div>
                 </div>
             </form>

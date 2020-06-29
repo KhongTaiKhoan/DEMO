@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 class NhanVien extends Controller
 {
 
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:ALL',['except'=>['index','show'] ]);
+    }
 
     protected $duongDanAnhDaiDien = "img/avatar/nhanvien";
     /**

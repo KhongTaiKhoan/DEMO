@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class TacGia extends Controller
 {
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:quan_ly_sach',['except'=>['index'] ]);
+    }
     /**
      * Display a listing of the resource.
      *

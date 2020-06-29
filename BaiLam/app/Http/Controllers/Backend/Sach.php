@@ -9,6 +9,11 @@ use Validator;
 use File;
 class Sach extends Controller
 {
+
+
+    public function __construct(){
+       $this->middleware('KiemTraQuyen:quan_ly_sach',['except'=>['index'] ]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -13,6 +13,11 @@ class PhieuYeuCau extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:quan_ly_phieu_yeu_cau',
+        ['only'=>['index','create','delete','edit','update','store'] ]);
+    } 
     public function index()
     {
         $mang =  \App\Model\phieuyeucau::paginate(5);

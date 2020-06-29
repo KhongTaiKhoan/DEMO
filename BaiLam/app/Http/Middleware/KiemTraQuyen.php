@@ -18,18 +18,21 @@ class KiemTraQuyen
 
         $chucvu = Auth::guard('admin')->user()->chucvus()->get();
         $hopLe = false;  
+
+    
         foreach($chucvu as $cv){
-            
-            if($cv->tenChucVu == 'ALL'){
-                $hopLe=true;
-                break;
-            }
-            foreach($cv->quyens()->get() as $q)
+           
+           
+            foreach($cv->quyens()->get() as $q){
+                if($q->maQuyen == 'ALL'){
+                    $hopLe=true;
+                    break;
+                }
                 if($q->maQuyen == $quyen){
                     $hopLe = true;
                     break;
                 }
-            
+            }
             if($hopLe)break;
         }
         if($hopLe)

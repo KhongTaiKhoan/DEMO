@@ -11,6 +11,11 @@ use Auth;
 use App\Notifications\GuiEmailXacNhan;
 class TaiKhoan extends Controller
 {
+
+
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:quan_ly_tai_khoan',['only'=>['index','create','edit'] ]);
+     }
     /**
      * Display a listing of the resource.
      *

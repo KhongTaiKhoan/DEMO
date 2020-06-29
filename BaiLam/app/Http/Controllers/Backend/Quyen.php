@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class Quyen extends Controller
 {
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:ALL',['except'=>['index'] ]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class PhieuNhap extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:quan_ly_phieu_nhap',
+        ['only'=>['index','create','delete','edit','update','store'] ]);
+    }
     /**
      * Display a listing of the resource.
      *

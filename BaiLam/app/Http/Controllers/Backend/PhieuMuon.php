@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class PhieuMuon extends Controller
-{
+{ 
+    public function __construct(){
+            $this->middleware('KiemTraQuyen:quan_ly_phieu_muon',['except'=>['index'] ]);
+    }
     
     /**
      * Display a listing of the resource.

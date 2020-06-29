@@ -16,7 +16,7 @@ class CreateQuyensTable extends Migration
         Schema::create('quyens', function (Blueprint $table) {
             $table->id();
             $table->string('tenQuyen',30);
-            $table->string('maQuyen',30);
+            $table->string('maQuyen',50);
             $table->string('moTa')->nullable();
             $table->timestamps();
         });

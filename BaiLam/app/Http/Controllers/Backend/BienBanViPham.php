@@ -8,6 +8,9 @@ use Carbon\Carbon;
 
 class BienBanViPham extends Controller
 {
+    public function __construct(){
+        $this->middleware('KiemTraQuyen:quan_ly_bien_ban',['except'=>['index'] ]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -21,8 +21,8 @@ class CreateNhanviensTable extends Migration
             $table->string('cmnd',30);
             $table->string('diaChi',50);
             $table->string('sdt',11);
-            $table->string('anhChanDung',30);
-            $table->boolean('gioiTinh',30);   /// true -- nam    |    false --- nu
+            $table->string('anhChanDung',30)->default('default.png');
+            $table->boolean('gioiTinh')->default(true);   /// true -- nam    |    false --- nu
             $table->timestamps();
         });
     }
