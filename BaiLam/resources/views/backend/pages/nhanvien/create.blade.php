@@ -30,70 +30,96 @@
             </div>
         </div>
 
-        <div class="white-box">
+        <div class="white-box" style="overflow: hidden;">
             <form id="nhanvienForm" action="{{route('nhanvien.store')}}" method="post">
+                {{ method_field('PUT') }}
                 @csrf
-                {{-- Nhap ten Nhan Vien --}}
-                <div>
-                    <label for="hoTen">Họ và tên</label>
-                    <input type="text" class="form-control" required name="hoTen" id="hoTen"
-                        placeholder="Tối đa 50 kí tự">
+
+
+                <div class="col-md-8">
+                    {{-- Nhap ten the loai --}}
+                    <div>
+                        <label for="hoTen">Họ và tên</label>
+                        <input type="text" class="form-control" required name="hoTen" id="hoTen"
+                            placeholder="Tối đa 50 kí tự" >
+                    </div>
+
+
+
+                    <div style="margin-top:2rem ;margin-right:1rem ;">
+                        <label for="chucVu">Chức vụ</label>
+                        <input type="text" class="form-control"  name="chucVu" id="chucVu"
+                            placeholder="Tối đa 30 kí tự">
+                    </div>
+
+
+
+                    <div style="margin-top:2rem ;margin-right:1rem ;">
+                        <label for="namSinh">Năm sinh</label>
+                        <input type="text" class="form-control"  required name="namSinh"
+                            id="namSinh">
+                    </div>
+
+
+                    <div style="margin-top:2rem ;margin-right:1rem ;">
+                        <label for="namMat">CMND</label>
+                        <input type="text" class="form-control"  name="cmnd" id="cmnd"
+                            placeholder="Tối đa 30 kí tự">
+                    </div>
+
+
+
+                    <div style="margin-top:2rem ;margin-right:1rem ;">
+                        <label for="namMat">Địa chỉ</label>
+                        <input type="text" class="form-control" name="diaChi" id="diaChi" placeholder="Tối đa 50 kí tự"
+                           >
+                    </div>
+
+
+
+                    <div style="margin-top:2rem ;margin-right:1rem ;">
+                        <label for="quocTich">Số điện thoại</label>
+                        <input type="text" class="form-control" name="sdt" id="sdt" placeholder="Tối đa 11 kí tự"
+                          >
+                    </div>
+
+
+                    <div>
+                        <p style="font-weight: bold;">Giới tính:</p>
+                        <div style="display: inline-block;margin-right:1rem;">
+                            <label class="myRadio" for="theloai-cho">
+                                <input checked type="radio" style="display: contents;" value="1" id="theloai-cho"
+                                    name="gioitinh">
+                                <span class="custom-tick"></span>
+                                <span>Nam</span>
+                        </div>
+                        <div style="display: inline-block;">
+                            </label>
+                            <label class="myRadio" for="theloai-chua">
+                                <input  type="radio" style="display: contents;" value="0" id="theloai-chua"
+                                    name="gioitinh">
+                                <span class="custom-tick"></span>
+                                <span>Nữ</span>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    {{-- Bat Dau chon the loai cha--}}
+
+                    <div class="text-center" style="margin-top: 5rem;">
+                        <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
+                        <button  type="button" id="check" class="btn btn-primary">Lưu</button>
+                        <button  type="button"  class=" sua btn  btn-info">Sửa</button>
+                        <a href="{{route('nhanvien.index')}}"> <button type="button"
+                                class="btn btn-danger">Hủy</button></a>
+                    </div>
+
                 </div>
-                
-                <div style="display: flex;">
-
-                <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="namSinh">Chức vụ</label>
-                    <input type="text" class="form-control"  name="chucVu" id="chucVu"
-                    placeholder="Tối đa 30 kí tự">
-                </div>
-                
-
-
-                <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="namSinh">Năm sinh</label>
-                    <input type="text" class="form-control"  name="namSinh" id="namSinh"
-                    placeholder="Năm sinh">
-                </div>
-
-                
-            
-                <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="namMat">CMND</label>
-                    <input type="text" class="form-control"  name="cmnd" id="cmnd"
-                    placeholder="Tối đa 30 kí tự">
-                </div>
-
-                
-
-                <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="quocTich">Địa chỉ</label>
-                    <input type="text" class="form-control"  name="diaChi" id="diaChi"
-                    placeholder="Tối đa 50 kí tự">
-                </div>
-
-
-                <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="quocTich">Số điện thoại</label>
-                    <input type="text" class="form-control"  name="sdt" id="sdt"
-                    placeholder="Tối đa 30 kí tự">
-                </div>
-
-
-                <div style="margin-top:2rem ;margin-right:1rem ;">
-                    <label for="quocTich">Email</label>
-                    <input type="text" class="form-control"  name="email" id="email"
-                    placeholder="Tối đa 0 kí tự">
-                </div>
-            </div>
-
-            <div class="text-center" style="margin-top: 5rem;">
-                <!-- <input type="button" class="btn btn-primary" value="Lưu"> -->
-                <button type="button" id="check" class="btn btn-primary">Lưu</button>
-                <a href="{{route('nhanvien.index')}}"> <button type="button" class="btn btn-danger">Hủy</button></a>
-            </div>
-
-
             </form>
         </div>
     </div>
@@ -126,20 +152,20 @@
         rules: {
             hoTen: {
                 required: true,
-                minlength: 7,
+                // minlength: 7,
                 maxlength: 50,
-                
+
             },
             chucVu: {
                 required: true,
                 minlength: 3,
                 maxlength: 30,
-                
+
             },
-            namSinh:{
-                min:'1950',
+            namSinh: {
+                min: '1950',
                 max: '2020',
-                required:true
+                required: true
             },
             cmnd: {
                 required: true,
@@ -156,11 +182,11 @@
                 minlength: 7,
                 maxlength: 11
             },
-           email:{
-            required: true,
+            email: {
+                required: true,
                 minlength: 1,
                 maxlength: 50
-           },
+            },
         },
         messages: {
             hoTen: {
@@ -173,40 +199,40 @@
                 minlength: 'Ít nhát 3 kí tự',
                 maxlength: 'Tối đa 30 kí tự'
             },
-            namSinh:{
-                min:'Năm sinh quá lâu, chém gió à',
+            namSinh: {
+                min: 'Năm sinh quá lâu, chém gió à',
                 max: 'Năm sinh lớn hơn hiện tại, chém gió à',
-                required:'Không được bỏ trống'
+                required: 'Không được bỏ trống'
             },
             cmnd: {
                 required: 'Không được bỏ trống',
                 minlength: 'Ít nhát 6 kí tự',
                 maxlength: 'Tối đa 30 kí tự'
             },
-            diaChi:{
+            diaChi: {
                 required: 'Không được bỏ trống',
                 minlength: 'Ít nhát 1 kí tự',
                 maxlength: 'Tối đa 50 kí tự'
-           },
+            },
             sdt: {
                 required: 'Không được bỏ trống',
                 minlength: 'Ít nhát 7 kí tự',
                 maxlength: 'Tối đa 11 kí tự'
             },
-            email:{
+            email: {
                 required: 'Không được bỏ trống',
                 minlength: 'Ít nhát 1 kí tự',
                 maxlength: 'Tối đa 40 kí tự'
-           },
+            },
         }, errorPlacement: function (err, elemet) {
-        
-        err.insertAfter(elemet);    
-        err.addClass('invalid-feedback d-inline text-danger');
-        elemet.addClass('form-control is-invalid');
-        $('.focus-input100-1,.focus-input100-2').addClass('hidden');
+
+            err.insertAfter(elemet);
+            err.addClass('invalid-feedback d-inline text-danger');
+            elemet.addClass('form-control is-invalid');
+            $('.focus-input100-1,.focus-input100-2').addClass('hidden');
+        }
     }
-}
-);
+    );
     function thucHienAjax(form) {
         var obj = {
             'hoTen': $("#hoTen").val(),
@@ -215,8 +241,7 @@
             'cmnd': $("#cmnd").val(),
             'diaChi': $("#diaChi").val(),
             'sdt': $("#sdt").val(),
-            'email': $("#email").val(),
-            'ID_Admin': 1,
+            'gioiTinh' :$("input[name=gioiTinh]:checked").val(),
             // 'theLoai': $('input[name=theLoai]:checked').val(),
         
         };
