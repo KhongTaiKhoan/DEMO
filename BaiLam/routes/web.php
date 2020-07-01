@@ -71,7 +71,7 @@ Route::group(
               Route::get('doimatkhau/{id}/code/{code}','TaiKhoan@getViewDoiMatKhau')->name('taikhoan.doimatkhau_'); 
               Route::post('doimatkhau/{id}','TaiKhoan@doiMatKhau')->name('taikhoan.doimatkhau'); 
               Route::get('email/{id}','TaiKhoan@guiEmailDoiMatKhau')->name('taikhoan.mail'); 
-              
+              Route::get('logout','TaiKhoan@logout')->name('taikhoan.logout');
             }
             );
 

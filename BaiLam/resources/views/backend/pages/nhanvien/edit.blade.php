@@ -156,8 +156,11 @@
                         <p style="font-weight: bold;">Giới tính:</p>
                         <div style="display: inline-block;margin-right:1rem;">
                             <label class="myRadio" for="theloai-cho">
-                                <input checked type="radio" style="display: contents;" value="1" id="theloai-cho"
-                                    name="gioitinh">
+                                <input  type="radio" style="display: contents;" value="1" id="theloai-cho"
+                                   @if ($item->gioiTinh == true)
+                                      checked 
+                                   @endif    
+                                name="gioitinh">
                                 <span class="custom-tick"></span>
                                 <span>Nam</span>
                         </div>
@@ -165,7 +168,10 @@
                             </label>
                             <label class="myRadio" for="theloai-chua">
                                 <input  type="radio" style="display: contents;" value="0" id="theloai-chua"
-                                    name="gioitinh">
+                                @if ($item->gioiTinh == false)
+                                      checked 
+                                   @endif      
+                                name="gioitinh">
                                 <span class="custom-tick"></span>
                                 <span>Nữ</span>
                             </label>
@@ -327,8 +333,8 @@
             'cmnd': $("#cmnd").val(),
             'diaChi': $("#diaChi").val(),
             'sdt': $("#sdt").val(),
-            'gioiTinh' :$("input[name=gioiTinh]:checked").val(),
-            'ID_Admin': 1,
+            'gioiTinh' :$("input[name=gioitinh]:checked").val(),
+         
 
         };
         // var obj = $("#nhanvienForm").serialize();

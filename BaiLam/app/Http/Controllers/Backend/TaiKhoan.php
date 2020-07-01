@@ -211,5 +211,8 @@ class TaiKhoan extends Controller
         return  view('backend.xacthucmail')->with(['info'=>'Email đã được gửi, hãy check email để tiếp tục hành trình']);
     }
 
-   
+   public function logout(){
+       Auth::guard('admin')->logout();        
+       return redirect()->route('admin.login');
+   }
 }

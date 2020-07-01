@@ -87,6 +87,7 @@
                             <ul  class="nav nav-bar" >
                                 <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('taikhoan.show',['taikhoan'=>Auth::guard('admin')->user()->id])}}">Tài khoản</a></li>
                                 <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('taikhoan.nhanvien',['id'=>Auth::guard('admin')->user()->id] )}}">Thông tin cá nhân</a></li>
+                                <li class = "nav-item"><a class = "font-muli pdleft-5rem hover-gray nav-link" href="{{route('taikhoan.logout')}}" >Đăng xuất</a></li>
                             </ul>
                         </div>
                     </li>

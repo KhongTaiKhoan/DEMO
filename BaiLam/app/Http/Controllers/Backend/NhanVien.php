@@ -21,6 +21,8 @@ class NhanVien extends Controller
     public function index()
     {
         $mang =  DB::table('nhanviens')->paginate(5);
+        
+
         return \view('backend.pages.nhanvien.index')->with(['arr'=>$mang,'page'=>1]);
     }
 

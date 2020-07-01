@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="HLinh">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('backend/plugins/images/favicon.png')}}">
-    <title>Ample Admin Template - The Ultimate Multipurpose admin template</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/website/logo.png')}}">
+    <title>Yoyobook </title>
     
     
     @section('header')
@@ -123,7 +123,7 @@
     @yield('noi-dung')
 
     
-    <footer class="footer text-center"> 2017 &copy; Ample Admin brought to you by wrappixel.com </footer>
+    <footer class="footer text-center"> 2020 &copy; thư viện yoyobook </footer>
     </div>
     <!-- ============================================================== -->
     <!-- End Page Content -->
