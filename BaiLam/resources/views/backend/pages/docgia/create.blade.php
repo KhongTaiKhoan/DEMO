@@ -129,8 +129,9 @@
             },
            sdt:{
             required: true,
-                minlength: 7,
-                maxlength: 11
+                minlength: 10,
+                maxlength: 11,
+                digits: true
            },
            email:{
             required: true,
@@ -157,8 +158,9 @@
            },
             sdt: {
                 required: 'Không được bỏ trống',
-                minlength: 'Ít nhát 7 kí tự',
-                maxlength: 'Tối đa 11 kí tự'
+                minlength: 'Ít nhát 10 kí tự',
+                maxlength: 'Tối đa 11 kí tự',
+                digits: 'SDT ko hợp lệ'
             },
             email:{
                 required: 'Không được bỏ trống',
